@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
+import { ReactNode } from 'react';
 
 // Importar las imágenes correctamente
 import logo from '../../assets/Image/logo.png';
@@ -7,7 +8,11 @@ import ventasIcon from '../../assets/Icons/Ventas.png';
 import premiumIcon from '../../assets/Icons/Premium.png';
 import comprasIcon from '../../assets/Icons/Compras.png';
 
-const NavBar = () => {
+type NavBarProps = {
+    children: ReactNode;
+  };
+
+const NavBar = ({ children }: NavBarProps) => {
     return (
         <>
         <div className='d-flex contenedor-principal'>
@@ -71,6 +76,8 @@ const NavBar = () => {
                     </div>
                 </nav>
 
+                {children}
+                
                 {/* Botón en pantallas pequeñas */}
                 <div className="collapse d-md-none" id="colapsarBarraLateral">
                     <nav className="bg-light p-3">
