@@ -1,14 +1,11 @@
-
+import PublicarProducto from'./Components/PublicarProducto/PublicarProducto.tsx'
 import './App.css'
-import NavBar from './Components/Navbar/Navbar.tsx'
-import ProductCart from './Components/ProductCart/ProductCart.tsx'
+//import NavBar from './Components/Navbar/Navbar.tsx'
 function App() {
 
   return (
     <>
-      <NavBar>
-        <ProductCart />
-      </NavBar>
+      
     </>
   )
 }

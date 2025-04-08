@@ -188,12 +188,19 @@ p.ciudad{
     color: #666;
 }
 
+.main{
+    padding: '20px';
+     overflow: 'auto' ;
+}
+
 @media (max-width: 1600px) {
     .contenedor-cards {
         grid-template-columns: repeat(4, 1fr); 
     }
 
 }
+
+
 
 
 @media (max-width: 1210px) {

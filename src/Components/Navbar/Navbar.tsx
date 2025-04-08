@@ -7,7 +7,7 @@ import ventasIcon from '../../assets/Icons/Ventas.png';
 import premiumIcon from '../../assets/Icons/Premium.png';
 import comprasIcon from '../../assets/Icons/Compras.png';
 
-const NavBar = () => {
+const NavBar = ({children}) => {
     return (
         <>
         <div className='d-flex contenedor-principal'>
@@ -106,6 +106,7 @@ const NavBar = () => {
                 </div>
             </div>
         </div>
+        <main className="main">{children}</main>
         </>
     );
 };
