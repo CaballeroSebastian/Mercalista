@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 import './App.css'
 import NavBar from './Components/Navbar/Navbar.tsx'
@@ -11,3 +12,5 @@ function App() {
 }
 
 export default App
+=======
+>>>>>>> Stashed changes
