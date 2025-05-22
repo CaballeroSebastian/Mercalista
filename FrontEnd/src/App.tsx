@@ -5,24 +5,23 @@ import './App.css'
 
 
 //rutas por crear SEBASTIAN MUÑOZ
-//import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
-//import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
+
 // import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
 // import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
 
 
 //Rutas por crear SAMUEL ALVAREZ
-// import Suscription from './Components/Suscription/Suscription.tsx' //--> Muckup Suscripcion
-//import Register from './Components/Register/Register.tsx'  //--> Mcukup Registrar
+
 //import Suscription from './Components/Suscription/Suscription.tsx' //--> Muckup Suscripcion
 // import Register from './Components/Register/MainRegister.tsx'  //--> Mcukup Registrar
 //import RegisterPassword from './Components/RegisterPassword/RegisterPassword.tsx' //--> Muckup Registro-contraseña
 
 //Rutas por crear CABALLERO
 import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup Landing Page
-// import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
+import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
 import LoginNavbar from './Components/LoginNavbar/LoginNavbar.tsx'
 import Menu from './Components/LoggedNav/LoggedNav.tsx'
+
 //Rutas por crear JULIANA MORALES
 //import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
 //import ConfirmPassword from './Components/ConfirmPassword/ConfirmPassword.tsx' //--> Muckup Confirmar-verficacion
@@ -55,8 +54,7 @@ function App() {
             <ProductCard/>
           </LoginNavbar >
           } />
-        {/* <Route path='/Profile' element={<Profile/>} />         */}
-        {/* <Route path='/Profile' element={<Profile/>} /> */} 
+        <Route path='/Profile' element={<Profile/>} />        
         <Route path='/logged' element={   
           <Menu>
             <ProductCard/>  
