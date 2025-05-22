@@ -1,0 +1,557 @@
+
+.body {
+    
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+/* Header */
+.contenedor-header  {
+    background-color: #413620;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    height: 20% !important;
+}
+
+
+
+.titulo-login{
+    font-size: 40px;
+    font-family: Cinzel;
+    color: #c2c2c2;
+}
+
+/* Logo */
+.contenedor-logo{
+    position: absolute;
+    left: 0px;
+}
+
+.logo-merca {
+    width: 60px;
+    height: 60px;
+    max-width: 300px;
+    margin: 7px;
+}
+
+/* Contenedores principales */
+.contenedor-derecho1, 
+.contenedor-izquierdo1 {
+    position: absolute;
+    top: 100px;
+}
+
+.contenedor-izquierdo1 {
+    position: absolute;
+    top: 150px;
+    left: 120px;
+
+}
+
+
+
+.contenedor-derecho1 {
+    width: 400px;
+    top: 240px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    transform: translateX(110vh);
+}
+
+/* Imagen collage */
+.collage-fruit {
+    width: 500px;
+    height: 325px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-top: 30px;
+    filter: drop-shadow(20px 15px 3px rgba(0, 0, 0, 0.3));
+    transform: translateX(-50px);
+}
+
+
+/* Texto del collage */
+.text2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    transform: translateX(85px);
+}
+
+/* Formulario */
+.form-login {
+    display: flex;
+    flex-direction: column;
+}
+
+.email {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.form-label1 {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.form-control2 {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;;
+}
+
+/* Botón continuar */
+.button-continuar {
+   width: 100%;
+    margin-bottom: 5px;
+}
+
+.btn-conti {
+    background-color: #8c5b17;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.btn-conti:hover {
+    background-color: #704713;
+}
+
+/* Crear cuenta link */
+.button-crearcuenta {
+    margin: 10px 0;
+}
+
+.button-crearcuenta a {
+    color: #8c5b17;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.crear-cuenta a:hover {
+    text-decoration: underline;
+}
+
+/* Botón Google */
+.icon-google {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.btn-google-img {
+    background-color: white;
+    color: #555;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.icon-google-v{
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Línea media */
+.lineas-medio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 7px 0;
+    position: relative;
+}
+
+.lineas-medio::before,
+.lineas-medio::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ccc;
+    margin: 0 10px;
+}
+
+
+
+@media (max-width: 1920px) and (min-width: 1581px) {
+
+   
+    .contenedor1 {
+        position: absolute;
+        top: 210px;
+        right: 120px;
+        width: 30% !important;
+        transform: translateX(-80px);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    
+    .contenedor-header{
+        height: 100px;
+    }
+
+
+
+
+    .form-login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%; /* Asegúrate de que el formulario ocupe todo el ancho del contenedor */
+    }
+
+    .form-contro2 {
+        padding: 7px !important;
+        margin-bottom: -2px;
+    }
+
+    .btn-conti{
+        width: 100%;
+        height: 40px;
+        padding: 2px;
+        margin-bottom: 10px;
+    }
+    
+    .btn-google-img {
+               width: 100% !important;
+        height: 40px;
+        font-size: 15px !important;
+        padding: 5px !important;
+        margin-bottom: 10px;
+    }
+    
+  
+
+    .icon-google-v{
+        width: 20px !important;
+        height: 20px;
+
+    }
+
+    .lineas-mediao{
+        margin-top: 10px; 
+    }
+   
+
+    .collage-fruit {
+        width: 525px;
+        height: 410px;
+        object-fit: contain;
+        border-radius: 10px;
+        margin-top: 45px !important;
+        filter: drop-shadow(20px 15px 3px rgba(0, 0, 0, 0.3));
+        transform: translateX(100px);
+    }
+
+    .text2 {
+        
+        font-size: calc(1.4vw); 
+        margin-top: 70px ; 
+        transform: translateX(120px); 
+    }
+
+    .logo-merca {
+        width: calc(4vw);
+        height: calc(4vw);
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 1580px) and (min-width: 1281px) {
+    
+
+     
+        .contenedor-derecho1 {
+        right: 70px;
+        width: calc(34.72vw);
+        transform: translateX(-100px);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    
+    .contenedor-header{
+        height: 100px;
+    }
+
+   
+
+    .form-login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%; /* Asegúrate de que el formulario ocupe todo el ancho del contenedor */
+    }
+
+    .form-control2 {
+     
+        margin-bottom: -2px;
+    }
+
+    .btn-conti{
+        width: 100%; /* Asegúrate de que los botones ocupen todo el ancho */
+        height: 45px; /* Aumenta el tamaño del botón */
+        margin-bottom: 10px; /* Espaciado entre los botones */
+    }
+    
+    .btn-google-img {
+        width: 100% !important;
+        height: 47px;
+        padding: 5px !important;
+        margin-bottom: 10px;
+    }
+    
+ 
+
+    .icon-google-v{
+        width: 24px !important; 
+        height: 24px; 
+
+    }
+
+    .lineas-medio{
+        margin-top: 10px; 
+    }
+    
+    .collage-fruit{
+        width: 445px;
+        height: 29%;
+        object-fit: contain;
+        border-radius: 10px;
+        filter: drop-shadow(20px 15px 3px rgba(0, 0, 0, 0.3));
+        transform: translateX(calc(70px));
+    }
+
+    .text2 {
+        margin-top: 70px ; 
+        
+    }
+
+    .logo-merca {
+        width: calc(4vw);
+        height: calc(4vw);
+        margin: 10px;
+    }
+}
+/* Para pantallas entre 1281px y 967px */
+@media (max-width: 1281px) and (min-width: 967px) {
+    .contenedor-derecho1 {
+        
+        position: absolute;
+        margin-top: -20px;
+        right: 20px;
+        width: calc(33vw) !important;
+        transform: translateX(-100px);
+        
+    
+    }
+
+    .collage-fruit {
+        width: calc(35vw);
+        height: 330px;
+        object-fit: contain;
+        border-radius: 10px;
+        margin-top: 20px;
+        filter: drop-shadow(20px 15px 3px rgba(0, 0, 0, 0.3));
+        transform: translateX(-35px);
+    }
+
+    .text2 {
+        font-size: calc(2vw);
+        margin-bottom: 20px;
+        margin-top: 15%;
+        transform: translateX(0px);
+    }
+
+    .logo-merca{
+        width: 60px;
+        height: 60px;
+        max-width: 300px;
+        margin: 7px;
+    }
+
+    .form-login {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    
+}
+
+/* Para pantallas entre 967px y 834px */
+@media (max-width: 967px) and (min-width: 834px) {
+    .contenedor-derecho1 {
+        position: absolute;
+        top: 200px;
+        right: 50px; /* Mantén el contenedor alineado a la derecha */
+        width: calc(40vw) !important; /* Ajusta el ancho dinámicamente */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Agrega un sombreado */
+        transform: none; /* Elimina el desplazamiento */
+    }
+    .email,
+    .button-continuar,
+    .icon-google-v {
+        margin-bottom: 5px ; /* Espaciado entre los elementos */
+    }
+
+    .form-control2 {
+        width: 100%; /* Asegúrate de que los inputs ocupen todo el ancho */
+        padding: 10px;
+        font-size: 14px; /* Ajusta el tamaño del texto */
+    }
+
+    .btn-conti,
+    .btn-google-img {
+        width: 100%; /* Asegúrate de que los botones ocupen todo el ancho */
+        padding: 10px;
+        font-size: 14px; /* Ajusta el tamaño del texto */
+    }
+
+    .btn-google-img{
+        margin-top: -15px;
+    }
+
+    .lineas-medio{
+        margin-top: -12px;
+    }
+
+    .collage-fruit {
+        width: calc(35vw); /* Ajusta el tamaño de la imagen dinámicamente */
+        height: auto;
+        max-width: 350px; /* Tamaño máximo */
+        transform: translateX(-25); /* Mantiene la posición */
+    } 
+
+    .text2 {
+        font-size: calc(2.2vw); /* Ajusta el tamaño del texto dinámicamente */
+        transform: translateX(-43px); /* Mantiene la posición */
+        margin-top: 50px;
+    }
+
+    .logo-merca {
+        width: calc(6vw); /* Ajusta el tamaño del logo dinámicamente */
+        height: calc(6vw);
+    }
+}
+
+/* Para pantallas entre 833px y 500px */
+@media (max-width: 833.33px) and (min-width: 500px) {
+    
+    .collage-fruit {
+        display: none; /* Oculta la imagen */
+    }
+
+    .logo-merca {
+        margin: 5 auto; /* Centra el logo horizontalmente */
+        width: 50px; /* Ajusta el tamaño del logo */
+        height: 50px;
+    }
+
+    .text2 {
+        font-size: 20px; /* Ajusta el tamaño del texto */
+        text-align: left ; /* Centra el texto */
+        margin-bottom: 15px;
+        transform: translateX( -70px); /* Mueve un poco hacia la derecha */
+    }
+
+       .contenedor-derecho1 {
+        /* position: relative; */
+        width: calc(80vw) !important;
+        margin: -10px auto;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateX(50px) !important; 
+    }
+}
+
+@media(max-width:499px) and (min-width:320px){
+
+
+    .collage-fruit {
+        display: none; /* Oculta la imagen */
+    }
+
+    .logo-merca {
+        margin: 5 auto; /* Centra el logo horizontalmente */
+    width: calc(13vw); /* Ajusta el tamaño del logo */
+    height: calc(13vw);
+
+    }
+
+    .text2{
+        font-size: calc(4.2vw); /* Ajusta el tamaño del texto */
+        margin: 10px auto;
+        transform: translateX(-75px); /* Mueve un poco hacia la derecha */
+    }
+
+    .contenedor-derecho1 {
+        width: calc(80vw);
+        margin: -20px auto; 
+        padding: 24px;
+        transform: translateX(40px) !important;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
