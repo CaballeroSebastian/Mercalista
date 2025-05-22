@@ -19,7 +19,7 @@ import './App.css'
 //import RegisterPassword from './Components/RegisterPassword/RegisterPassword.tsx' //--> Muckup Registro-contraseña
 
 //Rutas por crear CABALLERO
-// import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup Landing Page
+import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup Landing Page
 // import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
 import LoginNavbar from './Components/LoginNavbar/LoginNavbar.tsx'
 import Menu from './Components/LoggedNav/LoggedNav.tsx'
@@ -52,14 +52,14 @@ function App() {
         {/* --> SEBASTIAN CABALLERO*/}
         <Route path='/' element={
           <LoginNavbar >
-            {/* <ProductCard/> */}
+            <ProductCard/>
           </LoginNavbar >
           } />
         {/* <Route path='/Profile' element={<Profile/>} />         */}
         {/* <Route path='/Profile' element={<Profile/>} /> */} 
         <Route path='/logged' element={   
           <Menu>
-            {/* <ProductCard/>   */}
+            <ProductCard/>  
           </Menu>
           } /> 
           
