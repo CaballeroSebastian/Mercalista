@@ -12,7 +12,7 @@ import './App.css'
 
 //Rutas por crear SAMUEL ALVAREZ
 
-//import Suscription from './Components/Suscription/Suscription.tsx' //--> Muckup Suscripcion
+import Suscription from './Components/Suscription/Suscription.tsx' //--> Muckup Suscripcion
 // import Register from './Components/Register/MainRegister.tsx'  //--> Mcukup Registrar
 //import RegisterPassword from './Components/RegisterPassword/RegisterPassword.tsx' //--> Muckup Registro-contraseña
 
@@ -67,7 +67,7 @@ function App() {
 
 
         {/* --> SAMUEL ALVAREZ */}
-        {/* <Route path='/Suscription' element={<Suscription/>} /> */}
+        <Route path='/Suscription' element={<Suscription/>} />
         {/*<Route path='/Register' element={<Register/>} />*/}
         {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} /> */}  
         {/* <Route path='/Suscription' element={<Suscription/>} /> */}

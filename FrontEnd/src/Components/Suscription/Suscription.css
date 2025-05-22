@@ -1,0 +1,111 @@
+/* Include Bootstrap CSS in your HTML file using a <link> tag */
+body {
+  background-color: #f8f9fa;
+}
+
+.container-suscripcion {
+  
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 190px !important;
+  margin-top: 77px;
+}
+
+.container-cards{
+ width: 80%;
+ align-items: center !important;
+ justify-content: center !important;
+}
+
+.container-py-6{
+margin: 0% !important;
+}
+
+.d-none{
+  display: none;
+}
+
+.pricing-header {
+  max-width: 700px;
+}
+
+.mensualcompra{
+  background-color: #9f7833 !important;
+  color: white !important;
+}
+
+.mensualcompra:hover{
+  background-color: #ffd791 !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.anualcompra{
+  background-color: #9f7833 !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.b-anualcompra{
+  background-color: #9f7833 !important;
+  color: white !important;
+}
+
+.b-anualcompra:hover{
+  background-color: #ffd791 !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.boton-c{
+  margin: 0px!important;
+  height: auto !important;
+}
+
+
+.table{
+  --bs-table-bg: #f8f9fa;
+}
+
+.bton-search{
+  background-color: #ffffff54 !important;
+  color: rgb(0, 0, 0) !important;
+  border-color : #9f7833 !important;
+}
+
+.bton-search:hover{
+  background-color: #9f7833 !important;
+  color: rgb(255, 255, 255) !important;
+  border-color : #9f7833 !important;
+}
+
+
+
+@media (min-width:992px){
+  .container , .container-sm, .container-md, .container-lg{
+    max-width: 1200px !important;
+  }
+}
+
+@media (min-width:768px) and (max-width:992px){
+  .container-suscripcion, .container-sm{
+    max-width: 992px !important;
+    
+  }
+
+  .card-body {
+    font-size: 0.9rem !important;
+  }
+
+  .card-body h1{
+    font-size: 1.9rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-suscripcion, .container-sm{
+    max-width: 992px !important;
+    margin-top: 77px !important;
+    margin-left: auto !important;
+  }
+
+  
+}
