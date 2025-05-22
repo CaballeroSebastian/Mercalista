@@ -20,7 +20,7 @@ import './App.css'
 
 //Rutas por crear CABALLERO
 import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup Landing Page
-// import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
+import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
 import LoginNavbar from './Components/LoginNavbar/LoginNavbar.tsx'
 import Menu from './Components/LoggedNav/LoggedNav.tsx'
 //Rutas por crear JULIANA MORALES
@@ -55,8 +55,7 @@ function App() {
             <ProductCard/>
           </LoginNavbar >
           } />
-        {/* <Route path='/Profile' element={<Profile/>} />         */}
-        {/* <Route path='/Profile' element={<Profile/>} /> */} 
+        <Route path='/Profile' element={<Profile/>} />        
         <Route path='/logged' element={   
           <Menu>
             <ProductCard/>  
