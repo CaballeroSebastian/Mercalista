@@ -21,6 +21,8 @@ import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup 
 import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
 import LoginNavbar from './Components/LoginNavbar/LoginNavbar.tsx'
 import Menu from './Components/LoggedNav/LoggedNav.tsx'
+import Manuals from './Components/Manuals/Manual.tsx'
+
 
 //Rutas por crear JULIANA MORALES
 //import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
@@ -54,6 +56,8 @@ function App() {
             <ProductCard/>  
           </Menu>
           } /> 
+        <Route path='/Manuals' element={<Manuals/>} />        
+          
           
         
         {/* --> SEBASTIAN MUÑOZ*/}
