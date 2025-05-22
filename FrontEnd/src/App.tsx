@@ -52,14 +52,14 @@ function App() {
         {/* --> SEBASTIAN CABALLERO*/}
         <Route path='/' element={
           <LoginNavbar >
-            <ProductCard/>
+            {/* <ProductCard/> */}
           </LoginNavbar >
           } />
         <Route path='/Profile' element={<Profile/>} />        
         {/* <Route path='/Profile' element={<Profile/>} /> */} 
         <Route path='/logged' element={   
           <Menu>
-            <ProductCard/>  
+            {/* <ProductCard/>   */}
           </Menu>
           } /> 
           
