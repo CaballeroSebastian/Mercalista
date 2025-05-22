@@ -1,7 +1,7 @@
-// //importar redireccionadores a las rutas
-// import { Routes, Route } from 'react-router-dom'
-// //importar estilos
-// import './App.css'
+//importar redireccionadores a las rutas
+import { Routes, Route } from 'react-router-dom'
+//importar estilos
+import './App.css'
 
 
 // //rutas por crear SEBASTIAN MUÑOZ
@@ -31,7 +31,7 @@
 // //import Purchases from './Components/Purchases/Purchases.tsx' //--> Muckup Mis ventas
 // //import Sales form './Components/Sales/Sales.tsx' //--> Muckup Mis ventas
 // //import Preview from './Components/Preview/Preview.tsx' //--> Muckup Previzualizacion
-// //import PublicarProducto from './Components/PublicarProducto/Publicar.jsx'
+// //import PublicarProducto from './Components/PublicarProducto/Publicar.tsx'
 
 // //Rutas por crear JULIANA MORALES
 // //import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
@@ -41,68 +41,68 @@
 // import Purchases from './Components/Purchases/Purchases.tsx' //--> Muckup Mis ventas
 // import Sales from './Components/Sales/Sales.tsx' //--> Muckup Mis ventas
 // import OnSale from './Components/OnSale/OnSale.tsx' //--> Muckup Previzualizacion
-// import ProductRegistrationForm from './Components/PublicarTest/PublicarTest.tsx'
+import ProductRegistrationForm from './Components/PublicarTest/PublicarTest.tsx'
 
 
-// function App() {
+function App() {
 
-//   return (
-//     <>
-//       <Routes>
-//         {/* --> SEBASTIAN CABALLERO*/}
-//         <Route path='/' element={
-//           <LoginNavbar >
-//             <ProductCard/>
-//           </LoginNavbar >
-//           } />
-//         <Route path='/Profile' element={<Profile/>} />        
-//         {/* <Route path='/Profile' element={<Profile/>} /> */} 
-//         <Route path='/logged' element={   
-//           <Menu>
-//             <ProductCard/>  
-//           </Menu>
-//           } /> 
+  return (
+    <>
+      <Routes>
+        {/* --> SEBASTIAN CABALLERO*/}
+        <Route path='/' element={
+          <LoginNavbar >
+            <ProductCard/>
+          </LoginNavbar >
+          } />
+        <Route path='/Profile' element={<Profile/>} />        
+        {/* <Route path='/Profile' element={<Profile/>} /> */} 
+        <Route path='/logged' element={   
+          <Menu>
+            <ProductCard/>  
+          </Menu>
+          } /> 
           
         
-//         {/* --> SEBASTIAN MUÑOZ*/}
-//         {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> */}
-//         {/* <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
+        {/* --> SEBASTIAN MUÑOZ*/}
+        {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> */}
+        {/* <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
 
       
-//         {/* --> SEBASTIAN MUÑOZ*/}
-//         <Route path='/LoginEmail' element={<LoginEmail/>} /> 
-//         <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
+        {/* --> SEBASTIAN MUÑOZ*/}
+        <Route path='/LoginEmail' element={<LoginEmail/>} /> 
+        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
 
 
-//         {/* --> SAMUEL ALVAREZ */}
-//         <Route path='/Suscription' element={<Suscription/>} />
-//         {/*<Route path='/Register' element={<Register/>} />*/}
-//         {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} /> */}  
-//         {/* <Route path='/Suscription' element={<Suscription/>} /> */}
-//         <Route path='/Register' element={<Register/>} />
-//         {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />   */}
+        {/* --> SAMUEL ALVAREZ */}
+        <Route path='/Suscription' element={<Suscription/>} />
+        {/*<Route path='/Register' element={<Register/>} />*/}
+        {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} /> */}  
+        {/* <Route path='/Suscription' element={<Suscription/>} /> */}
+        <Route path='/Register' element={<Register/>} />
+        {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />   */}
         
         
-//         {/* --> JULIANA MORALES */}
-//         {/* <Route path='/PasswordRecovery' element={<PasswordRecovery/>} /> */}
-//         {/* <Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} /> */} 
+        {/* --> JULIANA MORALES */}
+        {/* <Route path='/PasswordRecovery' element={<PasswordRecovery/>} /> */}
+        {/* <Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} /> */} 
         
-//         {/* --> BRAYAN */}
-//         {/* <Route path= '/Purchases' element={<Purchases/>}/>
-//         <Route path= '/Sales' element={<Sales/>}/>
-//         {/* <Route path= '/Purchases/Preview' element={<Preview/>}/>  */}
-//         {/* <Route path= '/OnSale' element={<OnSale/>}/>
-//         <Route path='/PublicarProducto' element={<PublicarProducto />}} */}
-//         <Route path= '/Purchases' element={<Purchases/>}/>
-//         <Route path= '/Sales' element={<Sales/>}/>
-//         <Route path= '/OnSale' element={<OnSale/>}/>
-//         <Route path='/PublicarProducto' element={<ProductRegistrationForm />} />
+        {/* --> BRAYAN */}
+        {/* <Route path= '/Purchases' element={<Purchases/>}/>
+        <Route path= '/Sales' element={<Sales/>}/>
+        {/* <Route path= '/Purchases/Preview' element={<Preview/>}/>  */}
+        {/* <Route path= '/OnSale' element={<OnSale/>}/>
+        <Route path='/PublicarProducto' element={<PublicarProducto />}} */}
+        <Route path= '/Purchases' element={<Purchases/>}/>
+        <Route path= '/Sales' element={<Sales/>}/>
+        <Route path= '/OnSale' element={<OnSale/>}/>
+        <Route path='/PublicarProducto' element={<ProductRegistrationForm />} />
         
         
-//       </Routes>
-//     </>
-//   )
-// }
+      </Routes>
+    </>
+  )
+}
 
-// export default App
+export default App
 
