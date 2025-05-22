@@ -6,8 +6,8 @@ import './App.css'
 
 //rutas por crear SEBASTIAN MUÑOZ
 
-// import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
-// import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
+import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
+import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
 
 
 //Rutas por crear SAMUEL ALVAREZ
@@ -21,6 +21,8 @@ import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup 
 import Profile from './Components/Profile/Profile.tsx' //--> Muckup Perfil
 import LoginNavbar from './Components/LoginNavbar/LoginNavbar.tsx'
 import Menu from './Components/LoggedNav/LoggedNav.tsx'
+import Manuals from './Components/Manuals/Manual.tsx'
+
 
 //Rutas por crear JULIANA MORALES
 //import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
@@ -35,6 +37,12 @@ import Menu from './Components/LoggedNav/LoggedNav.tsx'
 //Rutas por crear JULIANA MORALES
 //import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
 //import ConfirmPassword from './Components/ConfirmPassword/ConfirmPassword.tsx' //--> Muckup Confirmar-verficacion
+
+//Rutas por crear BRAYAN
+// import Purchases from './Components/Purchases/Purchases.tsx' //--> Muckup Mis ventas
+// import Sales from './Components/Sales/Sales.tsx' //--> Muckup Mis ventas
+import OnSale from './Components/OnSale/OnSale.tsx' //--> Muckup Previzualizacion
+import ProductRegistrationForm from './Components/PublicarTest/PublicarTest.tsx'
 
 
 function App() {
@@ -54,16 +62,13 @@ function App() {
             <ProductCard/>  
           </Menu>
           } /> 
+        <Route path='/Manuals' element={<Manuals/>} />        
+          
           
         
         {/* --> SEBASTIAN MUÑOZ*/}
-        {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> */}
-        {/* <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
-
-      
-        {/* --> SEBASTIAN MUÑOZ*/}
-        {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> 
-        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
+        <Route path='/LoginEmail' element={<LoginEmail/>} />
+        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
 
 
         {/* --> SAMUEL ALVAREZ */}
@@ -85,10 +90,10 @@ function App() {
         {/* <Route path= '/Purchases/Preview' element={<Preview/>}/>  */}
         {/* <Route path= '/OnSale' element={<OnSale/>}/>
         <Route path='/PublicarProducto' element={<PublicarProducto />}} */}
-        {/* <Route path= '/Purchases' element={<Purchases/>}/>
-        <Route path= '/Sales' element={<Sales/>}/>
-        <Route path= '/OnSale' element={<OnSale/>}/>
-        <Route path='/PublicarProducto' element={<ProductRegistrationForm />} /> */}
+        {/* <Route path= '/Purchases' element={<Purchases/>}/> */}
+        {/* <Route path= '/Sales' element={<Sales/>}/> */}
+        <Route path= '/OnSale' element={<OnSale/>}/> 
+        <Route path='/PublicarProducto' element={<ProductRegistrationForm />} />
         
         
       </Routes>

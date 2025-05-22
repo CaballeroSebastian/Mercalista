@@ -1,0 +1,438 @@
+body{
+    background-color: #ffffff;
+}
+
+/* Contenedor principal */
+.contenedor-publicar-producto {
+
+    margin: 0 auto;
+    padding: 10%;
+    background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+      "Helvetica Neue", sans-serif;
+    color: #333333;
+    margin-left: 190px;
+    width: calc(100% - 190px);
+    height: 100vh;
+    margin-left: 190px !important;
+
+  }
+  
+  /* Para pantallas muy grandes */
+  @media (min-width: 1920px) {
+    .contenedor-publicar-producto {
+      max-width: 1600px;
+      padding: 32px;
+    }
+  }
+  
+  /* Para pantallas muy pequeñas */
+  @media (max-width: 480px) {
+    .contenedor-publicar-producto {
+      padding: 16px;
+    }
+    
+  }
+  
+  /* Títulos y subtítulos */
+  .titulo-publicar-producto {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #9c6615;
+    margin-bottom: 32px;
+    letter-spacing: -0.5px;
+  }
+  
+  .subtitulo-publicar-producto {
+    font-size: 20px;
+    font-weight: 500;
+    color: #9c6615;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+  }
+  
+  /* Grid layout para el formulario */
+  .grid-publicar-producto {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  @media (min-width: 768px) {
+    .grid-publicar-producto {
+      grid-template-columns: 1fr 1fr;
+    }
+  
+  }
+  
+  /* Para pantallas muy grandes */
+  @media (min-width: 1920px) {
+    .grid-publicar-producto {
+      gap: 48px;
+    }
+  
+    .titulo-publicar-producto {
+      font-size: 36px;
+    }
+  
+    .subtitulo-publicar-producto {
+      font-size: 24px;
+    }
+  }
+  
+  /* Para pantallas muy pequeñas */
+  @media (max-width: 480px) {
+    .titulo-publicar-producto {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+  
+    .subtitulo-publicar-producto {
+      font-size: 18px;
+    }
+  }
+  
+  /* Grupos de campos */
+  .grupo-campos-publicar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  /* Campos individuales */
+  .campo-publicar-producto {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  /* Etiquetas */
+  .etiqueta-publicar-producto {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+  }
+  
+  .texto-opcional-publicar {
+    color: #777777;
+    font-weight: normal;
+  }
+  
+  /* Entradas de texto */
+  .entrada-publicar-producto {
+    padding: 10px 14px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .entrada-publicar-producto:focus {
+    outline: none;
+    border-color: #9c6615;
+    box-shadow: 0 0 0 2px rgba(156, 102, 21, 0.1);
+  }
+  
+  /* Área de texto */
+  .area-texto-publicar {
+    padding: 10px 14px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 14px;
+    min-height: 120px;
+    resize: vertical;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+      "Helvetica Neue", sans-serif;
+  }
+  
+  .area-texto-publicar:focus {
+    outline: none;
+    border-color: #9c6615;
+    box-shadow: 0 0 0 2px rgba(156, 102, 21, 0.1);
+  }
+  
+  /* Contenedor de precio */
+  .contenedor-precio-publicar {
+    display: flex;
+  }
+  
+  .simbolo-precio-publicar,
+  .decimales-precio-publicar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    border: 1px solid #cccccc;
+    padding: 0 12px;
+  }
+  
+  .simbolo-precio-publicar {
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+  }
+  
+  .decimales-precio-publicar {
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .entrada-precio-publicar {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .entrada-precio-publicar:focus {
+    outline: none;
+    border-color: #9c6615;
+    box-shadow: 0 0 0 2px rgba(156, 102, 21, 0.1);
+  }
+  
+  /* Selectores */
+  .selector-publicar-producto {
+    padding: 10px 14px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #ffffff;
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333333' d='M6 8.825L1.175 4 2.05 3.125 6 7.075 9.95 3.125 10.825 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 32px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .selector-publicar-producto:focus {
+    outline: none;
+    border-color: #9c6615;
+    box-shadow: 0 0 0 2px rgba(156, 102, 21, 0.1);
+  }
+  
+  /* Sección de fotos */
+  .seccion-fotos-publicar {
+    margin-top: 16px;
+  }
+  
+  .encabezado-fotos-publicar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .maximo-fotos-publicar {
+    background-color: #9c6615;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .contenedor-carga-fotos-publicar {
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .etiqueta-elegir-foto-publicar {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  
+  .boton-elegir-foto-publicar {
+    background-color: #f5f5f5;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-align: center;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .boton-elegir-foto-publicar:hover {
+    background-color: #e5e5e5;
+  }
+  
+  .info-archivos-publicar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .texto-examinar-publicar,
+  .texto-seleccionados-publicar {
+    color: #777777;
+    font-size: 14px;
+  }
+  
+  .entrada-archivo-oculta-publicar {
+    display: none;
+  }
+  
+  /* Contenedor de previsualizaciones */
+  .contenedor-previsualizaciones-publicar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  @media (min-width: 1920px) {
+    .contenedor-previsualizaciones-publicar {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contenedor-previsualizaciones-publicar {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 767px){
+    .contenedor-publicar-producto{
+      margin-left: 0px!important;
+      padding: 5%;
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 1060px){
+    .contenedor-publicar-producto{
+      display: grid;
+      grid-template-columns: 1fr;
+      
+    }
+  }
+  
+  .contenedor-miniatura-publicar {
+    position: relative;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .imagen-miniatura-publicar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Botones */
+  .boton-eliminar-datos-publicar {
+    width: auto;
+    padding: 8px 16px;
+    background-color: #9c6615;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-left: auto;
+    display: block;
+  }
+  
+  .boton-eliminar-datos-publicar:hover {
+    background-color: #b27618;
+  }
+  
+  .boton-eliminar-datos-publicar:active {
+    transform: translateY(1px);
+  }
+  
+  .contenedor-boton-publicar-producto {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .boton-publicar-producto {
+    width: 60%;
+    padding: 12px 24px;
+    background-color: #9c6615;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .boton-publicar-producto:hover {
+    background-color: #b27618;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .boton-publicar-producto:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Para pantallas muy grandes */
+  @media (min-width: 1920px) {
+    .entrada-publicar-producto,
+    .area-texto-publicar,
+    .entrada-precio-publicar,
+    .selector-publicar-producto {
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+  
+    .boton-publicar-producto {
+      padding: 14px 28px;
+      font-size: 18px;
+      width: 350px;
+    }
+  
+    .contenedor-miniatura-publicar {
+      height: 100px;
+    }
+  }
+  
+  /* Para pantallas muy pequeñas */
+  @media (max-width: 480px) {
+    .entrada-publicar-producto,
+    .area-texto-publicar,
+    .entrada-precio-publicar,
+    .selector-publicar-producto {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  
+    .boton-publicar-producto {
+      padding: 10px 20px;
+      font-size: 16px;
+      width: 100%;
+    }
+  
+    .contenedor-miniatura-publicar {
+      height: 60px;
+    }
+  }
+  
+  /* Pie de página */
+  .pie-pagina-publicar-producto {
+    margin-top: 48px;
+    text-align: center;
+    color: #777777;
+    font-size: 14px;
+  }
+  
