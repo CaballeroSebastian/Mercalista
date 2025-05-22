@@ -1,0 +1,165 @@
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.contNavManual {
+    width: auto;
+    min-height: 100vh;
+    height: auto;
+    background-color: #413620 !important;
+}
+
+.logoMerc{
+    width: 55px;
+}
+
+.cont-title {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.titleMercalista {
+    width: calc(100% - 60px);
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem !important;
+}
+
+.btn-toggle-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.sidebar-tab {
+    position: fixed;
+    top: 40px;
+    width: 30px;
+    height: 60px;
+    background-color: #4136207a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+    z-index: 1050;
+    transition: left 0.3s ease;
+}
+
+/* Pestaña abierta */
+.sidebar-tab-open {
+    left: 230px;
+}
+
+/* Pestaña cerrada */
+.sidebar-tab-closed {
+    left: 0;
+}
+
+.sidebar-tab:hover {
+    background-color: #5c4723;
+}
+
+/*Movil*/
+
+.btonMenu{
+    background-color: #413620c7;
+}
+
+.btonMenu:hover{
+    background-color: #b99d65a2;
+}
+
+.HeaderMovil {
+    position: relative;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra el título */
+    color: #fff;
+}
+
+.btonMovil {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f0f0f0;
+}
+
+.contMobile{
+    width: auto;
+    height: 23rem !important;
+    background-color: #5e5036;
+}
+
+.content-area {
+    background-color: #fff;
+    min-height: auto;
+    overflow-y: auto;
+    width: 100%;
+}
+
+hr{
+    width: auto;
+    color: #000 !important;
+    opacity: 100%;
+}
+
+@media (max-width: 768px) {
+    .contNavManual {
+        width: 100% !important;
+        position: absolute;
+        z-index: 1051;
+    }
+
+    .sidebar-tab-open {
+        left: 100%;
+    }
+
+    .sidebar-tab-closed {
+        left: 0;
+    }
+
+}
+
+.contenManual{
+    width: 100%;
+    height: auto;
+    margin-left: 2rem;
+}
+
+@media (max-width: 770px) {
+    .contNavManual {
+        width: 100% !important;
+        height: auto !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1051;
+        flex-direction: column !important;
+    }
+
+    .sidebar-tab,
+    .sidebar-tab-open,
+    .sidebar-tab-closed {
+        display: none;
+    }
+    
+    .contenManual {
+        width: 100% ;
+        height: auto ;
+        margin-left: 0 ;
+    }
+
+    .logoMerc{
+        width: 60px;
+    }
+}
