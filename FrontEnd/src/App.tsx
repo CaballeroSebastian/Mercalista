@@ -1,6 +1,6 @@
 //importar redireccionadores a las rutas
-// 
-// //importar estilos
+import { Routes, Route } from 'react-router-dom'
+//importar estilos
 import './App.css'
 
 
@@ -55,7 +55,7 @@ function App() {
             {/* <ProductCard/> */}
           </LoginNavbar >
           } />
-        <Route path='/Profile' element={<Profile/>} />        
+        {/* <Route path='/Profile' element={<Profile/>} />         */}
         {/* <Route path='/Profile' element={<Profile/>} /> */} 
         <Route path='/logged' element={   
           <Menu>
@@ -70,8 +70,8 @@ function App() {
 
       
         {/* --> SEBASTIAN MUÑOZ*/}
-        {/* <Route path='/LoginEmail' element={<LoginEmail/>} />  */}
-        {/* <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
+        {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> 
+        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
 
 
         {/* --> SAMUEL ALVAREZ */}
