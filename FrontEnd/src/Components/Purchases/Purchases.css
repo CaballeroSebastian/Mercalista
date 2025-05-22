@@ -1,0 +1,257 @@
+/* === CONTENEDOR PRINCIPAL === */
+.purchases-container {
+  width: calc(100% - 190px);
+  height: auto;
+  font-family: 'Lucida Sans', 'Lucida Grande', Geneva, Verdana, sans-serif;
+  padding: 0 5rem 5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
+  margin-left: 190px !important;
+ 
+}
+
+  
+  
+/* === TÍTULO === */
+.purchases-title {
+  text-align: center;
+  font-size: 3rem;
+  margin: 50px auto 60px;
+  font-weight: normal;
+  max-width: 90%;
+}
+
+/* === CONTENEDOR DE TARJETAS === */
+.purchase-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); /* Más ancho mínimo */
+  gap: 60px 60px; /* más separación entre filas y columnas */
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+/* === TARJETA === */
+.purchase-card {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    -10px 0 0 #9C6615;
+  filter: drop-shadow(5px 9px 4px rgba(17, 17, 16, 0.84));
+  position: relative;
+  width: 100%;
+  align-items: center;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
+}
+
+.purchase-card:hover {
+  transform: scale(1.02);
+}
+
+.purchase-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: 3px 3px 10px #9C6615;
+  border-radius: 12px;
+  z-index: -1;
+}
+
+/* === IMAGEN === */
+.purchase-image-container {
+  width: 110px;
+  height: 110px;
+  overflow: hidden;
+  margin-right: 20px;
+  border-radius: 15px;
+  flex-shrink: 0;
+  border: 4px solid #9C6615;
+}
+
+.purchase-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* === DETALLES === */
+.purchase-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.9rem;
+  gap: 10px;
+}
+
+.purchase-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* asegura alineación vertical */
+  margin-bottom: 0;
+  gap: 10px;
+}
+
+.purchase-label {
+  color: #866a1c;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.purchase-value {
+  color: black;
+  font-weight: normal;
+  margin-left: 5px;
+  font-size: 1rem;
+}
+
+.purchase-date,
+.purchase-total {
+  color: #9C6615;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: right;
+}
+
+/* === RESPONSIVE === */
+
+/* Tablets (≤ 1199px) */
+@media (max-width: 1265px) {
+  .purchase-card-container {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 50px;
+    padding: 0 2rem 0 0; 
+  }
+
+  .purchases-title {
+    font-size: 2.5rem;
+  }
+
+  .purchase-image-container {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media(max-width: 957px){
+  .purchase-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+  }
+
+  .purchase-card-container {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    padding: 0 10px;
+  }
+   .purchase-image-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 15px;
+    border-radius: 12px;
+  }
+  .purchase-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .purchase-details {
+    gap: 10px;
+  }
+}
+
+/* Dispositivos móviles (≤ 767px) */
+@media (max-width: 767px) {
+  .purchases-container{
+    width: 100%;
+    padding: 0;
+    padding-bottom: 5rem;
+    margin-left: 0px!important;
+  }
+  
+  .purchase-card-container {
+    grid-template-columns: repeat(2, 1fr);
+    width: auto;
+    height: auto;
+    padding: 0 10px;
+  }
+
+  .purchase-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    box-shadow: none;
+    filter: none;
+  }
+
+  .purchase-image-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 15px;
+    border-radius: 12px;
+  }
+
+  .purchase-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .purchase-details {
+    gap: 10px;
+  }
+
+  .purchase-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .purchase-date,
+  .purchase-total {
+    text-align: left;
+    margin-top: 6px;
+  }
+
+  .purchase-label,
+  .purchase-date,
+  .purchase-total {
+    font-size: 1rem;
+  }
+
+  .purchase-value {
+    font-size: 0.9rem;
+  }
+}
+
+/* Teléfonos pequeños (≤ 575px) */
+@media (max-width: 575px) {
+  .purchases-title {
+    font-size: 1.8rem;
+    margin: 20px 0 30px;
+  }
+
+  .purchase-label,
+  .purchase-date,
+  .purchase-total {
+    font-size: 0.95rem;
+  }
+
+  .purchase-value {
+    font-size: 0.85rem;
+  }
+
+  .purchase-card {
+    padding: 10px;
+  }
+}
