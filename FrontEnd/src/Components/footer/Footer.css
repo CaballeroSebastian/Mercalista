@@ -1,0 +1,126 @@
+
+   
+
+
+.footer {
+  width: calc(100% - 190px);
+  background-color: #594c33;  
+  padding: 2rem 0;
+  border-top: 1px solid #e9ecef;
+  bottom: 0; 
+  margin-left: 190px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2.1rem;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.footer-section {
+  margin-bottom: 1.5rem;
+}
+
+.footer-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1.4rem;
+  color: #ffd791; 
+}
+
+.footer-text {
+  font-size: 0.875rem;
+  color: white;
+  line-height: 1.5;
+}
+
+.footer-links,
+.footer-team {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li,
+.footer-team li {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: white;
+}
+
+.footer-link {
+  text-decoration: none !important;
+  color: white;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #ffd791; 
+  text-decoration: underline;
+}
+
+.footer-social {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.social-icon {
+  color: #6c757d;
+  transition: color 0.2s ease;
+}
+
+.social-icon:hover {
+  color: #333;
+}
+
+.github-icon {
+  color: white; /* o el color que prefieras para GitHub */
+}
+
+.email-icon {
+  color: white; /* por ejemplo, rojo para email */
+}
+
+.linkedin-icon {
+  color: white; /* azul LinkedIn */
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid white; 
+;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.75rem;
+  color: white;
+}
+
+
+
+ /* background-color: #413620;
+    color: #ffd791; */
+
+    @media (max-width: 768px) {
+      .footer {
+        width: 100%;
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+      }
+    }
