@@ -41,7 +41,7 @@ import Manuals from './Components/Manuals/Manual.tsx'
 //Rutas por crear BRAYAN
 // import Purchases from './Components/Purchases/Purchases.tsx' //--> Muckup Mis ventas
 // import Sales from './Components/Sales/Sales.tsx' //--> Muckup Mis ventas
-// import OnSale from './Components/OnSale/OnSale.tsx' //--> Muckup Previzualizacion
+import OnSale from './Components/OnSale/OnSale.tsx' //--> Muckup Previzualizacion
 import ProductRegistrationForm from './Components/PublicarTest/PublicarTest.tsx'
 
 
@@ -92,7 +92,7 @@ function App() {
         <Route path='/PublicarProducto' element={<PublicarProducto />}} */}
         {/* <Route path= '/Purchases' element={<Purchases/>}/> */}
         {/* <Route path= '/Sales' element={<Sales/>}/> */}
-        {/* <Route path= '/OnSale' element={<OnSale/>}/> */}
+        <Route path= '/OnSale' element={<OnSale/>}/> 
         <Route path='/PublicarProducto' element={<ProductRegistrationForm />} />
         
         
