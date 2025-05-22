@@ -6,8 +6,8 @@ import './App.css'
 
 //rutas por crear SEBASTIAN MUÑOZ
 
-// import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
-// import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
+import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
+import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
 
 
 //Rutas por crear SAMUEL ALVAREZ
@@ -61,13 +61,8 @@ function App() {
           
         
         {/* --> SEBASTIAN MUÑOZ*/}
-        {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> */}
-        {/* <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
-
-      
-        {/* --> SEBASTIAN MUÑOZ*/}
-        {/* <Route path='/LoginEmail' element={<LoginEmail/>} /> 
-        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} /> */}
+        <Route path='/LoginEmail' element={<LoginEmail/>} />
+        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
 
 
         {/* --> SAMUEL ALVAREZ */}
