@@ -25,8 +25,8 @@ import Manuals from './Components/Manuals/Manual.tsx'
 
 
 //Rutas por crear JULIANA MORALES
-//import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
-//import ConfirmPassword from './Components/ConfirmPassword/ConfirmPassword.tsx' //--> Muckup Confirmar-verficacion
+import PasswordRecovery from './Components/PasswordRecovery/PasswordRecovery.tsx' //--> Muckup Recuperacion- constraseña
+import ConfirmPassword from './Components/ConfirmPassword/ConfirmPassword.tsx' //--> Muckup Confirmar-verficacion
 
 //Rutas por crear BRAYAN
 //import Purchases from './Components/Purchases/Purchases.tsx' //--> Muckup Mis ventas
@@ -81,8 +81,8 @@ function App() {
         
         
         {/* --> JULIANA MORALES */}
-        {/* <Route path='/PasswordRecovery' element={<PasswordRecovery/>} /> */}
-        {/* <Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} /> */} 
+        {<Route path='/PasswordRecovery' element={<PasswordRecovery/>} /> }
+        {<Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} /> } 
         
         {/* --> BRAYAN */}
         {/* <Route path= '/Purchases' element={<Purchases/>}/>
