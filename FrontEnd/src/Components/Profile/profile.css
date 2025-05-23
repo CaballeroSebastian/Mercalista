@@ -193,11 +193,6 @@ p{
     width: auto !important;
     height: auto;
   }
-
-  .row {
-    --bs-gutter-x: 0rem !important;
-  }
-
 }
 
 @media (max-width: 576px) {

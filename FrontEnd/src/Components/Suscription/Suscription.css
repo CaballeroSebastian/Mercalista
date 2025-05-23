@@ -122,6 +122,6 @@ margin: 0% !important;
 
 @media (max-width: 1131px) and (min-width: 768px) {
     .row {
-        --bs-gutter-x: 1rem !important;
+        --bs-gutter-x: 0px;
     }
 }
