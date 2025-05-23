@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pymysql", "python311Packages.gunicorn", "mysql"]
+nixPkgs = ["python311", "python311Packages.pymysql", "python311Packages.gunicorn", "mariadb"]
 
 [phases.install]
 cmds = ["pip install --break-system-packages -r requirements.txt"]
