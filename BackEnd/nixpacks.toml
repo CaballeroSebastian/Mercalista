@@ -5,7 +5,9 @@ nixPkgs = ["python310", "pip"]
 cmds = [
   "cd BackEnd && python -m pip install --upgrade pip",
   "cd BackEnd && python -m pip install -r requirements.txt",
-  "cd BackEnd && python -m gunicorn --version"
+  "cd BackEnd && python -m pip show gunicorn",
+  "cd BackEnd && python -m gunicorn --version || echo 'gunicorn not found!'",
+  "which gunicorn || echo 'gunicorn no está en PATH'"
 ]
 
 [phases.build]
