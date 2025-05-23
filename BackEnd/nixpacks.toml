@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = "cd BackEnd && gunicorn main_app.wsgi"
+cmd = "cd BackEnd && python -m gunicorn main_app.wsgi"
