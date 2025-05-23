@@ -2,17 +2,19 @@
 nixPkgs = [
   "python311",
   "python311Packages.pip",
-  "python311Packages.setuptools",
+  "python311Packages.virtualenv",  # NEW
   "python311Packages.pymysql",
-  "python311Packages.gunicorn"
+  "python311Packages.gunicorn",
+  "mariadb"
 ]
 
 [phases.install]
 cmds = [
-  "python -m ensurepip --upgrade",
-  "python -m pip install --upgrade pip",
-  "pip install -r requirements.txt"  # Sin "cd BackEnd" porque ya estamos ahí
+  "python -m venv /app/venv",  # Crea un venv mutable
+  ". /app/venv/bin/activate",  # Actívalo
+  "pip install --upgrade pip",
+  "pip install -r requirements.txt"
 ]
 
 [start]
-cmd = "gunicorn main_app.wsgi:application --bind 0.0.0.0:$PORT"  # Sin "cd BackEnd"
+cmd = "gunicorn main_app.wsgi:application --bind 0.0.0.0:$PORT"
