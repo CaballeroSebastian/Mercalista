@@ -1,0 +1,252 @@
+.main-mercalista-register{
+  
+    width:auto;
+    height: calc(100vh - 66px);
+    display:flex;
+  }
+  
+  .section-mercalista-register{
+    max-height: calc(100vh - 66px); /* Asegura que ocupa toda la altura de la ventana */
+    width: 45%;
+  }
+  
+  .aside-mercalista-register{
+    width: 55%; /* Asegúrate de que el ancho esté definido */
+    display: flex; /* Habilita flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    max-height: calc(100vh - 66px); /* Asegura que ocupa toda la altura de la ventana */
+    margin: 0 auto; /* Centra el contenedor si es necesario */
+    
+    
+  }
+  
+  .form-register {
+    background-color: #e2e2e2;
+    padding: 40px; /* Espaciado interno */
+    border-radius: 10px ;
+    box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.4);
+    margin: 20px; /* Asegúrate de que no tenga márgenes externos */
+    width: 95%; /* Ajusta el ancho relativo al contenedor */
+    max-width: 600px; /* Limita el ancho máximo */
+    border: 1px solid #000000; /* Borde opcional */
+
+  }
+  
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="ciudad"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #996633;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: inset 0 0 1px #fff;
+    transition: background-color 0.3s;
+  }
+  
+  input[type="submit"]:hover {    
+    background-color: #80552a;
+  }
+  
+  .btn-continuar{
+    width: 100%;
+    padding: 10px;
+    background-color: #996633;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: inset 0 0 1px #fff;
+    transition: background-color 0.3s;
+  }
+
+  .Logo-Mercalista{
+    width: 80px;
+    height: 80px;
+    max-width: 300px; /* Ajusta el tamaño máximo según sea necesario */
+    margin: 20px;
+  }
+  
+  .ImgVerduras{
+    display: block;
+    width: 65%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    filter: drop-shadow(20px 15px 3px rgba(0, 0, 0, 0.3));
+  }
+  
+  .Div-ImgVerduras {
+    display: flex; /* Habilita flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    width: fit-content; /* Ajusta el ancho al contenido */
+    max-width: 100%; /* Limita el ancho máximo al 100% del contenedor padre */
+    height: auto; /* Ajusta la altura automáticamente */
+    margin: 0 auto; /* Centra el div horizontalmente si es necesario */
+    margin-top: 50px;
+    
+  }
+  
+  .Title-CrearCuenta-Mercalista{
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+  }
+  
+  .header-mercalista-register{
+    width: 100%;
+    
+  }
+
+  /* Estilo para el nuevo header */
+.header-banner {
+  background-color: #413620; /* Marrón */
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.div-terminos-register{
+  margin-bottom: '1rem';
+  display: flex;
+  margin :10px;
+}
+
+
+
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Responsivo para el nuevo header */
+@media (max-width: 768px) {
+  .header-title {
+      font-size: 18px; /* Ajusta el tamaño de la fuente para pantallas pequeñas */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1920px) {
+  .header-title {
+      font-size: 22px; /* Ajusta el tamaño de la fuente para pantallas medianas */
+  }
+}
+  
+  @media (max-width: 768px) {
+    .main-mercalista-register {
+      flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+      height: auto; /* Permite que el contenedor se ajuste al contenido */
+    }
+  
+    
+    .section-mercalista-register,
+    .aside-mercalista-register {
+      width: 100%; /* Ambos ocupan el 100% del ancho */
+      min-height: auto; /* Permite que la altura se ajuste al contenido */
+    }
+  
+    .form-register {
+      width: 90%;
+      max-width: none;
+      margin: 30px auto;
+      padding: 20px;
+      
+      
+    }
+    .Div-ImgVerduras {
+      display: none;
+    }
+    
+    .Logo-Mercalista{
+      width: 50px; /* Ajusta el tamaño del logo para pantallas pequeñas */
+      height: 50px;
+    }
+  
+    .Title-CrearCuenta-Mercalista{
+      font-size: 20px; /* Ajusta el tamaño de la fuente para pantallas pequeñas */
+      margin :10px;
+      
+    }
+
+        label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 10px;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="ciudad"] {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1920px) {
+    .main-mercalista-register {
+      flex-direction: row; /* Mantiene la dirección de fila en pantallas medianas */
+      height:calc(100vh - 66px); /* Mantiene la altura original */
+    }
+  
+    .section-mercalista-register,
+    .aside-mercalista-register {
+      width: 50%; /* Ambos ocupan el 50% del ancho */
+      min-height: auto; /* Permite que la altura se ajuste al contenido */
+    }
+  
+    .form-register {
+      width: 90%; /* Ajusta el ancho para pantallas medianas */
+      max-width: none; /* Elimina el límite de ancho máximo */
+      margin: 30px;
+      height: 70vh;
+    
+}
+
+    .div-form-register{
+      height: 100%;
+    }
+
+
+      
+    
+  
+    .Title-CrearCuenta-Mercalista{
+      font-size: 30px; /* Ajusta el tamaño de la fuente para pantallas medianas */
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+}
