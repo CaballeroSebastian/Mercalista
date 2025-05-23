@@ -75,11 +75,11 @@ WSGI_APPLICATION = 'main_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mercalista',
+        'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'PASSWORD': 'xKwcqZaQQxaFedxSdcWnKOXcrMgMlMLV',
+        'HOST': 'interchange.proxy.rlwy.net',
+        'PORT': '46707',
     }
 }
 
