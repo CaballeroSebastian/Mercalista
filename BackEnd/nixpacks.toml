@@ -4,7 +4,8 @@ nixPkgs = ["python310", "pip"]
 [phases.install]
 cmds = [
   "cd BackEnd && python -m pip install --upgrade pip",
-  "cd BackEnd && python -m pip install -r requirements.txt"
+  "cd BackEnd && python -m pip install -r requirements.txt",
+  "cd BackEnd && python -m gunicorn --version"
 ]
 
 [phases.build]
@@ -14,4 +15,4 @@ cmds = [
 ]
 
 [start]
-cmd = "cd BackEnd && gunicorn main_app.wsgi"
+cmd = "cd BackEnd && python -m gunicorn main_app.wsgi"
