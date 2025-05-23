@@ -1,6 +1,7 @@
 [phases.setup]
 nixPkgs = [
   "python311",
+  "python311Packages.pip",
   "python311Packages.pymysql",
   "python311Packages.gunicorn",
   "mariadb"
@@ -8,7 +9,7 @@ nixPkgs = [
 
 [phases.install]
 cmds = [
-  "python3 -m ensurepip --upgrade",
+  ". /root/.nix-profile/etc/profile.d/nix.sh",  # cargar nix environment
   "python3 -m pip install --break-system-packages -r requirements.txt"
 ]
 
