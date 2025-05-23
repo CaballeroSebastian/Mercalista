@@ -1,0 +1,17 @@
+[phases.setup]
+nixPkgs = ["python310", "pip"]
+
+[phases.install]
+cmds = [
+  "cd BackEnd && python -m pip install --upgrade pip",
+  "cd BackEnd && python -m pip install -r requirements.txt"
+]
+
+[phases.build]
+cmds = [
+  "cd BackEnd && python manage.py migrate",
+  "cd BackEnd && python manage.py collectstatic --noinput"
+]
+
+[start]
+cmd = "cd BackEnd && gunicorn main_app.wsgi"
