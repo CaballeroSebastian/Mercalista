@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import logo from '../../assets/image/logo.png';
+import logo from '../../assets/Image/logo.png';
 import './Manuals.css';
 
 import { ArrowLeft, ArrowRight, ArrowDown } from 'lucide-react';

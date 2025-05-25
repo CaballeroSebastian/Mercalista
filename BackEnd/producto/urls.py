@@ -1,6 +1,6 @@
-from . import views
+#from . import views
 from django.urls import path, include
-from views import ProductoListView
+from .views import ProductoListView
 
 urlpatterns = [
     path("verProductos/", ProductoListView.as_view(), name='producto-list'),
