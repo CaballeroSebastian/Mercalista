@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     #Dependencias
     "corsheaders",
     "rest_framework",
+    #apps
+    'producto',
 ]
 
 REST_FRAMEWORK = {
