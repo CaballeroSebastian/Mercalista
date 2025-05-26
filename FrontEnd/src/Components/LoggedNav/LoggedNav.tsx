@@ -122,7 +122,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         <img className="nav-icon-menu" src={usuario} alt="Usuario" />
                         </button>
                         <ul className="dropdown-menu">
-                            <li><a className="iconU dropdown-item" href="#"><img className="icon" src={usuario} alt="Usuario" /> Mi Perfil</a></li>
+                            <li><a className="iconU dropdown-item" href="/profile"><img className="icon" src={usuario} alt="Usuario" /> Mi Perfil</a></li>
                             <li><a className="iconU dropdown-item" href="#"><img className="icon" src={chat} alt="Chat" />Chats</a></li>
                             <li><a className="iconS dropdown-item" href="#"><img className="icon" src={premiumIcon} alt="Premium" />Premium</a></li>
                             <button className='iconCs' ><img className="icon" src={logOut} alt="Cerrar Sesion" />Cerrar Sesion</button>
