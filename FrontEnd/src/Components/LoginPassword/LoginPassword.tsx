@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './LoginPassword.css';
-import logo from '../../assets/image/logo.png';
+import logo from '../../assets/Image/logo.png';
 import collage from '../LoginEmail/img/collage.png';
 import googleIcon from '../LoginEmail/img/google.png';
 

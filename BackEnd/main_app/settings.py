@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 from pathlib import Path
 
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9g&%6&xa14wy8llymd%040_gv90&vcjgq%+lxi*7s3v!e1(k1j'
+SECRET_KEY = 'django-insecure-qbp+ed)%w=(d9&u1ca2c1m21!5cnmefy2=*p1q$wvac9v6e5tu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,23 +41,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    #dependencais
+    #Dependencias
     "corsheaders",
+    "rest_framework",
+    #apps
+    'producto',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+   
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-        'corsheaders.middleware.CorsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'main_app.urls'
@@ -79,14 +89,15 @@ WSGI_APPLICATION = 'main_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': 'xKwcqZaQQxaFedxSdcWnKOXcrMgMlMLV',
-        'HOST': 'interchange.proxy.rlwy.net',
-        'PORT': '46707',
+        'PASSWORD': 'NOWzYqQHTqpRsvqgnROFrduVUxjxdOun',
+        'HOST': 'mainline.proxy.rlwy.net',
+        'PORT': '47421',
     }
 }
 
@@ -123,8 +134,6 @@ USE_TZ = True
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -136,9 +145,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ALLOWED_HOSTS = ['*']
 
 # CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",     # React
-#     "http://localhost:5173",     # Vite
-#     "http://localhost:8000",     # Django
+#     "http://localhost:8000", #django
+#     "http://127.0.0.1:3000", #react
+#     "http://localhost:5173", #vite
 # ]

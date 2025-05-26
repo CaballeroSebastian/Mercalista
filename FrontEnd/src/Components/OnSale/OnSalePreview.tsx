@@ -1,15 +1,16 @@
 import './OnSalePreview.css'
-
-interface Producto{
-    id: number,
-    nombre: string,
-    categoria?: string,
-    stock?: number,
-    UnidadMedida?: string,
-    Descripcion?: string,
-    precio: string,
-    estado?: string
-    foto: string 
+import productoImg from './img/producto.jpeg';
+interface Producto {
+  idproducto: number;
+  nombre: string;
+  categoriaproducto?: string;
+  cantidadstock?: number;
+  precio: string;
+  descripcion?: string;
+  estado?: string;
+  fotos: string;
+  unidadmedida?: string;
+  
 }
 
 interface Props{
@@ -33,12 +34,12 @@ const OnSalePreview = ({close, datosProducto}: Props) =>{
               <div className="product-info">
                 <div className="info-row">
                   <span className="info-label">Categoría:</span>
-                  <span className="info-value status-badge">{datosProducto.categoria}</span>
+                  <span className="info-value status-badge">{datosProducto.categoriaproducto}</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Stock:</span>
                   <span className="info-value status-badge">
-                    {datosProducto.stock} {datosProducto.UnidadMedida}
+                    {datosProducto.cantidadstock} {datosProducto.unidadmedida}
                   </span>
                 </div>
                 <div className="info-row">
@@ -53,13 +54,13 @@ const OnSalePreview = ({close, datosProducto}: Props) =>{
     
               <div className="photo-container">
                 <div className="photo-wrapper">
-                  <img src={datosProducto.foto || "/placeholder.svg"} alt={datosProducto.nombre} className="product-photo" />
+                  <img src={productoImg || "/placeholder.svg"} alt={datosProducto.nombre} className="product-photo" />
                 </div>
               </div>
     
               <div className="description-container">
                 <h3>Descripción</h3>
-                <p> {datosProducto.Descripcion}</p>
+                <p> {datosProducto.descripcion}</p>
               </div>
             </div>
           </div>

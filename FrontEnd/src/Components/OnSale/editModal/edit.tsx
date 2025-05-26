@@ -1,16 +1,17 @@
 import {useState} from 'react'
 
-interface Producto{
-    id: number,
-    nombre: string,
-    categoria?: string,
-    stock?: number,
-    UnidadMedida?: string,
-    Descripcion?: string,
-    precio: string,
-    estado?: string
-    foto: string 
-}
+interface Producto {
+    idproducto: number;
+    nombre: string;
+    categoriaproducto?: string;
+    cantidadstock?: number;
+    precio: string;
+    descripcion?: string;
+    estado?: string;
+    fotos: string;
+    unidadmedida?: string;
+    
+  }
 
 interface Props{
     cerrar: ()=> void,

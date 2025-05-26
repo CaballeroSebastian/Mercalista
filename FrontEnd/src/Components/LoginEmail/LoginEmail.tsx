@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginEmail.css';
 import collage from './img/collage.png';
-import logo from '../../assets/image/logo.png';
+import logo from '../../assets/Image/logo.png';
 import googleIcon from './img/google.png';
 import { useNavigate } from 'react-router-dom';
 
