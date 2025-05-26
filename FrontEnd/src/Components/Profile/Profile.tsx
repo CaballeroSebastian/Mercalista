@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./profile.css";
 import NavBar from "../LoggedNav/LoggedNav";
 import '../LoggedNav/LoggedNav.css';
@@ -8,9 +8,39 @@ import suscripcionIcon from './assets/suscripcion.png';
 import perfilIcon from './assets/perfil.png';
 import mapaIcon from './assets/mapa.png';
 
+import axios from "axios"
+
+interface datosUser {
+  idusuario : number;
+  tipousuario : string;
+  nombre :string;
+  apellido :string;
+  telefono : string;
+  cedula :string;
+  ciudad : string;
+  correo : string;
+  contraseña :string;
+  departamento :string; 
+}
+
 const Profile = () => {
+
+  const[datosUsuario, setDatosUsuario] = useState<datosUser[] | []>([])
+
     useEffect(() => {
-        const ciudad = "Bogotá, Colombia";
+        axios.get<datosUser[]>("http://127.0.0.1:8000/profile/1012345678")
+          .then(response => {
+            setDatosUsuario(response.data);
+          })
+          .catch(error => {
+            console.error("Error con los datos del usuario", error);
+          });
+
+      }, []);
+
+      
+    useEffect(() => {
+        const ciudad = "{datosUsuario[0].ciudad}" ;
         const tamaño = "400x200";
         const zoom = 12;
         const tipoMapa = "roadmap";
@@ -27,12 +57,17 @@ const Profile = () => {
           mapaImagen.src = urlMapa;
         }
       }, []);
+
+    
     return (
     <NavBar>
         <div className="perfil">
         <h1 className="title-perfil">Perfil</h1>
 
       {/* Contenedor Principal */}
+
+    {datosUsuario.map((dato)=>(
+      
         <div className="contenedor-perfil d-flex flex-wrap justify-content-between gap-3 row">
         {/* Bloque 1 - Información Personal */}
         <div className="bloque-1 col-12 col-md-6 col-lg-4">
@@ -54,7 +89,7 @@ const Profile = () => {
                 <div className="info-line">
                   <h2 className="h2-info">Email</h2>
                   <div className="li-container d-flex justify-content-between align-items-center">
-                    <span className="li-info">lucascastro944@gmail.com</span>
+                    <span className="li-info">{dato.correo}</span>
                     <a href="#">
                       <img className="icons" src={editarIcon} alt="editar" />
                     </a>
@@ -64,7 +99,7 @@ const Profile = () => {
                 <div className="info-line">
                   <h2 className="h2-info">Teléfono</h2>
                   <div className="li-container d-flex justify-content-between align-items-center">
-                      <span className="li-info">30023323234</span>
+                      <span className="li-info">{dato.telefono}</span>
                       <a href="#">
                       <img className="icons" src={editarIcon} alt="editar" />
                       </a>
@@ -85,7 +120,7 @@ const Profile = () => {
                 <h2 className="info-contraseña">Contraseña:</h2>
                 <div className="info-contraseña">
                   <div className="li-contraseña d-flex justify-content-between align-items-center">
-                    <span className="li-info">********</span>
+                    <span className="li-info">{dato.contraseña}</span>
                     <a href="#">
                       <img className="icons" src={editarIcon} alt="editar" />
                     </a>
@@ -153,6 +188,10 @@ const Profile = () => {
 
         {/* Final Ubicación */}
       </div>
+
+      )
+    )}
+
       {/* Final Contenedor */}
 
       {/* Bloque 4 - Botón Cerrar Sesión */}
