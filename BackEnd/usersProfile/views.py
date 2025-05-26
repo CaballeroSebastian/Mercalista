@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import Usuario
-from rest_framework.generics import ListAPIView
 from .serializers import usersProfileSerializer
-# Create your views here.
 
-class usersProfileView(ListAPIView):
-    queryset = Usuario.objects.get("correo","telefono","contraseña","ciudad","cedula" )
-    serializer = usersProfileSerializer
+class UsersProfileView(ListAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = usersProfileSerializer
 
+class UserProfileByCedulaView(RetrieveAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = usersProfileSerializer
+    lookup_field = 'cedula'

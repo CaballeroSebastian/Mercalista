@@ -56,7 +56,7 @@ function App() {
             <ProductCard/>
           </LoginNavbar >
           } />
-        <Route path='/Profile' element={<Profile/>} />        
+        <Route path='/Profile/:cedula' element={<Profile />} />        
         <Route path='/logged' element={   
           <Menu>
             <ProductCard/>  

@@ -1,7 +1,7 @@
-#from . import views
 from django.urls import path
-from .views import usersProfileView
+from .views import UsersProfileView, UserProfileByCedulaView
 
 urlpatterns = [
-    path(":int<cedula>", usersProfileView.as_view(), name='profile-users'),
+    path('', UsersProfileView.as_view()),
+    path('<str:cedula>/', UserProfileByCedulaView.as_view()),
 ]

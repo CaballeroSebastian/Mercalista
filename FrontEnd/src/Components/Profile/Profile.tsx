@@ -7,7 +7,7 @@ import editarIcon from './assets/boton-editar.png';
 import suscripcionIcon from './assets/suscripcion.png';
 import perfilIcon from './assets/perfil.png';
 import mapaIcon from './assets/mapa.png';
-
+import { useParams } from 'react-router-dom';
 import axios from "axios"
 
 interface datosUser {
@@ -23,41 +23,46 @@ interface datosUser {
   departamento :string; 
 }
 
+
 const Profile = () => {
+  // Obtenemos la cédula desde la URL
+  const { cedula } = useParams<{ cedula: string }>();
 
-  const[datosUsuario, setDatosUsuario] = useState<datosUser[] | []>([])
+  const [datosUsuario, setDatosUsuario] = useState<datosUser | null>(null);
 
-    useEffect(() => {
-        axios.get<datosUser[]>("http://127.0.0.1:8000/profile/1012345678")
-          .then(response => {
-            setDatosUsuario(response.data);
-          })
-          .catch(error => {
-            console.error("Error con los datos del usuario", error);
-          });
+  useEffect(() => {
+    if (!cedula) return; // Si no hay cédula, no hacemos nada
 
-      }, []);
+    axios
+      .get<datosUser>(`http://127.0.0.1:8000/profile/${cedula}/`)
+      .then((response) => {
+        setDatosUsuario(response.data);
+      })
+      .catch((error) => {
+        console.error("Error con los datos del usuario", error);
+      });
+  }, [cedula]);
 
-      
-    useEffect(() => {
-        const ciudad = "{datosUsuario[0].ciudad}" ;
-        const tamaño = "400x200";
-        const zoom = 12;
-        const tipoMapa = "roadmap";
-        const claveAPI = "AIzaSyC04nYD502bkMBWfeKSvZR2cIRU7W4UEIQ";
-    
-        const urlMapa = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
-          ciudad
-        )}&zoom=${zoom}&size=${tamaño}&maptype=${tipoMapa}&markers=color:red%7C${encodeURIComponent(
-          ciudad
-        )}&key=${claveAPI}`;
-    
-        const mapaImagen = document.getElementById("mapa-imagen") as HTMLImageElement;
-        if (mapaImagen) {
-          mapaImagen.src = urlMapa;
-        }
-      }, []);
+  useEffect(() => {
+  if (datosUsuario) {
+    const ciudadUsuario = `${datosUsuario.ciudad}, Colombia`;
+    const tamaño = "400x200";
+    const zoom = 12;
+    const tipoMapa = "roadmap";
+    const claveAPI = "AIzaSyDJ3hJPOOmYKWq4j-rWqRe9IeIlGI49P04";
 
+    const urlMapa = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
+      ciudadUsuario
+    )}&zoom=${zoom}&size=${tamaño}&maptype=${tipoMapa}&markers=color:red%7C${encodeURIComponent(
+      ciudadUsuario
+    )}&key=${claveAPI}`;
+
+    const mapaImagen = document.getElementById("mapa-imagen") as HTMLImageElement;
+    if (mapaImagen) {
+      mapaImagen.src = urlMapa;
+    }
+  }
+}, [datosUsuario]);
     
     return (
     <NavBar>
@@ -66,7 +71,6 @@ const Profile = () => {
 
       {/* Contenedor Principal */}
 
-    {datosUsuario.map((dato)=>(
       
         <div className="contenedor-perfil d-flex flex-wrap justify-content-between gap-3 row">
         {/* Bloque 1 - Información Personal */}
@@ -89,7 +93,7 @@ const Profile = () => {
                 <div className="info-line">
                   <h2 className="h2-info">Email</h2>
                   <div className="li-container d-flex justify-content-between align-items-center">
-                    <span className="li-info">{dato.correo}</span>
+                    <span className="li-info">{datosUsuario?.correo}</span>
                     <a href="#">
                       <img className="icons" src={editarIcon} alt="editar" />
                     </a>
@@ -99,7 +103,7 @@ const Profile = () => {
                 <div className="info-line">
                   <h2 className="h2-info">Teléfono</h2>
                   <div className="li-container d-flex justify-content-between align-items-center">
-                      <span className="li-info">{dato.telefono}</span>
+                      <span className="li-info">{datosUsuario?.telefono}</span>
                       <a href="#">
                       <img className="icons" src={editarIcon} alt="editar" />
                       </a>
@@ -120,7 +124,7 @@ const Profile = () => {
                 <h2 className="info-contraseña">Contraseña:</h2>
                 <div className="info-contraseña">
                   <div className="li-contraseña d-flex justify-content-between align-items-center">
-                    <span className="li-info">{dato.contraseña}</span>
+                    <span className="li-info">{datosUsuario?.contraseña}</span>
                     <a href="#">
                       <img className="icons" src={editarIcon} alt="editar" />
                     </a>
@@ -171,7 +175,7 @@ const Profile = () => {
                   <h2 className="h2-ciudad">Ciudad</h2>
                   <div className="ubicacion-content">
                     <div className="li-ubicacion d-flex justify-content-between align-items-center">
-                      <span className="li-info">Bogotá</span>
+                      <span className="li-info">{datosUsuario?.ciudad}</span>
                       <a href="#">
                         <img className="icons" src={editarIcon} alt="editar" />
                       </a>
@@ -189,8 +193,6 @@ const Profile = () => {
         {/* Final Ubicación */}
       </div>
 
-      )
-    )}
 
       {/* Final Contenedor */}
 
