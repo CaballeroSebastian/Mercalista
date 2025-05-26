@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",
     #apps
     'producto',
+    'backlogin',
 ]
 
 REST_FRAMEWORK = {
@@ -100,6 +101,7 @@ DATABASES = {
         'PORT': '47421',
     }
 }
+
 
 
 # Password validation

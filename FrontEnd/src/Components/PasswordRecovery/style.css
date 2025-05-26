@@ -50,7 +50,7 @@
     margin-bottom: 1rem;
   }
   
-  .img-collage {
+  .img-collage-passwordRecovery {
     width: 100%;
     height: auto;
     border-radius: 10px;
@@ -113,7 +113,7 @@
       max-width: 100%;
     }
   
-    .img-collage {
+    .img-collage-passwordRecovery{
       display: none;
     }
   
