@@ -15,3 +15,19 @@ class Producto(models.Model):
     class Meta:
         managed = False
         db_table = 'producto'
+
+class Vendedorproducto(models.Model):
+    idvendedorproducto = models.AutoField(db_column='idVendedorProducto', primary_key=True)  # Field name made lowercase.
+    idvendedor = models.ForeignKey('Vendedor', models.DO_NOTHING, db_column='idVendedor')  # Field name made lowercase.
+    idproducto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='idProducto')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'vendedorProducto'
+class Vendedor(models.Model):
+    idvendedor = models.AutoField(db_column='idVendedor', primary_key=True)  # Field name made lowercase.
+    idusuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='idUsuario')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'vendedor'
