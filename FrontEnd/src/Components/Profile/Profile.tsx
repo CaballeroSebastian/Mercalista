@@ -25,7 +25,6 @@ interface datosUser {
 
 
 const Profile = () => {
-  // Obtenemos la cédula desde la URL
   const { cedula } = useParams<{ cedula: string }>();
 
   const [datosUsuario, setDatosUsuario] = useState<datosUser | null>(null);
