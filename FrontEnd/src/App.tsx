@@ -14,7 +14,7 @@ import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> M
 
 import Suscription from './Components/Suscription/Suscription.tsx' //--> Muckup Suscripcion
 import Register from './Components/Register/MainRegister.tsx'  //--> Mcukup Registrar
-//import RegisterPassword from './Components/RegisterPassword/RegisterPassword.tsx' //--> Muckup Registro-contraseña
+import RegisterPassword from './Components/Register/RegisterPassword/RegisterPassword.tsx' //--> Muckup Registro-contraseña
 
 //Rutas por crear CABALLERO
 import ProductCard from './Components/ProductCart/ProductCart.tsx' //--> Muckup Landing Page
@@ -74,7 +74,7 @@ function App() {
         {/* --> SAMUEL ALVAREZ */}
         <Route path='/Suscription' element={<Suscription/>} />
         <Route path='/Register' element={<Register/>} />
-        {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} /> */}  
+        <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />  
         {/* <Route path='/Suscription' element={<Suscription/>} /> */}
         {/* <Route path='/Register' element={<Register/>} /> */}
         {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />   */}
