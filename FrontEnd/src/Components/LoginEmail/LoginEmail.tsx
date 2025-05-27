@@ -4,6 +4,8 @@ import collage from './img/collage.png';
 import logo from '../../assets/Image/logo.png';
 import googleIcon from './img/google.png';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 const LoginEmail: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -65,7 +67,7 @@ const LoginEmail: React.FC = () => {
             </button>
           </div>
           <div className="button-crearcuenta">
-            <a href="#">Crear cuenta</a>
+              <Link to="/register">Crear cuenta</Link>
           </div>
 
           <div className="lineas-medio text-center">
