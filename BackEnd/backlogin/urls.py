@@ -1,6 +1,8 @@
+
+
 from django.urls import path
-from .views import verificar_email
+from .views import VerificarEmailView
 
 urlpatterns = [
-    path('verificar-email/', verificar_email, name='verificar_email'),
+    path('verificar-email/', VerificarEmailView.as_view(), name='verificar_email'),
 ]

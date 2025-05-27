@@ -1,13 +1,17 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from .models import Usuario
-import json
 
-def verificar_email(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        email = data.get('email')
-        if Usuario.objects.filter(email=email).exists():
-            return JsonResponse({'email_valido': True})
-        else:
-            return JsonResponse({'email_valido': False}, status=404)
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Usuario
+
+class VerificarEmailView(APIView):
+    def post(self, request):
+        correo = request.data.get('correo')
+
+        if not correo:
+            return Response({'error': 'Correo no proporcionado'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar si el correo existe en la base de datos
+        existe = Usuario.objects.filter(correo=correo).exists()
+
+        return Response({'correo_valido': existe}, status=status.HTTP_200_OK)
