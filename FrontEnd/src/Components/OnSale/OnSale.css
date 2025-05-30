@@ -11,16 +11,12 @@
     
   }
   
-  .venta-title{
-    color: #9c6615;
-    text-align: center;
-    padding: 1.5rem 0 2rem 0;
-  }
 
   .Onsale-container {
     width: calc(100% - 190px);
+    height: 100vh;
     margin: 0 auto;
-    padding: 3rem; 
+    padding: 1.5rem 3rem 3rem 3rem; 
     margin-left: 190px;
   }
   

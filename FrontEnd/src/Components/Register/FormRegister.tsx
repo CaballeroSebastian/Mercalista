@@ -31,7 +31,7 @@ export function FormRegister() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    Navigate('/RegisterPassword')
+    Navigate('/Register/RegisterPassword')
     resetForm()
   }
 
@@ -101,6 +101,7 @@ export function FormRegister() {
             Departamento:
           </label>
           <select
+            typeof='text'
             className="form-select"
             id="dep-select"
             value={departamento}
@@ -124,6 +125,7 @@ export function FormRegister() {
             Ciudad:
           </label>
           <select
+            typeof='text'
             className="form-select"
             id="ciudad-select"
             value={ciudad}

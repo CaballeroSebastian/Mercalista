@@ -3,9 +3,7 @@ import './LoginPassword.css';
 import logo from '../../assets/Image/logo.png';
 import collage from '../LoginEmail/img/collage.png';
 import googleIcon from '../LoginEmail/img/google.png';
-
-import { Eye } from 'lucide-react';
-import { EyeClosed } from 'lucide-react';
+import { Eye, EyeClosed } from 'lucide-react';
 
 const LoginPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -31,17 +29,17 @@ const LoginPassword: React.FC = () => {
         <h1 className="titulo-login-password">MercaLista</h1>
       </header>
 
-      <div className="logo-container">
-        <img className="logo-mercalista" src={logo} alt="Logo de MercaLista" />
+      <div className="logo-container-password">
+        <img className="logo-mercalista-password" src={logo} alt="Logo de MercaLista" />
       </div>
 
       <div className="contenedor-izquierdo">
-        <h4 className="text">
+        <h4 className="text-login-password">
           Ingresá tu contraseña para comenzar
           <br />
           tu sesión de forma segura.
         </h4>
-        <img src={collage} alt="Collage de productos" className="img-collage" />
+        <img src={collage} alt="Collage de productos" className="img-collage-password" />
       </div>
 
       <div className="contenedor-derecho-login-password col-13 col-md-4 right-side">
@@ -52,7 +50,7 @@ const LoginPassword: React.FC = () => {
             </label>
             <input
               type="email"
-              className="form-control"
+              className="form-control-password"
               id="email"
               placeholder="Ingresa tu e-mail"
               value={email}
@@ -66,7 +64,7 @@ const LoginPassword: React.FC = () => {
             <div className="password-container position-relative">
               <input
                 type={passwordType}
-                className="form-control"
+                className="form-control-password"
                 id="password"
                 placeholder="Ingresa tu contraseña"
               />

@@ -358,7 +358,7 @@
     .contenedor-derecho1 {
         
         position: absolute;
-        margin-top: -20px;
+        margin-top: -70px;
         right: 20px;
         width: calc(33vw) !important;
         transform: translateX(-100px);
@@ -379,7 +379,7 @@
     .text2 {
         font-size: calc(2vw);
         margin-bottom: 20px;
-        margin-top: 15%;
+        margin-top: 3%;
         transform: translateX(0px);
     }
 
