@@ -8,6 +8,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const LoginEmail: React.FC = () => {
   const [correo, setCorreo] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // ⭐ Estado de carga
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,8 +19,14 @@ const LoginEmail: React.FC = () => {
       return;
     }
 
+    setIsLoading(true); // ⭐ Activar estado de carga
+    setError(''); // Limpiar errores previos
+
     try {
-      const response = await fetch('http://localhost:8000/login/VerificarEmailView', {
+      console.log('Enviando petición a:', 'http://localhost:8000/login/verificar-email/');
+      console.log('Datos enviados:', { correo });
+      
+      const response = await fetch('http://localhost:8000/login/verificar-email/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,20 +34,40 @@ const LoginEmail: React.FC = () => {
         body: JSON.stringify({ correo }),
       });
 
+      console.log('Status de respuesta:', response.status);
+      console.log('Response OK:', response.ok);
+
       const data = await response.json();
+      console.log('Datos recibidos:', data);
 
-      if(response.status == 200){
-        navigate('/LoginEmail/LoginPassword');} 
-
-      if (!response.ok || !data.correo_valido) {
+      // LÓGICA CORREGIDA: Guardar email en localStorage antes de navegar
+      if (response.ok && data.correo_valido) {
+        console.log('Correo válido, guardando y navegando...');
+        
+        // ⭐ AQUÍ ES DONDE GUARDAS EL CORREO ⭐
+        localStorage.setItem('userEmail', correo);
+        
+        navigate('/LoginEmail/LoginPassword');
+      } else if (response.ok && !data.correo_valido) {
+        console.log('Correo no válido');
         setError('Correo no registrado o inválido');
-        return;
+      } else {
+        console.log('Error del servidor');
+        setError('Error del servidor. Intenta de nuevo.');
       }
 
     } catch (err) {
-      console.error('Fetch error:', err);
+      console.error('Error completo:', err);
+      if (err instanceof Error) {
+        console.error('Tipo de error:', err.name);
+        console.error('Mensaje de error:', err.message);
+      } else {
+        console.error('Tipo de error desconocido');
+      }
       setError('Error al verificar el correo. Intenta de nuevo.');
-}
+    } finally {
+      setIsLoading(false); // ⭐ Desactivar estado de carga
+    }
   };
 
   return (
@@ -65,7 +92,7 @@ const LoginEmail: React.FC = () => {
         <form className="form-login text-center" onSubmit={handleSubmit}>
           <div className="email-login mb-4 text-start">
             <label htmlFor="correo" className="form-label1">
-              Correo electrónico
+              Email
             </label>
             <input
               type="email"
@@ -74,13 +101,18 @@ const LoginEmail: React.FC = () => {
               placeholder="Ingresa tu correo electrónico"
               value={correo}
               onChange={e => setCorreo(e.target.value)}
+              disabled={isLoading} // ⭐ Deshabilitar input mientras carga
             />
             {error && <div style={{ color: 'red', marginTop: 8 }}>{error}</div>}
           </div>
 
           <div className="button-continuar">
-            <button type="submit" className="btn-conti">
-              Continuar
+            <button 
+              type="submit" 
+              className="btn-conti"
+              disabled={isLoading} // ⭐ Deshabilitar botón mientras carga
+            >
+              {isLoading ? 'Verificando...' : 'Continuar'} {/* ⭐ Cambiar texto */}
             </button>
           </div>
 
@@ -93,7 +125,7 @@ const LoginEmail: React.FC = () => {
           </div>
 
           <div className="icon-google">
-            <button type="button" className="btn-google-img">
+            <button type="button" className="btn-google-img" disabled={isLoading}>
               <img src={googleIcon} alt="Google icon" className="icon-google-v" />
               Iniciar sesión con Google
             </button>
