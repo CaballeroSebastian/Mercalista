@@ -21,7 +21,7 @@ const ConfirmPassword: React.FC = () => {
   return (
     <div className="body">
       <header className="header">
-        <h1 className="titulo">MercaLista</h1>
+        <h1 className="titulo-emp">MercaLista</h1>
       </header>
 
       <div className="logo-container">

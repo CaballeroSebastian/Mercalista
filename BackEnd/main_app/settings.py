@@ -48,12 +48,12 @@ INSTALLED_APPS = [
     'producto',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ],
    
-}
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -95,9 +95,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': 'NOWzYqQHTqpRsvqgnROFrduVUxjxdOun',
+        'PASSWORD': 'QsXJxYSmzQoSBPRjEMddZGBJWybqfyib',
         'HOST': 'mainline.proxy.rlwy.net',
-        'PORT': '47421',
+        'PORT': '12810',
     }
 }
 
