@@ -3,8 +3,10 @@ import './PublicarTest.css';
 import type React from "react";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 export default function ProductRegistrationForm() {
+  const idUsuario = 1
   const navigate = useNavigate();
 
   const [formulario, setFormulario] = useState({
@@ -24,13 +26,16 @@ export default function ProductRegistrationForm() {
   const enviar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //envia datos a la base de datos
-     // try {
-        //     const respuesta = await crearProducto(formulario);
-        //     console.log('Producto creado:', respuesta.data);
-        //   } catch (error) {
-        //     console.error('Error al crear producto:', error);
-        //   }
-        // };
+     
+    axios.post(`http://127.0.0.1:8000/producto/crearProducto/${idUsuario}`, formulario)
+      .then(response =>{
+        if(response.status === 201){
+          console.log(response.data.mensje)
+        }
+        else{
+          console.log('ocurrio algun error')
+        }
+      })
 
     // Resetear formulario
     setFormulario({
