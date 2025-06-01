@@ -35,36 +35,3 @@ class ProductosEnVenta(APIView):
         serializer = ProductoSerializer(productos_completo, many=True)
         return Response(serializer.data)
 
-
-class crearProducto(APIView):
-    """
-    Clase para crear un producto.
-    """
-    def post(self, request, id):
-        serializer = ProductoSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            try:
-                vendedor = Vendedor.objects.get(pk=id)
-            except Vendedor.DoesNotExist:
-                return Response({'error': 'Vendedor no encontrado'}, status=404)
-
-            producto = serializer.save()
-            
-            Vendedorproducto.objects.create(
-                idvendedor=vendedor,
-                idproducto=Producto.objects.get(pk = producto.idproducto)
-            )
-
-            return Response(
-                {
-                    'id': producto.idproducto,
-                    'mensaje': 'Producto creado correctamente'
-                },
-                status=status.HTTP_201_CREATED
-            )
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-            
-#coment
