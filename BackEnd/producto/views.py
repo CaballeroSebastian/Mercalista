@@ -41,5 +41,49 @@ class ProductosEnVenta(APIView):
         # Serializar
         serializer = ProductoSerializer(productos_completo, many=True)
         return Response(serializer.data)
-    
+
+
+class crearProducto(APIView):
+    """
+    Clase para crear un producto.
+    """
+    def post(self, request, id):
+        # Obtener el archivo enviado por FormData
+        foto = request.FILES.get("foto")  # esto es seguro y no lanza excepción si no hay
+
+
+        # Guardar la foto en una ruta personalizada
+        ruta = f'productos{id}/{foto.name}'
+        path = default_storage.save(ruta, foto)
+
+        # Copiar los datos de request.data a un diccionario mutable
+        datos = request.data.copy()
+        datos['foto'] = path  # Guardamos la ruta de la imagen en el campo 'foto'
+
+        # Serializar con los datos modificados
+        serializer = ProductoSerializer(data=datos)
+
+        if serializer.is_valid():
+            try:
+                vendedor = Vendedor.objects.get(pk=id)
+            except Vendedor.DoesNotExist:
+                return Response({'error': 'Vendedor no encontrado'}, status=404)
+
+            producto = serializer.save()
+
+            Vendedorproducto.objects.create(
+                idvendedor=vendedor,
+                idproducto=Producto.objects.get(pk = producto.idproducto)
+            )
+
+            return Response(
+                {
+                    'id': producto.idproducto,
+                    'mensaje': 'Producto creado correctamente'
+                },
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
