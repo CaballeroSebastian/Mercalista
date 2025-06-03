@@ -5,6 +5,9 @@ import React from 'react';
 
 export function FormRegister() {
 
+
+
+
   const [terminosAceptados, setTerminosAceptados] = useState(false);
 
   const Navigate = useNavigate()
@@ -12,6 +15,7 @@ export function FormRegister() {
   const [name, Setname] = useState('')
   const [apellido, Setapellido] = useState('')
   const [telefono, Settelefono] = useState('')
+  const [correo, Setcorreo] = useState('')
   const [documento, Setdocumento] = useState('')
 
     // Estado para el departamento y la ciudad seleccionados
@@ -25,14 +29,25 @@ export function FormRegister() {
     Setname('')
     Setapellido('')
     Settelefono('')
+    Setcorreo('')
     Setdocumento('')
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    Navigate('/Register/RegisterPassword')
-    resetForm()
+    Navigate('/Register/RegisterPassword',{
+      state: {
+        name,
+        apellido,
+        telefono,
+        correo,
+        documento,
+        departamento,
+        ciudad
+      }
+    })
+    
   }
 
   // Maneja el cambio de departamento
@@ -48,7 +63,8 @@ export function FormRegister() {
 
 
     return (
-      <form className="form-register" onSubmit={handleSubmit}>
+      <form className="form-register" onSubmit={handleSubmit} method='POST'>
+        
         <div className='div-form-register'>
         <label htmlFor="name">Nombre:</label>
         <input 
@@ -84,6 +100,18 @@ export function FormRegister() {
           required
           />
         <br />
+
+         <label htmlFor="correo">Correo:</label>
+        <input 
+          type="email" 
+          id="correo" 
+          name="correo" 
+          value = {correo}
+          onChange={(e)=>Setcorreo(e.target.value)}
+          required
+          />
+        <br />
+
         <label htmlFor="documento">Documento:</label>
         <input 
           type="number" 
