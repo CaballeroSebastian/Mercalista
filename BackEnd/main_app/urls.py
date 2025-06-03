@@ -23,4 +23,5 @@ urlpatterns = [
     path('login/', include('backlogin.urls')),
 
     path('profile/', include('usersProfile.urls')),
+    path('Password/', include('loginPassword.urls')),
 ]

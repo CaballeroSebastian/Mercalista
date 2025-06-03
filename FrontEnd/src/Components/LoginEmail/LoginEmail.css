@@ -102,7 +102,12 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
+     outline: none; /* Quita el borde azul por defecto del navegador */
     border-radius: 5px;;
+}
+
+.form-control2:focus {
+  border: 1.5px solid #8c5b17; /* Cambia este color al que prefieras */
 }
 
 /* Botón continuar */
