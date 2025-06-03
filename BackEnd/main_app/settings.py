@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'backlogin',
     'usersProfile',
     'loginPassword',
+    'Register'
 ]
 
 # REST_FRAMEWORK = {

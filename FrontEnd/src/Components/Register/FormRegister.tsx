@@ -12,11 +12,12 @@ export function FormRegister() {
 
   const Navigate = useNavigate()
   
-  const [name, Setname] = useState('')
+  const [nombre, Setnombre] = useState('')
   const [apellido, Setapellido] = useState('')
   const [telefono, Settelefono] = useState('')
   const [correo, Setcorreo] = useState('')
-  const [documento, Setdocumento] = useState('')
+  const [cedula, Setcedula] = useState('')
+  const [tipousuario, Settipousuario] = useState('')
 
     // Estado para el departamento y la ciudad seleccionados
   const [departamento, setDepartamento] = useState('');
@@ -26,11 +27,12 @@ export function FormRegister() {
     //Función para resetar campos de entrada del formulario
 
   const resetForm = () => {
-    Setname('')
+    Setnombre('')
     Setapellido('')
     Settelefono('')
     Setcorreo('')
-    Setdocumento('')
+    Setcedula('')
+    Settipousuario('')
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,13 +40,14 @@ export function FormRegister() {
 
     Navigate('/Register/RegisterPassword',{
       state: {
-        name,
+        nombre,
         apellido,
         telefono,
         correo,
-        documento,
+        cedula,
         departamento,
-        ciudad
+        ciudad,
+        tipousuario,
       }
     })
     
@@ -69,10 +72,10 @@ export function FormRegister() {
         <label htmlFor="name">Nombre:</label>
         <input 
         type="text" 
-        id="name" 
-        name="name" 
-        value = {name}
-        onChange={(e)=>Setname(e.target.value)}
+        id="nombre" 
+        name="nombre" 
+        value = {nombre}
+        onChange={(e)=>Setnombre(e.target.value)}
         onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
         required
         
@@ -101,7 +104,7 @@ export function FormRegister() {
           />
         <br />
 
-         <label htmlFor="correo">Correo:</label>
+        <label htmlFor="correo">Correo:</label>
         <input 
           type="email" 
           id="correo" 
@@ -115,14 +118,30 @@ export function FormRegister() {
         <label htmlFor="documento">Documento:</label>
         <input 
           type="number" 
-          id="documento" 
-          name="documento"
-          value = {documento}
-          onChange={(e)=>Setdocumento(e.target.value)}
+          id="cedula" 
+          name="cedula"
+          value = {cedula}
+          onChange={(e)=>Setcedula(e.target.value)}
           onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/^\d{11}$/g, ''))}
           required
         />
         <br />
+        <label htmlFor="">Tipo de Usuario</label>
+        <select 
+          typeof='text'
+          className="form-select"
+          value={tipousuario} 
+          onChange={(e) => Settipousuario(e.target.value)}
+          name='tipousuario'
+          id='tipousuario'
+          required
+        > 
+          <option value="">-- Selecciona tipo de usuario --</option>
+          <option value="comprador">Comprador</option>
+          <option value="vendedor">Vendedor</option>
+        </select>
+        <br />
+
         <div >
           <label htmlFor="dep-select" className="form-label">
             {" "}
