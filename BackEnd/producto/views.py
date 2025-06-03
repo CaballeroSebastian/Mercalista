@@ -1,13 +1,33 @@
-from django.shortcuts import render
-from rest_framework.generics import ListAPIView
-from .models import Producto
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from .models import Vendedorproducto, Producto
 from .serializers import ProductoSerializer
-# Create your views here.
 
+class ProductosEnVenta(APIView):
 
-class ProductoListView(ListAPIView):
-    """
-    Vista para listar todos los productos.
-    """
-    queryset = Producto.objects.all()
-    serializer_class = ProductoSerializer
+    def obtener_ids_productos(self, id_vendedor):
+
+        permission_classes = [AllowAny]
+
+        queryset = Producto.objects.all() #neceario para poder activar el permiso
+
+        """
+        Función auxiliar para obtener los IDs de productos asociados a un vendedor.
+        """
+        productos = Vendedorproducto.objects.filter(idvendedor=id_vendedor).values()
+        productos_ids = []
+        for i in productos:
+            productos_ids.append(i['idproducto_id'])
+        return productos_ids
+
+    def get(self, request, id):
+        productos_ids = self.obtener_ids_productos(id)
+
+        # Obtener todos los productos completos de esos IDs
+        productos_completo = Producto.objects.filter(idproducto__in=productos_ids)
+
+        # Serializar
+        serializer = ProductoSerializer(productos_completo, many=True)
+        return Response(serializer.data)

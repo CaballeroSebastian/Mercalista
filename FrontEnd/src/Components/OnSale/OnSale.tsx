@@ -25,8 +25,10 @@ const OnSale = () => {
   const [openEdit, setOpenEdit] = useState<Producto | false>(false);
   const [productos, setProductos] = useState<Producto[]>([]);
 
+  const idUsuario = 1
+
   useEffect(() => {
-    axios.get<Producto[]>("http://127.0.0.1:8000/producto/verProductos/")
+    axios.get<Producto[]>(`http://127.0.0.1:8000/producto/verProductos/${idUsuario}`)
       .then(response => {
         setProductos(response.data);
       })
