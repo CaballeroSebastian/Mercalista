@@ -50,7 +50,7 @@ const LoginEmail: React.FC = () => {
         navigate('/LoginEmail/LoginPassword');
       } else if (response.ok && !data.correo_valido) {
         console.log('Correo no válido');
-        setError('Correo no registrado o inválido');
+        setError('Correo invalido');
       } else {
         console.log('Error del servidor');
         setError('Error del servidor. Intenta de nuevo.');

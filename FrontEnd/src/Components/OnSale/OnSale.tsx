@@ -63,7 +63,7 @@ const OnSale = () => {
           {productos.map((producto) => (
             <div className="product-card" key={producto.idproducto}>
               <div className="product-image">
-                <img src={ productoImg} alt={producto.nombre} />
+                <img src={producto.fotos} alt={producto.nombre} />
               </div>
               <div className="product-info">
                 <h3 className="product-nombre">{producto.nombre}</h3>

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'producto',
     'backlogin',
     'usersProfile',
+    'loginPassword',
 ]
 
 # REST_FRAMEWORK = {

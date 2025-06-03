@@ -37,7 +37,7 @@ const ProductCart = () => {
             image: './LandingPage/img/productos/platanoverde.jpg',
         },
                 {
-            id: 4,
+            id: 5,
             name: 'Plátano verde',
             price: '$200.000.00',
             weight: '10 Cargas',
@@ -45,7 +45,7 @@ const ProductCart = () => {
             image: './LandingPage/img/productos/platanoverde.jpg',
         },
                 {
-            id: 4,
+            id: 6,
             name: 'Plátano verde',
             price: '$200.000.00',
             weight: '10 Cargas',
