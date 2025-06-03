@@ -5,8 +5,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from .models import Vendedorproducto, Producto, Vendedor
 from .serializers import ProductoSerializer
+from django.core.files.storage import default_storage
 
 import json
+
+
 
 class ProductosEnVenta(APIView):
 
@@ -26,6 +29,10 @@ class ProductosEnVenta(APIView):
         return productos_ids
 
     def get(self, request, id):
+       
+
+
+        #id de los productos de determiando vendedor
         productos_ids = self.obtener_ids_productos(id)
 
         # Obtener todos los productos completos de esos IDs
@@ -34,4 +41,5 @@ class ProductosEnVenta(APIView):
         # Serializar
         serializer = ProductoSerializer(productos_completo, many=True)
         return Response(serializer.data)
+    
 

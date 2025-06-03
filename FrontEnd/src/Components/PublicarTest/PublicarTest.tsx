@@ -23,20 +23,68 @@ export default function ProductRegistrationForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setImagePreview(URL.createObjectURL(file));
+
+    }     
+  };
+
+  const handleDeleteFile = () => {  
+    setSelectedFile(null);
+    setImagePreview("");
+    setFormulario({ ...formulario, foto: "" });
+
+    const fileInput = document.getElementById("photos") as HTMLInputElement;
+    if (fileInput) fileInput.value = "";
+  };
+
   const enviar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //envia datos a la base de datos
-     
-    axios.post(`http://127.0.0.1:8000/producto/crearProducto/${idUsuario}`, formulario)
-      .then(response =>{
-        if(response.status === 201){
-          console.log(response.data.mensje)
-        }
-        else{
-          console.log('ocurrio algun error')
-        }
-      })
 
+
+    const formData = new FormData();
+    formData.append("nombre", formulario.nombre);
+    formData.append("categoria", formulario.categoria);
+    formData.append("stock", String(formulario.stock));
+    formData.append("UnidadMedida", formulario.UnidadMedida);
+    formData.append("Descripcion", formulario.Descripcion);
+    formData.append("estado", formulario.estado);
+    formData.append("precio", String(formulario.precio));
+    if (selectedFile) {
+      formData.append("foto", selectedFile);
+
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/producto/crearProducto/${idUsuario}`,
+        formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }
+    );
+    
+      if (response.status === 201) {
+        console.log(response.data.mensaje);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        // El servidor respondió con un código fuera del rango 2xx
+        console.error('Error:', error.response.data);
+      } else if (error.request) {
+        // La petición fue hecha pero no hubo respuesta
+        console.error('No hubo respuesta del servidor');
+      } else {
+        // Otro error
+        console.error('Error:', error.message);
+      }
+    }
+    
+     
     // Resetear formulario
     setFormulario({
       nombre: "",
@@ -63,23 +111,6 @@ export default function ProductRegistrationForm() {
     navigate('/onSale');
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      setImagePreview(URL.createObjectURL(file));
-      setFormulario({ ...formulario, foto: file.name });
-    }
-  };
-
-  const handleDeleteFile = () => {
-    setSelectedFile(null);
-    setImagePreview("");
-    setFormulario({ ...formulario, foto: "" });
-
-    const fileInput = document.getElementById("photos") as HTMLInputElement;
-    if (fileInput) fileInput.value = "";
-  };
 
   return (
     <Menu>
@@ -259,10 +290,8 @@ export default function ProductRegistrationForm() {
                       id="photos"
                       type="file"
                       accept="image/*"
-                      value={formulario.foto}
                       onChange={(e)=>{
-                        handleFileChange(e);
-                        setFormulario({ ...formulario, foto: e.target.value })
+                        handleFileChange(e)
                       }}
                       className="entrada-archivo-oculta-publicar"
                     />
@@ -303,5 +332,4 @@ export default function ProductRegistrationForm() {
     </Menu>
   );
 }
-
-
+}

@@ -13,3 +13,9 @@ class usersProfileSerializer(serializers.ModelSerializer):
         if not value.startswith('pbkdf2_'):  # Verifica si ya está encriptada
             return make_password(value)
         return value
+
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        exclude = ['contraseña']  # Excluye la contraseña del serializador
+

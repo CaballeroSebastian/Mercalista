@@ -1,5 +1,10 @@
 from django.db import models
 
+
+def ruta_imagen_usuario(instance, filename):
+    return f'productos/{instance.usuario.id}/{filename}'
+
+
 # Create your models here.
 class Producto(models.Model):
     idproducto = models.AutoField(db_column='idProducto', primary_key=True)  # Field name made lowercase.
@@ -9,7 +14,7 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.CharField(max_length=200)
     estado = models.CharField(max_length=8, blank=True, null=True)
-    fotos = models.CharField(max_length=1)
+    fotos = models.ImageField(upload_to=ruta_imagen_usuario)
     unidadmedida = models.CharField(db_column='unidadMedida', max_length=10)  # Field name made lowercase.
 
     class Meta:

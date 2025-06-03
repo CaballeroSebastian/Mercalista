@@ -155,3 +155,6 @@ ALLOWED_HOSTS = ['*']
 #     "http://127.0.0.1:3000", #react
 #     "http://localhost:5173", #vite
 # ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
