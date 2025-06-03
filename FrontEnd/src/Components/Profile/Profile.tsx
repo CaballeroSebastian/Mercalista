@@ -96,27 +96,66 @@ const Profile = () => {
     });
   };
 
-  const handleConfirmEdit = async (field: keyof datosUser) => {
-    if (!formData || !datosUsuario) return;
-    const value = formData[field];
+const handleConfirmEdit = async (field: keyof datosUser) => {
+  if (!formData || !datosUsuario) return;
+  const value = formData[field];
 
-    if (typeof value === "string" && !validateField(field, value)) {
-      const errorMessage = getValidationErrorMessage(field);
-      showAlert(errorMessage);
+  // Validar solo si es string (por ejemplo, para correo, teléfono, contraseña)
+  if (typeof value === "string" && !validateField(field, value)) {
+    const errorMessage = getValidationErrorMessage(field);
+    showAlert(errorMessage);
+    return;
+  }
+
+  try {
+    const updatedData: Partial<datosUser> = { ...datosUsuario };
+    if (field === "contraseña") {
+      // Enviar contraseña solo si no está vacía o undefined
+      if (value && typeof value === "string" && value.trim() !== "") {
+        updatedData.contraseña = value;
+      }
+    } else {
+      // Para otros campos, asegúrate que value no sea undefined
+      
+      if (value !== undefined && value !== datosUsuario[field]) {
+        updatedData[field] = value as never;
+      }
+    }
+
+    if (Object.keys(updatedData).length === 0) {
+      showAlert("No hay cambios para actualizar");
+      setIsEditing((prev) => ({ ...prev, [field]: false }));
       return;
     }
 
-    try {
-      const updatedData = { ...datosUsuario, ...formData };
-      const response = await axios.put(`http://127.0.0.1:8000/profile/${cedula}/`, updatedData);
-      setDatosUsuario(response.data);
-      setIsEditing((prev) => ({ ...prev, [field]: false }));
-      showAlert("Campo actualizado correctamente");
-    } catch (error) {
-      console.error("Error al actualizar", error);
+    const response = await axios.put(`http://127.0.0.1:8000/profile/${cedula}/`, updatedData);
+
+    setDatosUsuario(response.data);
+    setIsEditing((prev) => ({ ...prev, [field]: false }));
+    showAlert("Campo actualizado correctamente");
+  } catch (error: any) {
+    console.error("Error al actualizar", error);
+    const errData = error.response?.data;
+
+    if (errData) {
+      if (errData.telefono) {
+        showAlert(`Error en teléfono: ${errData.telefono.join(", ")}`);
+      } else if (errData.contraseña) {
+        showAlert(`Error en contraseña: ${errData.contraseña.join(", ")}`);
+      } else {
+        showAlert("Error al actualizar el campo. Intenta de nuevo.");
+      }
+    } else {
       showAlert("Error al actualizar el campo. Intenta de nuevo.");
     }
-  };
+  }
+
+
+  
+};
+
+
+
 
   useEffect(() => {
     if (datosUsuario) {
@@ -240,6 +279,7 @@ const Profile = () => {
                             className="form-control"
                             value={formData.telefono || ""}
                             onChange={(e) => handleInputChange(e, "telefono")}
+                            inputMode="numeric"
                           />
                           <img
                             className="icons"
@@ -275,12 +315,13 @@ const Profile = () => {
                     <div className="li-contraseña d-flex justify-content-between align-items-center">
                       {isEditing["contraseña"] ? (
                         <>
-                          <input
-                            type="password"
-                            className="form-control"
-                            value={isEditing["contraseña"] ? formData.contraseña || "" : ""}
-                            onChange={(e) => handleInputChange(e, "contraseña")}
-                          />
+                        <input
+                          type="password"
+                          className="form-control"
+                          placeholder="Dejar en blanco para no cambiar"
+                          value={isEditing["contraseña"] ? formData.contraseña || "" : ""}
+                          onChange={(e) => handleInputChange(e, "contraseña")}
+                        />
                           <img
                             className="icons"
                             src={checkIcon}
@@ -349,29 +390,8 @@ const Profile = () => {
                     <h2 className="h2-ciudad">Ciudad</h2>
                     <div className="ubicacion-content">
                       <div className="li-ubicacion d-flex justify-content-between align-items-center">
-                        {isEditing["ciudad"] ? (
-                          <>
-                            <input
-                              className="form-control"
-                              value={formData.ciudad || ""}
-                              onChange={(e) => handleInputChange(e, "ciudad")}
-                            />
-                            <img
-                              className="icons"
-                              src={checkIcon}
-                              alt="confirmar"
-                              onClick={() => handleConfirmEdit("ciudad")}
-                              style={{ cursor: "pointer" }}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <span className="li-info">{datosUsuario?.ciudad}</span>
-                            <a onClick={() => handleEditClick("ciudad")}>
-                              <img className="icons" src={editarIcon} alt="editar" />
-                            </a>
-                          </>
-                        )}
+                        {/* Solo mostramos la ciudad en modo lectura */}
+                        <span className="li-info">{datosUsuario?.ciudad}</span>
                       </div>
                       <div className="mapa-estatico">
                         <img id="mapa-imagen" src="./map.png" alt="Mapa Estático" className="img-fluid rounded" />
@@ -382,6 +402,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+
         </div>
 
         <div className="bloque-4 text-center">
