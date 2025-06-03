@@ -51,7 +51,8 @@ class crearProducto(APIView):
         # Obtener el archivo enviado por FormData
         foto = request.FILES.get("foto")  # esto es seguro y no lanza excepción si no hay
 
-
+        if not foto:
+            return Response({'error': 'No se proporcionó una imagen'}, status=status.HTTP_400_BAD_REQUEST)
         # Guardar la foto en una ruta personalizada
         ruta = f'productos{id}/{foto.name}'
         path = default_storage.save(ruta, foto)
