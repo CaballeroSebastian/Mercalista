@@ -7,8 +7,6 @@ from .serializers import  SerializerUsuario
 
 # Create your views here.
 
-<<<<<<< HEAD
-=======
 class CrearUsuario(APIView):
     def post(self, request):
         data = SerializerUsuario(data=request.data)
@@ -30,4 +28,3 @@ class CrearUsuario(APIView):
         else:
             return Response(data.errors, status=400)
 
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
