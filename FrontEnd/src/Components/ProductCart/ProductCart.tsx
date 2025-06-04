@@ -1,89 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProductCart.css';
 
+interface Product {
+    idproducto: number;
+    nombre: string;
+    precio: number;
+    cantidadstock: number;
+    fotos: string | null;
+}
+
 const ProductCart = () => {
-    // Datos de ejemplo
-    const products = [
-        {
-            id: 1,
-            name: 'Papa pastusa',
-            price: '$3\'000.000.00',
-            weight: '100 Cargas',
-            city: 'Boyacá',
-            image: './LandingPage/img/productos/papa.png',
-        },
-        {
-            id: 2,
-            name: 'Cebolla cabezona',
-            price: '$180.000.00',
-            weight: '5 Cargas',
-            city: 'Boyacá',
-            image: './LandingPage/img/productos/cebolla.jpeg',
-        },
-        {
-            id: 3,
-            name: 'Cilantro',
-            price: '$50.000.00',
-            weight: '2 Cargas',
-            city: 'Cundinamarca',
-            image: './LandingPage/img/productos/cilantro.jpg',
-        },
-        {
-            id: 4,
-            name: 'Plátano verde',
-            price: '$200.000.00',
-            weight: '10 Cargas',
-            city: 'Antioquia',
-            image: './LandingPage/img/productos/platanoverde.jpg',
-        },
-                {
-            id: 4,
-            name: 'Plátano verde',
-            price: '$200.000.00',
-            weight: '10 Cargas',
-            city: 'Antioquia',
-            image: './LandingPage/img/productos/platanoverde.jpg',
-        },
-                {
-            id: 4,
-            name: 'Plátano verde',
-            price: '$200.000.00',
-            weight: '10 Cargas',
-            city: 'Antioquia',
-            image: './LandingPage/img/productos/platanoverde.jpg',
-        },  
-    ];
+    const [products, setProducts] = useState<Product[]>([]);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/productos/');
+                if (!response.ok) throw new Error('Error al cargar productos');
+                const data = await response.json();
+                console.log('Productos recibidos:', data);
+                setProducts(data);
+            } catch (err) {
+                console.error('Error:', err);
+                setError('No se pudieron cargar los productos.');
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
-        <section className="productos">
+        <section className="productos-carts">
             <div className="contenedor">
                 <h3 className="titulo">Productos</h3>
                 <div className="contenedor-cards">
-                    {products.map((product) => (
-                        <a href="#" className="producto" key={product.id}>
-                            <div className="thumb">
-                                <img src={product.image} alt={product.name} />
-                            </div>
-                            <div className="informacion-producto">
-                                <p className="nombre">{product.name}</p>
-                                <p className="precio">{product.price}</p>
-                                <p className="peso">{product.weight}</p>
-                                <p className="ciudad">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        className="bi bi-geo-alt-fill"
-                                        viewBox="0 0 16 16"
-                                    >
-                                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
-                                    </svg>
-                                    {product.city}
-                                </p>
-                            </div>
-                        </a>
-                    ))}
+                    {error ? (
+                        <p>{error}</p>
+                    ) : products.length === 0 ? (
+                        <p>Cargando productos...</p>
+                    ) : (
+                        products.map(product => {
+                            const imagenUrl = product.fotos
+                                ? (product.fotos.startsWith('http')
+                                    ? product.fotos
+                                    : `http://127.0.0.1:8000/media/producto/${product.fotos}`)  // Aquí está la corrección
+                                : null;
+
+                            return (
+                                <a href="#" className="producto-carts" key={product.idproducto}>
+                                    <div className="thumb">
+                                        {imagenUrl ? (
+                                            <img src={imagenUrl} alt={product.nombre} />
+                                        ) : (
+                                            <div className="no-image">No img</div>
+                                        )}
+                                    </div>
+                                    <div className="informacion-producto">
+                                        <p className="nombre">{product.nombre}</p>
+                                        <p className="precio">${product.precio}</p>
+                                        <p className="peso">{product.cantidadstock} unidades</p>
+                                    </div>
+                                </a>
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </section>
