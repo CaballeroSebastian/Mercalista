@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Usuario(models.Model):
     idusuario = models.AutoField(db_column='idUsuario', primary_key=True)  # Field name made lowercase.
     tipousuario = models.CharField(db_column='tipoUsuario', max_length=9)  # Field name made lowercase.
