@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .models import Usuario
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from .models import Usuario
+
+
 from .serializers import  SerializerUsuario
 
 # Create your views here.
@@ -14,15 +15,15 @@ class CrearUsuario(APIView):
             # Aquí ya puedes acceder a validated_data
             Usuario.objects.create(
                 tipousuario = data.validated_data['tipousuario'],
-                nombre=data.validated_data['nombre'],
-                apellido=data.validated_data['apellido'],
-                telefono=data.validated_data['telefono'],
-                cedula=data.validated_data['cedula'],
-                ciudad=data.validated_data['ciudad'],
-                departamento=data.validated_data['departamento'],
-                correo=data.validated_data['correo'],
-                contraseña=data.validated_data['contraseña'],
-                username=data.validated_data['username'],
+                nombre = data.validated_data['nombre'],
+                apellido = data.validated_data['apellido'],
+                telefono = data.validated_data['telefono'],
+                cedula = data.validated_data['cedula'],
+                ciudad = data.validated_data['ciudad'],
+                departamento = data.validated_data['departamento'],
+                correo = data.validated_data['correo'],
+                contraseña = data.validated_data['contraseña'],
+                username = data.validated_data['username'],
             )
             return Response({"mensaje": "Usuario creado correctamente"}, status=201)
         else:
