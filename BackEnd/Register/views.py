@@ -33,8 +33,8 @@ class CrearUsuario(APIView):
             )
             return Response({
                 "mensaje": "Usuario creado correctamente",
-                "contraseña_original": raw_password,
-                "contraseña_encriptada": hashed_password
+                #"contraseña_original": raw_password,
+                #"contraseña_encriptada": hashed_password
             },  status=201)
         
         else:
