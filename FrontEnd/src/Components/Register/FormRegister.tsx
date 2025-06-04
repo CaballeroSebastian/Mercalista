@@ -5,14 +5,23 @@ import React from 'react';
 
 export function FormRegister() {
 
+
+
+
   const [terminosAceptados, setTerminosAceptados] = useState(false);
 
   const Navigate = useNavigate()
   
-  const [name, Setname] = useState('')
+  const [nombre, Setnombre] = useState('')
   const [apellido, Setapellido] = useState('')
   const [telefono, Settelefono] = useState('')
+  const [correo, Setcorreo] = useState('')
+<<<<<<< HEAD
   const [documento, Setdocumento] = useState('')
+=======
+  const [cedula, Setcedula] = useState('')
+  const [tipousuario, Settipousuario] = useState('')
+>>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
 
     // Estado para el departamento y la ciudad seleccionados
   const [departamento, setDepartamento] = useState('');
@@ -22,17 +31,44 @@ export function FormRegister() {
     //Función para resetar campos de entrada del formulario
 
   const resetForm = () => {
-    Setname('')
+    Setnombre('')
     Setapellido('')
     Settelefono('')
+    Setcorreo('')
+<<<<<<< HEAD
     Setdocumento('')
+=======
+    Setcedula('')
+    Settipousuario('')
+>>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    Navigate('/Register/RegisterPassword')
-    resetForm()
+    Navigate('/Register/RegisterPassword',{
+      state: {
+<<<<<<< HEAD
+        name,
+        apellido,
+        telefono,
+        correo,
+        documento,
+        departamento,
+        ciudad
+=======
+        nombre,
+        apellido,
+        telefono,
+        correo,
+        cedula,
+        departamento,
+        ciudad,
+        tipousuario,
+>>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
+      }
+    })
+    
   }
 
   // Maneja el cambio de departamento
@@ -48,15 +84,16 @@ export function FormRegister() {
 
 
     return (
-      <form className="form-register" onSubmit={handleSubmit}>
+      <form className="form-register" onSubmit={handleSubmit} method='POST'>
+        
         <div className='div-form-register'>
         <label htmlFor="name">Nombre:</label>
         <input 
         type="text" 
-        id="name" 
-        name="name" 
-        value = {name}
-        onChange={(e)=>Setname(e.target.value)}
+        id="nombre" 
+        name="nombre" 
+        value = {nombre}
+        onChange={(e)=>Setnombre(e.target.value)}
         onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
         required
         
@@ -84,17 +121,49 @@ export function FormRegister() {
           required
           />
         <br />
+
+<<<<<<< HEAD
+         <label htmlFor="correo">Correo:</label>
+=======
+        <label htmlFor="correo">Correo:</label>
+>>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
+        <input 
+          type="email" 
+          id="correo" 
+          name="correo" 
+          value = {correo}
+          onChange={(e)=>Setcorreo(e.target.value)}
+          required
+          />
+        <br />
+
         <label htmlFor="documento">Documento:</label>
         <input 
           type="number" 
-          id="documento" 
-          name="documento"
-          value = {documento}
-          onChange={(e)=>Setdocumento(e.target.value)}
+          id="cedula" 
+          name="cedula"
+          value = {cedula}
+          onChange={(e)=>Setcedula(e.target.value)}
           onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/^\d{11}$/g, ''))}
           required
         />
         <br />
+        <label htmlFor="">Tipo de Usuario</label>
+        <select 
+          typeof='text'
+          className="form-select"
+          value={tipousuario} 
+          onChange={(e) => Settipousuario(e.target.value)}
+          name='tipousuario'
+          id='tipousuario'
+          required
+        > 
+          <option value="">-- Selecciona tipo de usuario --</option>
+          <option value="comprador">Comprador</option>
+          <option value="vendedor">Vendedor</option>
+        </select>
+        <br />
+
         <div >
           <label htmlFor="dep-select" className="form-label">
             {" "}

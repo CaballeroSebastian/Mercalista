@@ -18,12 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+import os
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('producto/', include('producto.urls')),
     path('login/', include('backlogin.urls')),
-
     path('profile/', include('usersProfile.urls')),
+    path('Password/', include('loginPassword.urls')),
+    path('Register/', include('Register.urls')),
+    path('api/', include('productCart.urls')),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
