@@ -16,12 +16,8 @@ export function FormRegister() {
   const [apellido, Setapellido] = useState('')
   const [telefono, Settelefono] = useState('')
   const [correo, Setcorreo] = useState('')
-<<<<<<< HEAD
-  const [documento, Setdocumento] = useState('')
-=======
   const [cedula, Setcedula] = useState('')
   const [tipousuario, Settipousuario] = useState('')
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
 
     // Estado para el departamento y la ciudad seleccionados
   const [departamento, setDepartamento] = useState('');
@@ -35,12 +31,8 @@ export function FormRegister() {
     Setapellido('')
     Settelefono('')
     Setcorreo('')
-<<<<<<< HEAD
-    Setdocumento('')
-=======
     Setcedula('')
     Settipousuario('')
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,15 +40,6 @@ export function FormRegister() {
 
     Navigate('/Register/RegisterPassword',{
       state: {
-<<<<<<< HEAD
-        name,
-        apellido,
-        telefono,
-        correo,
-        documento,
-        departamento,
-        ciudad
-=======
         nombre,
         apellido,
         telefono,
@@ -65,7 +48,6 @@ export function FormRegister() {
         departamento,
         ciudad,
         tipousuario,
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
       }
     })
     
@@ -122,11 +104,7 @@ export function FormRegister() {
           />
         <br />
 
-<<<<<<< HEAD
-         <label htmlFor="correo">Correo:</label>
-=======
         <label htmlFor="correo">Correo:</label>
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
         <input 
           type="email" 
           id="correo" 
