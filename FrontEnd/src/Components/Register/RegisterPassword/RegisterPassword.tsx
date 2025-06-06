@@ -3,53 +3,21 @@ import './RegisterPassword.css';
 import { SectionLeftRegisterPassword } from './SectionLeftRegisterPassword';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import axios from 'axios'
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
 
 interface RegisterPassword {
   name: string;
   apellido: string;
   telefono: string;
   correo: string;
-<<<<<<< HEAD
-=======
   cedula: string;
   tipousuario: string;
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
   ciudad: string;
   departamento: string;
 }
 
 function RegisterPassword() {
   const location = useLocation();
-<<<<<<< HEAD
-  const { name, apellido, telefono, correo, documento, ciudad, departamento } = location.state || {};
-
-  // Estado para usuario y contraseña
-  const [usuario, setUsuario] = useState('');
-  const [contraseña, setContraseña] = useState('');
-
-  const handleConfirmar = () => {
-    // Combina los datos del formulario anterior con usuario y contraseña
-    const datosCompletos = {
-      name,
-      apellido,
-      telefono,
-      correo,
-      documento,
-      ciudad,
-      departamento,
-      usuario,
-      contraseña,
-    };
-
-    // Aquí puedes enviar los datos al backend o manejarlos según sea necesario
-    console.log('Datos completos:', datosCompletos);
-    
-  };
-=======
   const { nombre, apellido, telefono, correo, cedula, ciudad, tipousuario,  departamento } = location.state || {};
 
   // Estado para usuario y contraseña
@@ -96,7 +64,6 @@ function RegisterPassword() {
 };
 
 
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
 
   return (
     <>
@@ -109,13 +76,8 @@ function RegisterPassword() {
         </section>
         <aside className="aside-mercalista-register">
           <FormRegisterPassword
-<<<<<<< HEAD
-            usuario={usuario}
-            setUsuario={setUsuario}
-=======
             usuario={username}
             setUsuario={setUsername}
->>>>>>> 380b7fe967fb4da12bf11230b9b6100881b9b3af
             contraseña={contraseña}
             setContraseña={setContraseña}
             onConfirmar={handleConfirmar}

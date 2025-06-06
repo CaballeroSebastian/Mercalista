@@ -6,6 +6,8 @@ from rest_framework import status
 from .models import Vendedorproducto, Producto, Vendedor
 from .serializers import ProductoSerializer
 from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import os
 
 import json
 
@@ -44,47 +46,58 @@ class ProductosEnVenta(APIView):
 
 
 class crearProducto(APIView):
-    """
-    Clase para crear un producto.
-    """
     def post(self, request, id):
-        # Obtener el archivo enviado por FormData
-        foto = request.FILES.get("foto")  # esto es seguro y no lanza excepción si no hay
+        print("Archivos recibidos:", request.FILES)
+        print("Datos recibidos:", request.data)
+        
+        foto = request.FILES.get("fotos")
+        print("Archivo foto:", foto.name)
 
         if not foto:
             return Response({'error': 'No se proporcionó una imagen'}, status=status.HTTP_400_BAD_REQUEST)
-        # Guardar la foto en una ruta personalizada
-        ruta = f'productos{id}/{foto.name}'
-        path = default_storage.save(ruta, foto)
 
-        # Copiar los datos de request.data a un diccionario mutable
-        datos = request.data.copy()
-        datos['foto'] = path  # Guardamos la ruta de la imagen en el campo 'foto'
+        try:
+            #carpeta_usuario = os.path.join('productos', str(id))
+            #ruta_relativa = os.path.join(carpeta_usuario, foto.name)
+            ruta_relativa = f'productos/{id}/{foto.name}'
+            # Guardar la imagen
+            ruta_guardada = default_storage.save(ruta_relativa, ContentFile(foto.read()))
+            print("Ruta guardada:", ruta_guardada)
+            # Crear un diccionario con los datos del formulario
+            datos = {
+                'nombre': request.data.get('nombre'),
+                'categoriaproducto': request.data.get('categoriaproducto'),
+                'cantidadstock': int(request.data.get('cantidadstock')),
+                'unidadmedida': request.data.get('unidadmedida'),
+                'descripcion': request.data.get('descripcion'),
+                'estado': request.data.get('estado'),
+                'precio': float(request.data.get('precio')),
+                'fotos': ruta_guardada
+            }
+            print("Datos para serializar:", datos)
 
-        # Serializar con los datos modificados
-        serializer = ProductoSerializer(data=datos)
+            serializer = ProductoSerializer(data=datos)
+            if serializer.is_valid():
+                try:
+                    vendedor = Vendedor.objects.get(pk=id)
+                except Vendedor.DoesNotExist:
+                    return Response({'error': 'Vendedor no encontrado'}, status=404)
 
-        if serializer.is_valid():
-            try:
-                vendedor = Vendedor.objects.get(pk=id)
-            except Vendedor.DoesNotExist:
-                return Response({'error': 'Vendedor no encontrado'}, status=404)
+                producto = serializer.save()
+                
 
-            producto = serializer.save()
+                Vendedorproducto.objects.create(
+                    idvendedor=vendedor,
+                    idproducto=producto
+                )
 
-            Vendedorproducto.objects.create(
-                idvendedor=vendedor,
-                idproducto=Producto.objects.get(pk = producto.idproducto)
-            )
-
-            return Response(
-                {
+                return Response({
                     'id': producto.idproducto,
-                    'mensaje': 'Producto creado correctamente'
-                },
-                status=status.HTTP_201_CREATED
-            )
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+                    'mensaje': 'Producto creado correctamente',
+                }, status=status.HTTP_201_CREATED)
+            else:
+                print("Errores de validación:", serializer.errors)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print("Error al procesar el archivo:", str(e))
+            return Response({'error': f'Error al procesar el archivo: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)

@@ -3,40 +3,38 @@ import './PublicarTest.css';
 import type React from "react";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
 
-export default function ProductRegistrationForm() {
-  const idUsuario = 1
+const ProductRegistrationForm = () => {
+  const idUsuario = 1;
   const navigate = useNavigate();
 
   const [formulario, setFormulario] = useState({
     nombre: "",
-    categoria: "",
-    stock: 0,
-    UnidadMedida: "",
-    Descripcion: "",
+    categoriaproducto: "",
+    cantidadstock: 0,
+    unidadmedida: "",
+    descripcion: "",
     estado: "",
     precio: 0,
-    foto: "" // Aquí puedes guardar una URL o nombre de archivo
+    fotos: "" // Aquí puedes guardar una URL o nombre de archivo
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 
-  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setSelectedFile(file);
       setImagePreview(URL.createObjectURL(file));
-
-    }     
+    }
   };
 
-  const handleDeleteFile = () => {  
+  const handleDeleteFile = () => {
     setSelectedFile(null);
     setImagePreview("");
-    setFormulario({ ...formulario, foto: "" });
+    setFormulario({ ...formulario, fotos: "" });
 
     const fileInput = document.getElementById("photos") as HTMLInputElement;
     if (fileInput) fileInput.value = "";
@@ -44,73 +42,83 @@ export default function ProductRegistrationForm() {
 
   const enviar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //envia datos a la base de datos
 
+    if (!selectedFile) {
+      alert('Por favor, selecciona una imagen');
+      return;
+    }
+
+    // Verificar el tipo de archivo
+    if (!selectedFile.type.startsWith('image/')) {
+      alert('Por favor, selecciona un archivo de imagen válido');
+      return;
+    }
 
     const formData = new FormData();
     formData.append("nombre", formulario.nombre);
-    formData.append("categoria", formulario.categoria);
-    formData.append("stock", String(formulario.stock));
-    formData.append("UnidadMedida", formulario.UnidadMedida);
-    formData.append("Descripcion", formulario.Descripcion);
+    formData.append("categoriaproducto", formulario.categoriaproducto);
+    formData.append("cantidadstock", String(formulario.cantidadstock));
+    formData.append("unidadmedida", formulario.unidadmedida);
+    formData.append("descripcion", formulario.descripcion);
     formData.append("estado", formulario.estado);
     formData.append("precio", String(formulario.precio));
-    if (selectedFile) {
-      formData.append("foto", selectedFile);
+    formData.append("fotos", selectedFile);
+
+    // Log para depuración
+    console.log('Archivo a enviar:', selectedFile);
+    console.log('Tipo de archivo:', selectedFile.type);
+    console.log('Tamaño del archivo:', selectedFile.size);
+    console.log('FormData completo:', Object.fromEntries(formData.entries()));
 
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/producto/crearProducto/${idUsuario}`,
+      const response = await axios.post(
+        `http://127.0.0.1:8000/producto/crearProducto/${idUsuario}`,
         formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         }
-      }
-    );
-    
+      );
+
       if (response.status === 201) {
-        console.log(response.data.mensaje);
+        console.log('Respuesta exitosa:', response.data);
+        // Resetear formulario
+        setFormulario({
+          nombre: "",
+          categoriaproducto: "",
+          cantidadstock: 0,
+          unidadmedida: "",
+          descripcion: "",
+          estado: "",
+          precio: 0,
+          fotos: ""
+        });
+
+        setSelectedFile(null);
+        setImagePreview("");
+
+        // Resetear input de archivos
+        const fileInput = document.getElementById("photos") as HTMLInputElement;
+        if (fileInput) fileInput.value = "";
+
+        // Redirigir
+        navigate('/onSale');
       }
     } catch (error: any) {
+      console.error('Error completo:', error);
       if (error.response) {
-        // El servidor respondió con un código fuera del rango 2xx
-        console.error('Error:', error.response.data);
+        console.error('Datos del error:', error.response.data);
+        alert('Error al crear el producto: ' + JSON.stringify(error.response.data));
       } else if (error.request) {
-        // La petición fue hecha pero no hubo respuesta
         console.error('No hubo respuesta del servidor');
+        alert('No hubo respuesta del servidor');
       } else {
-        // Otro error
         console.error('Error:', error.message);
+        alert('Error: ' + error.message);
       }
     }
-    
-     
-    // Resetear formulario
-    setFormulario({
-      nombre: "",
-      categoria: "",
-      stock: 0,
-      UnidadMedida: "",
-      Descripcion: "",
-      estado: "",
-      precio: 0,
-      foto: ""
-    });
-
-    setSelectedFile(null);
-    setImagePreview("");
-
-    // Resetear input de archivos
-    const fileInput = document.getElementById("photos") as HTMLInputElement;
-    if (fileInput) fileInput.value = "";
-
-
-   
-
-    // Redirigir
-    navigate('/onSale');
   };
-
 
   return (
     <Menu>
@@ -153,12 +161,12 @@ export default function ProductRegistrationForm() {
                     type="number"
                     placeholder="Ingresa cantidad"
                     className="entrada-publicar-producto"
-                    value={formulario.stock}
+                    value={formulario.cantidadstock}
                     onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                       (e.target.value = e.target.value.replace(/[^\d]/g, ''))
                     }
                     onChange={(e) =>
-                      setFormulario({ ...formulario, stock: parseInt(e.target.value) })
+                      setFormulario({ ...formulario, cantidadstock: parseInt(e.target.value) })
                     }
                     required
                   />
@@ -174,9 +182,9 @@ export default function ProductRegistrationForm() {
                     rows={3}
                     style={{ width: '100%', height: '100px', resize: 'none' }}
                     maxLength={1000}
-                    value={formulario.Descripcion}
+                    value={formulario.descripcion}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      setFormulario({ ...formulario, Descripcion: e.target.value })
+                      setFormulario({ ...formulario, descripcion: e.target.value })
                     }
                   ></textarea>
                 </div>
@@ -194,7 +202,7 @@ export default function ProductRegistrationForm() {
                       required
                       inputMode="numeric"
                       value={formulario.precio}
-                      min={0.01}
+                      min={0.00}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setFormulario({ ...formulario, precio: parseFloat(e.target.value) })
                       }
@@ -216,9 +224,9 @@ export default function ProductRegistrationForm() {
                     id="category"
                     className="selector-publicar-producto"
                     required
-                    value={formulario.categoria}
+                    value={formulario.categoriaproducto}
                     onChange={(e) =>
-                      setFormulario({ ...formulario, categoria: e.target.value })
+                      setFormulario({ ...formulario, categoriaproducto: e.target.value })
                     }
                   >
                     <option value="" disabled>Seleccione una opción</option>
@@ -239,14 +247,16 @@ export default function ProductRegistrationForm() {
                     id="unit"
                     className="selector-publicar-producto"
                     required
-                    value={formulario.UnidadMedida}
+                    value={formulario.unidadmedida}
                     onChange={(e) =>
-                      setFormulario({ ...formulario, UnidadMedida: e.target.value })
+                      setFormulario({ ...formulario, unidadmedida: e.target.value })
                     }
                   >
                     <option value="" disabled>Elegir...</option>
-                    <option value="kg">Kilogramo (kg)</option>
-                    <option value="toneladas">Toneladas</option>
+                    <option value="kilogramos">kilogramos (kg)</option>
+                    <option value="tonelada">Tonelada</option>
+                    <option value="Arroba">Arroba</option>
+                    <option value="Carga">Carga</option>
                   </select>
                 </div>
 
@@ -262,9 +272,9 @@ export default function ProductRegistrationForm() {
                       setFormulario({ ...formulario, estado: e.target.value })
                     }
                   >
-                    <option value="" disabled>Elegir...</option>
-                    <option value="verde">Verde</option>
-                    <option value="maduro">Maduro</option>
+                    <option value="Sin tipo">Sin tipo</option>
+                    <option value="Verde">Verde</option>
+                    <option value="Maduro">Maduro</option>
                   </select>
                 </div>
               </div>
@@ -290,8 +300,8 @@ export default function ProductRegistrationForm() {
                       id="photos"
                       type="file"
                       accept="image/*"
-                      onChange={(e)=>{
-                        handleFileChange(e)
+                      onChange={(e) => {
+                        handleFileChange(e);
                       }}
                       className="entrada-archivo-oculta-publicar"
                     />
@@ -327,9 +337,9 @@ export default function ProductRegistrationForm() {
             Publicar producto
           </button>
         </div>
-
       </div>
     </Menu>
   );
-}
-}
+};
+
+export default ProductRegistrationForm;
