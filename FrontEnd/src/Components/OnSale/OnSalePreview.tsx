@@ -20,6 +20,8 @@ interface Props{
 
 const OnSalePreview = ({close, datosProducto}: Props) =>{
 
+  const backendUrl = "http://127.0.0.1:8000/";
+
     return (
         <div className="modal-overlay" onClick={close}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
@@ -54,7 +56,7 @@ const OnSalePreview = ({close, datosProducto}: Props) =>{
     
               <div className="photo-container">
                 <div className="photo-wrapper">
-                  <img src={productoImg || "/placeholder.svg"} alt={datosProducto.nombre} className="product-photo" />
+                  <img src={`${backendUrl}media/${datosProducto.fotos}` || "/placeholder.svg"} alt={datosProducto.nombre} className="product-photo" />
                 </div>
               </div>
     

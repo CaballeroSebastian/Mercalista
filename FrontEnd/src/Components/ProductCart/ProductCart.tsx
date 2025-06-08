@@ -45,7 +45,7 @@ const ProductCart = () => {
                                 ? (product.fotos.startsWith('http')
                                     ? product.fotos
                                     : `http://127.0.0.1:8000/media/producto/${product.fotos}`)  // Aquí está la corrección
-                                : null;
+                                : null; 
 
                             return (
                                 <a href="#" className="producto-carts" key={product.idproducto}>
