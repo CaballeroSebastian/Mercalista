@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProductCart.css';
+import ModalProductCard from './modalCard'
 
 interface Product {
     idproducto: number;
@@ -12,6 +13,19 @@ interface Product {
 const ProductCart = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
+
+    //estados ventana modal
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState<Product | false>(false)
+
+    //funcion para determina que producto abrira la ventana modal
+    const OpenCard = (producto: Product) =>{
+        setSelectedCard(producto)
+    }
+
+    const Cerrar = () =>{
+        setIsOpen(!isOpen)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,8 +62,8 @@ const ProductCart = () => {
                                 : null;
 
                             return (
-                                <a href="#" className="producto-carts" key={product.idproducto}>
-                                    <div className="thumb">
+                                <a href="#" className="producto-carts" key={product.idproducto} onClick={()=> {OpenCard(product); Cerrar()} }> 
+                                    <div className="thumb" >
                                         {imagenUrl ? (
                                             <img src={imagenUrl} alt={product.nombre} />
                                         ) : (
@@ -66,6 +80,11 @@ const ProductCart = () => {
                         })
                     )}
                 </div>
+                {isOpen &&(
+                    <ModalProductCard close = {Cerrar} data = {selectedCard} />
+                    )
+
+                }
             </div>
         </section>
     );
