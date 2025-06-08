@@ -24,6 +24,7 @@ interface Props{
 }
 
 const Edit =({cerrar, informacion}: Props)=>{
+    const backendUrl = "http://127.0.0.1:8000/";
 
     const onDelete = () =>{
 
@@ -31,7 +32,7 @@ const Edit =({cerrar, informacion}: Props)=>{
     const onSave = (data: any) =>{
         console.log(`informacion guardada correctamente: ${data}`)
     }
-
+    
     const [formData, setFormData] = useState({
         nombre: informacion?.nombre || "",
         categoriaproducto: informacion?.categoriaproducto || "",
@@ -40,8 +41,9 @@ const Edit =({cerrar, informacion}: Props)=>{
         descripcion: informacion?.descripcion || "",
         estado: informacion?.estado || "",
         precio: informacion?.precio || 0,
-        foto: informacion?.fotos || "",
+        fotos: informacion?.fotos || "",
       })
+    
     
       const [imagePreview, setImagePreview] = useState(informacion?.fotos || "")
     
@@ -80,35 +82,35 @@ const Edit =({cerrar, informacion}: Props)=>{
     
     
       return (
-        <div className="modal-overlay">
-          <div className="modal-container">
-            <div className="modal-header">
-              <div className="modal-title">
-                <Edit3 className="title-icon" />
-                <h2>Editar informacion</h2>
+        <div className="product-edit-overlay">
+          <div className="product-edit-container">
+            <div className="product-edit-header">
+              <div className="product-edit-title">
+                <Edit3 className="product-edit-title-icon" />
+                <h2>Editar Producto</h2>
               </div>
-              <button className="close-button" onClick={cerrar}>
+              <button className="product-edit-close-button" onClick={cerrar}>
                 <X size={24} />
               </button>
             </div>
     
-            <div className="modal-content">
-              <div className="form-grid">
-                <div className="form-section">
-                  <div className="input-group">
-                    <label htmlFor="nombre">Nombre del informacion</label>
+            <div className="product-edit-content">
+              <div className="product-edit-form-grid">
+                <div className="product-edit-form-section">
+                  <div className="product-edit-input-group">
+                    <label htmlFor="nombre">Nombre del Producto</label>
                     <input
                       type="text"
                       id="nombre"
                       name="nombre"
                       value={formData.nombre}
                       onChange={handleInputChange}
-                      placeholder="Ingrese el nombre del informacion"
+                      placeholder="Ingrese el nombre del producto"
                     />
                   </div>
     
-                  <div className="input-row">
-                    <div className="input-group">
+                  <div className="product-edit-input-row">
+                    <div className="product-edit-input-group">
                       <label htmlFor="categoriaproducto">Categoría</label>
                       <select
                         id="categoriaproducto"
@@ -118,27 +120,27 @@ const Edit =({cerrar, informacion}: Props)=>{
                       >
                         <option value="">Seleccionar categoría</option>
                         <option value="frutas">Frutas</option>
-                        <option value="verduras">Verduras</option>
-                        <option value="granos">Granos</option>
-                        <option value="lacteos">Lácteos</option>
-                        <option value="carnes">Carnes</option>
-                        <option value="otros">Otros</option>
+                        <option value="legumbres">Verduras</option>
+                        <option value="cereales">Granos</option>
+                        <option value="tuberculos">Lácteos</option>
+                        <option value="nueces">Carnes</option>
+                        <option value="especias">Otros</option>
                       </select>
                     </div>
     
-                    <div className="input-group">
+                    <div className="product-edit-input-group">
                       <label htmlFor="estado">Estado</label>
                       <select id="estado" name="estado" value={formData.estado} onChange={handleInputChange}>
-                        <option value="">Seleccionar estado</option>
-                        <option value="disponible">Disponible</option>
-                        <option value="agotado">Agotado</option>
-                        <option value="descontinuado">Descontinuado</option>
+                        <option value="Sin tipo">Sin tipo</option>
+                        <option value="Verde">Verde</option>
+                        <option value="Maduro">Maduro</option>
+                        
                       </select>
                     </div>
                   </div>
     
-                  <div className="input-row">
-                    <div className="input-group">
+                  <div className="product-edit-input-row">
+                    <div className="product-edit-input-group">
                       <label htmlFor="cantidadstock">Cantidad en Stock</label>
                       <input
                         type="number"
@@ -147,11 +149,10 @@ const Edit =({cerrar, informacion}: Props)=>{
                         value={formData.cantidadstock}
                         onChange={handleInputChange}
                         min="0"
-                        placeholder="0"
                       />
                     </div>
     
-                    <div className="input-group">
+                    <div className="product-edit-input-group">
                       <label htmlFor="unidadmedida">Unidad de Medida</label>
                       <select
                         id="unidadmedida"
@@ -159,18 +160,15 @@ const Edit =({cerrar, informacion}: Props)=>{
                         value={formData.unidadmedida}
                         onChange={handleInputChange}
                       >
-                        <option value="">Seleccionar unidad</option>
-                        <option value="kg">Kilogramos</option>
-                        <option value="g">Gramos</option>
-                        <option value="lb">Libras</option>
-                        <option value="unidad">Unidad</option>
-                        <option value="litros">Litros</option>
-                        <option value="ml">Mililitros</option>
+                        <option value="" disabled>Elegir...</option>
+                        <option value="kilogramos">kilogramos</option>
+                        <option value="tonelada">Tonelada</option>
+                        <option value="Carga">Carga</option>
                       </select>
                     </div>
                   </div>
     
-                  <div className="input-group">
+                  <div className="product-edit-input-group">
                     <label htmlFor="precio">Precio ($)</label>
                     <input
                       type="number"
@@ -184,34 +182,34 @@ const Edit =({cerrar, informacion}: Props)=>{
                     />
                   </div>
     
-                  <div className="input-group">
+                  <div className="product-edit-input-group">
                     <label htmlFor="descripcion">Descripción</label>
                     <textarea
                       id="descripcion"
                       name="descripcion"
                       value={formData.descripcion}
                       onChange={handleInputChange}
-                      placeholder="Describe las características del informacion..."
+                      placeholder="Describe las características del producto..."
                       rows={4}
                     />
                   </div>
                 </div>
     
-                <div className="image-section">
-                  <label className="image-label">Imagen del informacion</label>
-                  <div className="image-upload-container">
+                <div className="product-edit-image-section">
+                  <label className="product-edit-image-label">Imagen del Producto</label>
+                  <div className="product-edit-image-upload-container">
                     {imagePreview ? (
-                      <div className="image-preview">
-                        <img src={imagePreview || "/placeholder.svg"} alt="Preview" />
-                        <div className="image-overlay">
-                          <label htmlFor="foto" className="change-image-btn">
+                      <div className="product-edit-image-preview">
+                        <img src={`${backendUrl}media/${formData.fotos}` || "/placeholder.svg"} alt="Preview" />
+                        <div className="product-edit-image-overlay">
+                          <label htmlFor="foto" className="product-edit-change-image-btn">
                             <Upload size={20} />
                             Cambiar imagen
                           </label>
                         </div>
                       </div>
                     ) : (
-                      <label htmlFor="foto" className="upload-placeholder">
+                      <label htmlFor="foto" className="product-edit-upload-placeholder">
                         <Upload size={32} />
                         <span>Subir imagen</span>
                         <small>PNG, JPG hasta 5MB</small>
@@ -230,15 +228,15 @@ const Edit =({cerrar, informacion}: Props)=>{
               </div>
             </div>
     
-            <div className="modal-footer">
-              <button className="btn-secondary" onClick={cerrar}>
+            <div className="product-edit-footer">
+              <button className="product-edit-btn-secondary" onClick={cerrar}>
                 Cancelar
               </button>
-              <button className="btn-danger" onClick={handleDelete}>
+              <button className="product-edit-btn-danger" onClick={handleDelete}>
                 <Trash2 size={18} />
                 Eliminar
               </button>
-              <button className="btn-primary" onClick={handleSave}>
+              <button className="product-edit-btn-primary" onClick={handleSave}>
                 <Save size={18} />
                 Guardar Cambios
               </button>
@@ -258,3 +256,5 @@ export default Edit
        
 //     </>
 // )
+
+

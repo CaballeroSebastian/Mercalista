@@ -1,5 +1,5 @@
 
-    .modal-overlay {
+    .product-edit-overlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -13,7 +13,7 @@
       padding: 20px;
     }
 
-    .modal-container {
+    .product-edit-container {
       background: linear-gradient(135deg, #f5f1eb 0%, #ede4d3 100%);
       border-radius: 16px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
@@ -25,7 +25,7 @@
       flex-direction: column;
     }
 
-    .modal-header {
+    .product-edit-header {
       background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
       color: white;
       padding: 20px 24px;
@@ -35,25 +35,25 @@
       border-bottom: 3px solid #8b6914;
     }
 
-    .modal-title {
+    .product-edit-title {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .title-icon {
+    .product-edit-title-icon {
       background: rgba(255, 255, 255, 0.2);
       padding: 8px;
       border-radius: 8px;
     }
 
-    .modal-title h2 {
+    .product-edit-title h2 {
       margin: 0;
       font-size: 1.5rem;
       font-weight: 600;
     }
 
-    .close-button {
+    .product-edit-close-button {
       background: rgba(255, 255, 255, 0.2);
       border: none;
       color: white;
@@ -63,35 +63,35 @@
       transition: background-color 0.2s;
     }
 
-    .close-button:hover {
+    .product-edit-close-button:hover {
       background: rgba(255, 255, 255, 0.3);
     }
 
-    .modal-content {
+    .product-edit-content {
       padding: 24px;
       overflow-y: auto;
       flex: 1;
     }
 
-    .form-grid {
+    .product-edit-form-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 32px;
     }
 
-    .form-section {
+    .product-edit-form-section {
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
-    .input-group {
+    .product-edit-input-group {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .input-row {
+    .product-edit-input-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
@@ -123,19 +123,19 @@
       min-height: 100px;
     }
 
-    .image-section {
+    .product-edit-image-section {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .image-label {
+    .product-edit-image-label {
       font-weight: 600;
       color: #8b6914;
       font-size: 0.9rem;
     }
 
-    .image-upload-container {
+    .product-edit-image-upload-container {
       position: relative;
       border: 2px dashed #d4c4a8;
       border-radius: 12px;
@@ -143,18 +143,18 @@
       background: white;
     }
 
-    .image-preview {
+    .product-edit-image-preview {
       position: relative;
       aspect-ratio: 1;
     }
 
-    .image-preview img {
+    .product-edit-image-preview img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .image-overlay {
+    .product-edit-image-overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -168,11 +168,11 @@
       transition: opacity 0.2s;
     }
 
-    .image-preview:hover .image-overlay {
+    .product-edit-image-preview:hover .product-edit-image-overlay {
       opacity: 1;
     }
 
-    .change-image-btn {
+    .product-edit-change-image-btn {
       background: #b8860b;
       color: white;
       padding: 12px 20px;
@@ -185,11 +185,11 @@
       transition: background-color 0.2s;
     }
 
-    .change-image-btn:hover {
+    .product-edit-change-image-btn:hover {
       background: #8b6914;
     }
 
-    .upload-placeholder {
+    .product-edit-upload-placeholder {
       aspect-ratio: 1;
       display: flex;
       flex-direction: column;
@@ -202,22 +202,22 @@
       transition: all 0.2s;
     }
 
-    .upload-placeholder:hover {
+    .product-edit-upload-placeholder:hover {
       background: #f9f7f4;
       border-color: #b8860b;
     }
 
-    .upload-placeholder span {
+    .product-edit-upload-placeholder span {
       font-weight: 600;
       font-size: 1.1rem;
     }
 
-    .upload-placeholder small {
+    .product-edit-upload-placeholder small {
       color: #999;
       font-size: 0.85rem;
     }
 
-    .modal-footer {
+    .product-edit-footer {
       background: #f9f7f4;
       padding: 20px 24px;
       display: flex;
@@ -226,7 +226,7 @@
       border-top: 1px solid #e5dcc9;
     }
 
-    .btn-primary, .btn-secondary, .btn-danger {
+    .product-edit-btn-primary, .product-edit-btn-secondary, .product-edit-btn-danger {
       padding: 12px 24px;
       border-radius: 8px;
       font-weight: 600;
@@ -239,91 +239,91 @@
       font-size: 0.95rem;
     }
 
-    .btn-primary {
+    .product-edit-btn-primary {
       background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
       color: white;
     }
 
-    .btn-primary:hover {
+    .product-edit-btn-primary:hover {
       background: linear-gradient(135deg, #8b6914 0%, #6b5010 100%);
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
     }
 
-    .btn-secondary {
+    .product-edit-btn-secondary {
       background: white;
       color: #8b6914;
       border: 2px solid #d4c4a8;
     }
 
-    .btn-secondary:hover {
+    .product-edit-btn-secondary:hover {
       background: #f9f7f4;
       border-color: #b8860b;
     }
 
-    .btn-danger {
+    .product-edit-btn-danger {
       background: #dc3545;
       color: white;
     }
 
-    .btn-danger:hover {
+    .product-edit-btn-danger:hover {
       background: #c82333;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     }
 
     @media (max-width: 768px) {
-      .modal-overlay {
+      .product-edit-overlay {
         padding: 10px;
       }
 
-      .modal-container {
+      .product-edit-container {
         max-height: 95vh;
       }
 
-      .modal-header {
+      .product-edit-header {
         padding: 16px 20px;
       }
 
-      .modal-title h2 {
+      .product-edit-title h2 {
         font-size: 1.25rem;
       }
 
-      .modal-content {
+      .product-edit-content {
         padding: 20px;
       }
 
-      .form-grid {
+      .product-edit-form-grid {
         grid-template-columns: 1fr;
         gap: 24px;
       }
 
-      .input-row {
+      .product-edit-input-row {
         grid-template-columns: 1fr;
         gap: 16px;
       }
 
-      .modal-footer {
+      .product-edit-footer {
         padding: 16px 20px;
         flex-direction: column-reverse;
       }
 
-      .btn-primary, .btn-secondary, .btn-danger {
+      .product-edit-btn-primary, .product-edit-btn-secondary, .product-edit-btn-danger {
         width: 100%;
         justify-content: center;
       }
     }
 
     @media (max-width: 480px) {
-      .modal-header {
+      .product-edit-header {
         padding: 12px 16px;
       }
 
-      .modal-content {
+      .product-edit-content {
         padding: 16px;
       }
 
-      .modal-footer {
+      .product-edit-footer {
         padding: 12px 16px;
       }
     }
