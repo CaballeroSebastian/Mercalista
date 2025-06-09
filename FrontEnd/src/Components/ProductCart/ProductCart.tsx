@@ -8,6 +8,8 @@ interface Product {
     precio: number;
     cantidadstock: number;
     fotos: string | null;
+    categoriaproducto: string;
+    descripcion: string;
 }
 
 const ProductCart = () => {
@@ -47,7 +49,7 @@ const ProductCart = () => {
     return (
         <section className="productos-carts">
             <div className="contenedor">
-                <h3 className="titulo">Productos</h3>
+                <h3 className="tituloPrew">Productos</h3>
                 <div className="contenedor-cards">
                     {error ? (
                         <p>{error}</p>
@@ -70,11 +72,13 @@ const ProductCart = () => {
                                             <div className="no-image">No img</div>
                                         )}
                                     </div>
-                                    <div className="informacion-producto">
-                                        <p className="nombre">{product.nombre}</p>
-                                        <p className="precio">${product.precio}</p>
-                                        <p className="peso">{product.cantidadstock} unidades</p>
+                                    <div className="informacion-productoPrew">
+                                        <p className="nombrePrew">{product.nombre}</p>
+                                        <p className="CategoriaPrew">{product.categoriaproducto}</p>                                        
+                                        <p className="descripcionPrew">{product.descripcion || "Sin descripción"}</p>
+                                        <p className="precioPrew">${product.precio}</p>                                    
                                     </div>
+                                    <button className="ComprarPrew">Añadir al Carrito</button>
                                 </a>
                             );
                         })

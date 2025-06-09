@@ -282,10 +282,29 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                   <div className="info-line">
                     <h2 className="h2-info">Usuario</h2>
                     <div className="li-contenedor d-flex justify-content-between align-items-center">
-                      <span className="li-info">{datosUsuario?.username}</span>
-    <                   a onClick={() => handleEditClick("username")}>
-                        <img className="icons" src={editarIcon} alt="editar" />
-                      </a>
+                      {isEditing["username"] ? (
+                        <>
+                          <input
+                            className="form-control"
+                            value={formData.username || ""}
+                            onChange={(e) => handleInputChange(e, "username")}
+                          />
+                          <img
+                            className="icons"
+                            src={checkIcon}
+                            alt="confirmar"
+                            onClick={() => handleConfirmEdit("username")}
+                            style={{ cursor: "pointer" }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <span className="li-info">{datosUsuario?.username}</span>
+                          <a onClick={() => handleEditClick("username")}>
+                            <img className="icons" src={editarIcon} alt="editar" />
+                          </a>
+                        </>
+                      )}
                     </div>
                     <p className="nota-usuario">Cambia el usuario cada 30 días.</p>
                   </div>

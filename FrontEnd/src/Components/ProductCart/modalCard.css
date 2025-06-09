@@ -103,18 +103,15 @@
   }
   
   /* Contenedor de fotos */
-  .photo-container {
+  .photo-containerPrew {
     position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
-    height: 200px;
   }
   
-  .photo-wrapper {
-    width: 200px;
-    height: 200px;
+  .photo-wrapperPrew {
     border-radius: 8px;
     overflow: hidden;
     border: 2px solid #d6c6a6;
@@ -134,6 +131,13 @@
     border-radius: 8px;
     border: 1px solid #d6c6a6;
     margin-top: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: auto;
+
   }
   
   .description-container h3 {
@@ -148,6 +152,28 @@
     line-height: 1.5;
     margin: 0;
   }
+
+  .ComprarPrewCaja{
+    width: 80%;
+    padding: 2px;
+    margin: 0 auto;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #413620e1;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+    color: #ffe9c2;
+
+    margin-top: 20px;
+  }
+
+  .ComprarPrewCaja:hover {
+    color: rgb(255, 255, 255);    
+    background-color: #413620;
+}
   
   /* Animación de entrada */
   @keyframes modalFadeIn {
