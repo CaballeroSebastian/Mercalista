@@ -9,6 +9,7 @@ interface Product {
     precio: number;
     cantidadstock: number;
     fotos: string | null;
+    categoriaproducto: string;
 }
 
 interface ModalProps {
@@ -32,7 +33,7 @@ const ModalProductCard = ({close, data}: ModalProps) =>{
               <div className="product-info">
                 <div className="info-row">
                   <span className="info-label">Categoría:</span>
-                  <span className="info-value status-badge">verduras</span>
+                  <span className="info-value status-badge">{data.categoriaproducto || "Sin categoría"}</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Stock:</span>
@@ -46,20 +47,32 @@ const ModalProductCard = ({close, data}: ModalProps) =>{
                 </div>
                 <div className="info-row">
                   <span className="info-label">Estado:</span>
-                  <span className="info-value status-badge">maduro</span>
+                  <span className="info-value status-badge">{data.estado || "Sin estado"}</span>
                 </div>
               </div>
     
-              <div className="photo-container">
-                <div className="photo-wrapper">
-                  <img src={productoImg || "/placeholder.svg"} alt={data.nombre} className="product-photo" />
+              <div className="photo-containerPrew">
+                <div className="photo-wrapperPrew">
+                  <img
+                    src={
+                      data.fotos
+                        ? (data.fotos.startsWith('http')
+                            ? data.fotos
+                            : `http://127.0.0.1:8000/media/producto/${data.fotos}`)
+                        : productoImg
+                    }
+                    alt={data.nombre}
+                    className="product-photo"
+                  />
                 </div>
               </div>
     
               <div className="description-container">
                 <h3>Descripción</h3>
-                <p> nada</p>
+                <p>{data.descripcion || "Sin descripción"}</p>
               </div>
+                <button className="ComprarPrewCaja">Añadir al Carrito</button>
+              
             </div>
           </div>
         </div>
