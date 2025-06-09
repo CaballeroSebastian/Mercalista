@@ -1,6 +1,3 @@
 from django.db import models
-
-from Register.models import Usuario
-
-
-# Create your models here.
+class Usuario(models.Model):
+    image_profile = models.ImageField(upload_to='imageProfile/', null=True, blank=True)
