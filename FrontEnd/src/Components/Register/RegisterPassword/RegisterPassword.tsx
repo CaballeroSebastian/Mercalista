@@ -3,41 +3,67 @@ import './RegisterPassword.css';
 import { SectionLeftRegisterPassword } from './SectionLeftRegisterPassword';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios'
 
 interface RegisterPassword {
   name: string;
   apellido: string;
   telefono: string;
   correo: string;
+  cedula: string;
+  tipousuario: string;
   ciudad: string;
   departamento: string;
 }
 
 function RegisterPassword() {
   const location = useLocation();
-  const { name, apellido, telefono, correo, ciudad, departamento } = location.state || {};
+  const { nombre, apellido, telefono, correo, cedula, ciudad, tipousuario,  departamento } = location.state || {};
 
   // Estado para usuario y contraseña
-  const [usuario, setUsuario] = useState('');
+  const [username, setUsername] = useState('');
   const [contraseña, setContraseña] = useState('');
 
-  const handleConfirmar = () => {
-    // Combina los datos del formulario anterior con usuario y contraseña
-    const datosCompletos = {
-      name,
-      apellido,
-      telefono,
-      correo,
-      ciudad,
-      departamento,
-      usuario,
-      contraseña,
-    };
+  const handleConfirmar = async () => {
+  // Combina los datos del formulario anterior con usuario y contraseña
+  const datosCompletos = {
+  nombre,
+  apellido,
+  telefono,
+  correo,
+  cedula,
+  ciudad,
+  tipousuario,
+  departamento,
+  username,
+  contraseña,
+};
 
-    // Aquí puedes enviar los datos al backend o manejarlos según sea necesario
-    console.log('Datos completos:', datosCompletos);
-    
-  };
+  console.log('Datos completos a enviar:', datosCompletos);
+
+      try {
+    const response = await axios.post(
+      'http://localhost:8000/Register/crearUsuario/',
+      datosCompletos,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 5000,
+      }
+    );
+    console.log('✅ Usuario registrado con éxito:', response.data);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      console.error('❌ Error del backend:', error.response.data);
+    } else {
+      console.error('❌ Error desconocido:', error.message);
+    }
+  }
+};
+
+
 
   return (
     <>
@@ -50,8 +76,8 @@ function RegisterPassword() {
         </section>
         <aside className="aside-mercalista-register">
           <FormRegisterPassword
-            usuario={usuario}
-            setUsuario={setUsuario}
+            usuario={username}
+            setUsuario={setUsername}
             contraseña={contraseña}
             setContraseña={setContraseña}
             onConfirmar={handleConfirmar}
