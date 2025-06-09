@@ -69,8 +69,9 @@ export function FormRegister() {
       <form className="form-register" onSubmit={handleSubmit} method='POST'>
         
         <div className='div-form-register'>
-        <label htmlFor="name">Nombre:</label>
-        <input 
+        <label className='label-register' htmlFor="name">Nombre:</label>
+        <input
+        className='form-input-register'
         type="text" 
         id="nombre" 
         name="nombre" 
@@ -81,8 +82,9 @@ export function FormRegister() {
         
         />
         <br />
-        <label htmlFor="apellido">Apellido:</label>
-        <input 
+        <label className='label-register' htmlFor="apellido">Apellido:</label>
+        <input
+          className='form-input-register'
           type="text" 
           id="apellido" 
           name="apellido" 
@@ -92,8 +94,9 @@ export function FormRegister() {
           required
           />
         <br />
-        <label htmlFor="telefono">Telefono:</label>
-        <input 
+        <label className='label-register' htmlFor="telefono">Telefono:</label>
+        <input
+          className='form-input-register'
           type="number" 
           id="telefono" 
           name="telefono" 
@@ -104,8 +107,9 @@ export function FormRegister() {
           />
         <br />
 
-        <label htmlFor="correo">Correo:</label>
-        <input 
+        <label className='label-register' htmlFor="correo">Correo:</label>
+        <input
+          className='form-input-register'
           type="email" 
           id="correo" 
           name="correo" 
@@ -115,8 +119,9 @@ export function FormRegister() {
           />
         <br />
 
-        <label htmlFor="documento">Documento:</label>
+        <label className='label-register' htmlFor="documento">Documento:</label>
         <input 
+          className='form-input-register'
           type="number" 
           id="cedula" 
           name="cedula"
@@ -126,7 +131,7 @@ export function FormRegister() {
           required
         />
         <br />
-        <label htmlFor="">Tipo de Usuario</label>
+        <label className='label-register' htmlFor="">Tipo de Usuario</label>
         <select 
           typeof='text'
           className="form-select"
@@ -143,7 +148,7 @@ export function FormRegister() {
         <br />
 
         <div >
-          <label htmlFor="dep-select" className="form-label">
+          <label  htmlFor="dep-select" className="form-label-register">
             {" "}
             Departamento:
           </label>
@@ -168,7 +173,7 @@ export function FormRegister() {
         </div>
 
         <div >
-          <label htmlFor="ciudad-select" className="form-label">
+          <label htmlFor="ciudad-select" className="form-label-register">
             Ciudad:
           </label>
           <select
