@@ -163,7 +163,26 @@ const PreviewSale = ({ onClose, datosVenta }:SalesHistoryModalProps) => {
                 </div>
   
                 <div className="sales-modal-buyer-details">
-
+                  <div className="sales-modal-buyer-detail-item">
+                    <div className="sales-modal-buyer-detail-icon">
+                      <Phone size={18} />
+                    </div>
+                    <div className="sales-modal-buyer-detail-content">
+                      <span className="sales-modal-buyer-detail-label">Teléfono</span>
+                      <span className="sales-modal-buyer-detail-value">{datosVenta.telefono}</span>
+                    </div>
+                  </div>
+  
+                  <div className="sales-modal-buyer-detail-item">
+                    <div className="sales-modal-buyer-detail-icon">
+                      <Mail size={18} />
+                    </div>
+                    <div className="sales-modal-buyer-detail-content">
+                      <span className="sales-modal-buyer-detail-label">Email</span>
+                      <span className="sales-modal-buyer-detail-value">{datosVenta.email}</span>
+                    </div>
+                  </div>
+  
                   <div className="sales-modal-buyer-detail-item">
                     <div className="sales-modal-buyer-detail-icon">
                       <MapPin size={18} />

@@ -159,5 +159,5 @@ ALLOWED_HOSTS = ['*']
 #     "http://localhost:5173", #vite
 # ]
 
-MEDIA_URL = '/media/producto/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
