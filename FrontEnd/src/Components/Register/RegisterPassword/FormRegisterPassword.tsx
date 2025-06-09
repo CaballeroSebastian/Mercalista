@@ -24,8 +24,9 @@ export function FormRegisterPassword({
     <>
       
       <form className="form-register" onSubmit={(e) => e.preventDefault()}>
-        <label htmlFor="user">User:</label>
-        <input 
+        <label className='form-label-register' htmlFor="user">User:</label>
+        <input
+          className='form-input-register'
           type="text" 
           id="user" 
           name="user"
@@ -34,9 +35,10 @@ export function FormRegisterPassword({
           onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value)}
           required />
         <br />
-        <label htmlFor="password">Password:</label>
+        <label className='form-label-register' htmlFor="password">Password:</label>
         <input
-         type="text" 
+         className='form-input-register'
+         type="password" 
          id="password" 
          name="password"
          value={contraseña}
