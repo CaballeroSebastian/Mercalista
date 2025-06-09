@@ -13,6 +13,7 @@ class Usuario(models.Model):
     correo = models.CharField(max_length=100, unique= True)
     contraseña = models.CharField(max_length=100)
     departamento = models.CharField(max_length=100)
+    username = models.CharField(max_length=50, unique=True)
 
     class Meta:
         managed = False
