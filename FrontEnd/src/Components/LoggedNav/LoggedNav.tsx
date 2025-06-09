@@ -34,8 +34,8 @@ const Menu = ({children}: NavBarPropsLogged) => {
     const { username } = useParams<{ username: string }>();
 
     useEffect(() => {
-        // Solo redirigir si estamos en la ruta /logged/* y el username no coincide
-        if (window.location.pathname.startsWith('/logged/') && user?.username !== username) {
+        // Verificar que el usuario está viendo su propia página
+        if (user?.username !== username) {
             navigate(`/logged/${user?.username}`);
         }
     }, [user, username, navigate]);
