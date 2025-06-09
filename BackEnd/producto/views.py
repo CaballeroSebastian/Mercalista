@@ -3,7 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
-from .models import Vendedorproducto, Producto, Vendedor
+from rest_framework.decorators import api_view
+from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador
 from .serializers import ProductoSerializer
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -101,3 +102,25 @@ class crearProducto(APIView):
         except Exception as e:
             print("Error al procesar el archivo:", str(e))
             return Response({'error': f'Error al procesar el archivo: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def eliminarProducto(request, pk):
+    try:
+        print(f"Intentando eliminar producto con ID: {pk}")
+
+        # Eliminar registros en Carrito que referencian al producto
+        Carrito.objects.filter(idproducto=pk).delete()
+
+        # Eliminar registros en VendedorProducto que referencian al producto
+        Vendedorproducto.objects.filter(idproducto=pk).delete()
+
+        # Ahora sí es seguro eliminar el producto
+        producto = Producto.objects.get(pk=pk)
+        producto.delete()
+
+        print(f"Producto con ID {pk} eliminado exitosamente")
+        return Response({'mensaje': 'Producto eliminado'}, status=status.HTTP_204_NO_CONTENT)
+    
+    except Producto.DoesNotExist:
+        print(f"Producto con ID {pk} no encontrado")
+        return Response({'error': 'Producto no encontrado'}, status=status.HTTP_404_NOT_FOUND)

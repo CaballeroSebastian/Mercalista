@@ -2,6 +2,9 @@
 import { Routes, Route } from 'react-router-dom'
 //importar estilos
 import './App.css'
+import { AuthProvider } from './Context/AuthContext'; // ✅ Correcto
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+
 
 
 //rutas por crear SEBASTIAN MUÑOZ
@@ -46,57 +49,78 @@ import ProductRegistrationForm from './Components/PublicarTest/PublicarTest.tsx'
 
 
 function App() {
-
+  
   return (
     <>
-      <Routes>
-        {/* --> SEBASTIAN CABALLERO*/}
-        <Route path='/' element={
-          <LoginNavbar >
-            <ProductCard/>
-          </LoginNavbar >
+      <AuthProvider>
+        <Routes>
+          {/* Rutas públicas */}
+          <Route path='/' element={
+            <LoginNavbar>
+              <ProductCard/>
+            </LoginNavbar>
           } />
-        <Route path='/Profile/:cedula' element={<Profile />} />        
-        <Route path='/logged' element={   
-          <Menu>
-            <ProductCard/>  
-          </Menu>
-          } /> 
-        <Route path='/Manuals' element={<Manuals/>} />        
-          
-          
-        
-        {/* --> SEBASTIAN MUÑOZ*/}
-        <Route path='/LoginEmail' element={<LoginEmail/>} />
-        <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
+          <Route path='/LoginEmail' element={<LoginEmail/>} />
+          <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
+          <Route path='/Register' element={<Register/>} />
+          <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />
+          <Route path='/PasswordRecovery' element={<PasswordRecovery/>} />
+          <Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} />
 
+          {/* Rutas protegidas */}
+          <Route path='/Profile/:cedula' element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          } />
 
-        {/* --> SAMUEL ALVAREZ */}
-        <Route path='/Suscription' element={<Suscription/>} />
-        <Route path='/Register' element={<Register/>} />
-        <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />  
-        {/* <Route path='/Suscription' element={<Suscription/>} /> */}
-        {/* <Route path='/Register' element={<Register/>} /> */}
-        {/* <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />   */}
-        
-        
-        {/* --> JULIANA MORALES */}
-        {<Route path='/PasswordRecovery' element={<PasswordRecovery/>} /> }
-        {<Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} /> } 
-        
-        {/* --> BRAYAN */}
-        {/* <Route path= '/Purchases' element={<Purchases/>}/>
-        <Route path= '/Sales' element={<Sales/>}/>
-        {/* <Route path= '/Purchases/Preview' element={<Preview/>}/>  */}
-        {/* <Route path= '/OnSale' element={<OnSale/>}/>
-        <Route path='/PublicarProducto' element={<PublicarProducto />}} */}
-        <Route path= '/Purchases' element={<Purchases/>}/> 
-        <Route path= '/Sales' element={<Sales/>}/>
-        <Route path= '/OnSale' element={<OnSale/>}/> 
-        <Route path='/PublicarProducto' element={<ProductRegistrationForm />} />
-        
-        
-      </Routes>
+          <Route path='/logged/:username' element={
+            <PrivateRoute>
+              <Menu>
+                <ProductCard/>
+              </Menu>
+            </PrivateRoute>
+          } />
+
+          <Route path='/Purchases' element={
+            <PrivateRoute>
+              <Purchases/>
+            </PrivateRoute>
+          } />
+
+          <Route path='/Sales' element={
+            <PrivateRoute>
+              <Sales/>
+            </PrivateRoute>
+          } />
+
+          <Route path='/OnSale' element={
+            <PrivateRoute>
+              <OnSale/>
+            </PrivateRoute>
+          } />
+
+          <Route path='/PublicarProducto' element={
+            <PrivateRoute>
+              <ProductRegistrationForm />
+            </PrivateRoute>
+          } />
+
+          <Route path='/Suscription' element={
+            <PrivateRoute>
+              <Suscription/>
+            </PrivateRoute>
+          } />
+
+          {/* Añadir la ruta para Manuals */}
+          <Route path='/manuals' element={
+            <PrivateRoute>
+              <Manuals />
+            </PrivateRoute>
+          } />
+
+        </Routes>
+      </AuthProvider>
     </>
   )
 }

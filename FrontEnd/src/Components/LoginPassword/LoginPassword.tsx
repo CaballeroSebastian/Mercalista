@@ -1,14 +1,17 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import './LoginPassword.css';
 import logo from '../../assets/Image/logo.png';
 import collage from '../LoginEmail/img/collage.png';
 import googleIcon from '../LoginEmail/img/google.png';
 import { Eye, EyeClosed } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext'; 
+
 
 const LoginPassword: React.FC = () => {
-   const [email, setEmail] = useState('');
+  const { login } = useAuth(); // ✅ Usar el hook personalizado
+
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); // Estado para contraseña
   const [passwordType, setPasswordType] = useState<'password' | 'text'>('password');
   const [eyeIcon, setEyeIcon] = useState(<EyeClosed />);
@@ -65,15 +68,28 @@ const LoginPassword: React.FC = () => {
 
       // ⭐ LÓGICA DE RESPUESTA
       if (response.ok && data.contraseña_valida) {
-        console.log('Login exitoso');
+        const userData = {
+        idusuario: data.usuario.idusuario,
+        tipousuario: data.usuario.tipousuario, // Cambiado de rol a tipousuario
+        nombre: data.usuario.nombre,
+        apellido: data.usuario.apellido,
+        telefono: data.usuario.telefono,
+        cedula: data.usuario.cedula,
+        ciudad: data.usuario.ciudad, // Agregado
+        correo: data.usuario.correo,
+        contraseña: data.usuario.contraseña, // Agregado
+        departamento: data.usuario.departamento, // Agregado
+        username: data.usuario.username
+    };
+        // Usar userData en lugar de data.usuario
+        login(data.access_token, userData);
+        // Aquí cambias la navegación para incluir el username
+        navigate(`/logged/${userData.username}`);
         
-        // ⭐ GUARDAR TOKENS Y DATOS DEL USUARIO
+        // Guardar userData en localStorage en lugar de data.usuario
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('refresh_token', data.refresh_token);
-        localStorage.setItem('userData', JSON.stringify(data.usuario));
-        
-        // ⭐ REDIRIGIR AL DASHBOARD O PÁGINA PRINCIPAL
-        navigate('/logged'); // Cambia por tu ruta
+        localStorage.setItem('userData', JSON.stringify(userData));
         
       } else if (response.ok && !data.contraseña_valida) {
         console.log('Contraseña incorrecta');

@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import type React from "react"
+import axios from 'axios'
 import { X, Upload, Edit3, Trash2, Save } from "lucide-react"
 import './editModal.css'
 
@@ -26,9 +27,17 @@ interface Props{
 const Edit =({cerrar, informacion}: Props)=>{
     const backendUrl = "http://127.0.0.1:8000/";
 
-    const onDelete = () =>{
+    const onDelete = async(pk: number) =>{
+      try{
+        const response = await axios.delete(`${backendUrl}/producto/eliminarProducto/${pk}`)
+        alert("Producto eliminado exitosamente");
+      }
+      catch (error){
+        console.log('error al eliminar el producto:', error)
+        alert('hubo un error al eliminar el producto')
+      }
+    };
 
-    }
     const onSave = (data: any) =>{
         console.log(`informacion guardada correctamente: ${data}`)
     }
@@ -75,7 +84,7 @@ const Edit =({cerrar, informacion}: Props)=>{
     
       const handleDelete = () => {
         if (window.confirm("¿Estás seguro de que deseas eliminar este informacion?")) {
-          onDelete?.()
+          onDelete?.(informacion.idproducto)
           cerrar()
         }
       }

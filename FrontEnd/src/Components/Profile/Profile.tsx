@@ -8,8 +8,10 @@ import checkIcon from './assets/check.png';
 import suscripcionIcon from './assets/suscripcion.png';
 import perfilIcon from './assets/perfil.png';
 import mapaIcon from './assets/mapa.png';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useAuth } from '../../Context/AuthContext'; 
+
 
 interface datosUser {
   idusuario: number;
@@ -22,32 +24,63 @@ interface datosUser {
   correo: string;
   contraseña: string;
   departamento: string;
+  username: string; 
 }
 
 const Profile = () => {
+  const { user, accessToken, logout } = useAuth();
+  const navigate = useNavigate();
   const { cedula } = useParams<{ cedula: string }>();
-  const [datosUsuario, setDatosUsuario] = useState<datosUser | null>(null);
-  const [isEditing, setIsEditing] = useState<{ [key in keyof datosUser]?: boolean }>({});
-  const [formData, setFormData] = useState<Partial<datosUser>>({});
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
+  // Agregar los estados faltantes
+  const [datosUsuario, setDatosUsuario] = useState<datosUser | null>(null);
+  const [formData, setFormData] = useState<Partial<datosUser>>({});
+  const [isEditing, setIsEditing] = useState<{ [key in keyof datosUser]?: boolean }>({});
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Función para mostrar alertas
   const showAlert = (message: string) => {
     setAlertMessage(message);
-    setTimeout(() => setAlertMessage(null), 4000);
+    setTimeout(() => setAlertMessage(null), 3000);
   };
 
   useEffect(() => {
-    if (!cedula) return;
-    axios
-      .get<datosUser>(`http://127.0.0.1:8000/profile/${cedula}/`)
-      .then((response) => {
+    if (!user || !accessToken) {
+      navigate('/LoginEmail');
+      return;
+    }
+
+    // Verificar si el usuario está intentando ver un perfil que no es el suyo
+    if (user.cedula !== cedula) {
+      navigate(`/Profile/${user.cedula}`);
+      return;
+    }
+
+    const fetchUserData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(
+          `http://127.0.0.1:8000/profile/${cedula}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         setDatosUsuario(response.data);
         setFormData({ ...response.data, contraseña: "" });
-      })
-      .catch((error) => {
-        console.error("Error con los datos del usuario", error);
-      });
-  }, [cedula]);
+      } catch (error) {
+        console.error("Error al obtener datos del usuario:", error);
+        setError("Error al cargar los datos del perfil");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [user, accessToken, navigate, cedula]);
 
   const validateField = (field: keyof datosUser, value: string): boolean => {
     switch (field) {
@@ -177,6 +210,24 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
     }
   }, [datosUsuario]);
 
+  useEffect(() => {
+    console.log('User:', user);
+    console.log('AccessToken:', accessToken);
+    console.log('DatosUsuario:', datosUsuario);
+  }, [user, accessToken, datosUsuario]);
+
+  if (isLoading) {
+    return <div >Cargando perfil...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!datosUsuario) {
+    return <div>No se encontraron datos del usuario</div>;
+  }
+
   return (
     <NavBar>
       {alertMessage && (
@@ -231,8 +282,8 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                   <div className="info-line">
                     <h2 className="h2-info">Usuario</h2>
                     <div className="li-contenedor d-flex justify-content-between align-items-center">
-                      <span className="li-info">PepeLechuga</span>
-                      <a href="#">
+                      <span className="li-info">{datosUsuario?.username}</span>
+    <                   a onClick={() => handleEditClick("username")}>
                         <img className="icons" src={editarIcon} alt="editar" />
                       </a>
                     </div>
@@ -406,9 +457,15 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
         </div>
 
         <div className="bloque-4 text-center">
-          <button className="btn-cerrar-sesion btn w-md-auto">
-            Cerrar Sesión
-          </button>
+          <button 
+  className="btn-cerrar-sesion btn w-md-auto"
+  onClick={() => {
+    logout();
+    // Puedes agregar aquí navegación después del logout si lo necesitas
+  }}
+>
+  Cerrar Sesión
+</button>
         </div>
       </div>
     </NavBar>

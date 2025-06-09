@@ -34,6 +34,13 @@ class Vendedor(models.Model):
         managed = False
         db_table = 'vendedor'
 
+class Comprador(models.Model):
+    idcomprador = models.AutoField(db_column='idComprador', primary_key=True)  # Field name made lowercase.
+    idusuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='idUsuario')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'comprador'
 
 class Usuario(models.Model):
     idusuario = models.AutoField(db_column='idUsuario', primary_key=True)  # Field name made lowercase.
@@ -50,3 +57,25 @@ class Usuario(models.Model):
     class Meta:
         managed = False
         db_table = 'usuario'
+
+class Carrito(models.Model):
+    idcarrito = models.AutoField(db_column='idCarrito', primary_key=True)  # Field name made lowercase.
+    cantidadproductos = models.IntegerField(db_column='cantidadProductos')  # Field name made lowercase.
+    preciototal = models.DecimalField(db_column='precioTotal', max_digits=10, decimal_places=2)  # Field name made lowercase.
+    idproducto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='idProducto')  # Field name made lowercase.
+    idpedido = models.ForeignKey('Pedido', models.DO_NOTHING, db_column='idPedido')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'carrito'
+
+class Pedido(models.Model):
+    idpedido = models.AutoField(db_column='idPedido', primary_key=True)  # Field name made lowercase.
+    direccion = models.CharField(max_length=50)
+    fechapedido = models.DateTimeField(db_column='fechaPedido')  # Field name made lowercase.
+    idcomprador = models.ForeignKey('Comprador', models.DO_NOTHING, db_column='idComprador')  # Field name made lowercase.
+    idvendedor = models.ForeignKey('Vendedor', models.DO_NOTHING, db_column='idVendedor')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pedido'

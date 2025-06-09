@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';  
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import { Link } from 'react-router-dom';
-import { ReactNode } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { type ReactNode, useEffect } from 'react';
 
 import './LoggedNav.css';
 
@@ -19,7 +19,7 @@ import notiwhite from './assetsLogged/iconsWhite/NotiWhite.png';
 import carritoWhite from './assetsLogged/iconsWhite/CarWhite.png';
 import vendidoP from './assetsLogged/iconsWhite/VendidoPwhite.png';
 import ventaP from './assetsLogged/iconsWhite/VentaPwhite.png';
-
+import { useAuth } from '../../Context/AuthContext';
 import Footer from '../footer/Footer';
 
 
@@ -29,6 +29,22 @@ type NavBarPropsLogged = {
 
 
 const Menu = ({children}: NavBarPropsLogged) => {
+    const { logout, user } = useAuth();
+    const navigate = useNavigate();
+    const { username } = useParams<{ username: string }>();
+
+    useEffect(() => {
+        // Solo redirigir si estamos en la ruta /logged/* y el username no coincide
+        if (window.location.pathname.startsWith('/logged/') && user?.username !== username) {
+            navigate(`/logged/${user?.username}`);
+        }
+    }, [user, username, navigate]);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/'); // Redirigir al inicio después de cerrar sesión
+    };
+
     return (   
         <div className="menu-container">
             <nav id="barraLateral" className="border-right d-none d-md-block">
@@ -122,10 +138,16 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         <img className="nav-icon-menu" src={usuario} alt="Usuario" />
                         </button>
                         <ul className="dropdown-menu">
-                            <li><a className="iconU dropdown-item" href="/profile"><img className="icon" src={usuario} alt="Usuario" /> Mi Perfil</a></li>
+                            <li><Link to={`/Profile/${user?.cedula}`} className="iconU dropdown-item">
+                                <img className="icon" src={usuario} alt="Usuario" />
+                                <p >Mi Perfil</p>
+                            </Link></li>
                             <li><a className="iconU dropdown-item" href="#"><img className="icon" src={chat} alt="Chat" />Chats</a></li>
                             <li><a className="iconS dropdown-item" href="#"><img className="icon" src={premiumIcon} alt="Premium" />Premium</a></li>
-                            <button className='iconCs' ><img className="icon" src={logOut} alt="Cerrar Sesion" />Cerrar Sesion</button>
+                            <button className='iconCs' onClick={handleLogout}>
+                                <img className="icon" src={logOut} alt="Cerrar Sesion" />
+                                Cerrar Sesion
+                            </button>
                         </ul>
                     </div>
                 </div>
@@ -198,4 +220,4 @@ const Menu = ({children}: NavBarPropsLogged) => {
     );
 }
 
-export default Menu;
+ export default Menu;
