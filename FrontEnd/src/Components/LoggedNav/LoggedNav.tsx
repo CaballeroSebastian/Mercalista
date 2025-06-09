@@ -3,6 +3,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { type ReactNode, useEffect } from 'react';
+import axios from "axios";
 
 import './LoggedNav.css';
 
@@ -29,20 +30,59 @@ type NavBarPropsLogged = {
 
 
 const Menu = ({children}: NavBarPropsLogged) => {
-    const { logout, user } = useAuth();
+    const { logout, user, accessToken } = useAuth();
     const navigate = useNavigate();
     const { username } = useParams<{ username: string }>();
 
     useEffect(() => {
-        // Solo redirigir si estamos en la ruta /logged/* y el username no coincide
         if (window.location.pathname.startsWith('/logged/') && user?.username !== username) {
             navigate(`/logged/${user?.username}`);
         }
     }, [user, username, navigate]);
 
+    // Si el usuario tiene imagen de perfil, úsala; si no, usa la imagen por defecto
+    const userProfileImg = (user?.image_profile
+        ? (user.image_profile.startsWith("http")
+            ? `${user.image_profile}?${Date.now()}`
+            : `http://127.0.0.1:8000${user.image_profile}?${Date.now()}`)
+        : usuario
+    );
+
     const handleLogout = () => {
         logout();
-        navigate('/'); // Redirigir al inicio después de cerrar sesión
+        navigate('/');
+    };
+
+    // Función para actualizar la imagen de perfil
+    const handleProfileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (!e.target.files || e.target.files.length === 0 || !user || !accessToken) return;
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image_profile", file);
+
+        try {
+            await axios.put(
+                `http://127.0.0.1:8000/profile/update-image/${user.cedula}/`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "multipart/form-data"
+                    }
+                }
+            );
+            // Vuelve a pedir los datos del usuario para actualizar la imagen en el contexto
+            const response = await axios.get(
+                `http://127.0.0.1:8000/profile/${user.cedula}/`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+            );
+            // Actualiza el usuario en el contexto
+            localStorage.setItem('userData', JSON.stringify(response.data));
+            window.location.reload(); // O actualiza el estado global si tienes un método para ello
+        } catch (err) {
+            alert("Error al subir la foto de perfil");
+        }
     };
 
     return (   
@@ -132,18 +172,27 @@ const Menu = ({children}: NavBarPropsLogged) => {
                     <Link to='#' className="account-link ml-auto">
                         <img className="nav-icon-menu " src={notificacion} alt="Notificación" />
                     </Link>
-
                     <div className="dropdown">
                         <button className="dropdownMenu btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img className="nav-icon-menu" src={usuario} alt="Usuario" />
+                            <img
+                                className="nav-icon-menu profile-icon " 
+                                src={userProfileImg}
+                                alt="Usuario"
+                            />
                         </button>
                         <ul className="dropdown-menu">
-                            <li><Link to={`/Profile/${user?.cedula}`} className="iconU dropdown-item">
-                                <img className="icon" src={usuario} alt="Usuario" />
-                                <p >Mi Perfil</p>
-                            </Link></li>
-                            <li><a className="iconU dropdown-item" href="#"><img className="icon" src={chat} alt="Chat" />Chats</a></li>
-                            <li><a className="iconS dropdown-item" href="#"><img className="icon" src={premiumIcon} alt="Premium" />Premium</a></li>
+                            <li>
+                                <Link to={`/Profile/${user?.cedula}`} className="iconU dropdown-item">
+                                    <img className="icon" src={usuario} alt="Usuario" />
+                                    <p>Mi Perfil</p>
+                                </Link>
+                            </li>
+                            <li>
+                                <a className="iconU dropdown-item" href="#"><img className="icon" src={chat} alt="Chat" />Chats</a>
+                            </li>
+                            <li>
+                                <a className="iconS dropdown-item" href="#"><img className="icon" src={premiumIcon} alt="Premium" />Premium</a>
+                            </li>
                             <button className='iconCs' onClick={handleLogout}>
                                 <img className="icon" src={logOut} alt="Cerrar Sesion" />
                                 Cerrar Sesion
@@ -204,6 +253,8 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         <Link to='#'>
                             <img className="nav-icon-menu" src={notiwhite} alt="Notificación" />
                         </Link>
+                        {/* Imagen de perfil en móvil */}
+                        <img className="nav-icon-menu" src={userProfileImg} alt="Usuario" />
                     </div>
 
                     <form className="d-flex" role="search">
@@ -213,6 +264,13 @@ const Menu = ({children}: NavBarPropsLogged) => {
                 </nav>
             </div>
 
+            <input
+                id="profile-image-upload"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleProfileImageChange}
+            />
             {children}
             <Footer />
 

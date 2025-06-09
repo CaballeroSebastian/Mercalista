@@ -25,6 +25,7 @@ interface datosUser {
   contraseña: string;
   departamento: string;
   username: string; 
+  image_profile: string;
 }
 
 const Profile = () => {
@@ -209,12 +210,6 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
       }
     }
   }, [datosUsuario]);
-
-  useEffect(() => {
-    console.log('User:', user);
-    console.log('AccessToken:', accessToken);
-    console.log('DatosUsuario:', datosUsuario);
-  }, [user, accessToken, datosUsuario]);
 
   if (isLoading) {
     return <div >Cargando perfil...</div>;
@@ -439,11 +434,56 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
             <div className="contenido-bloque3">
               <h2 className="title-info">Foto de Perfil</h2>
               <div className="foto-perfil-container">
-                <img src={perfilIcon} alt="Foto de perfil" className="foto-perfil" />
-                <div className="d-flex justify-content-center">
-                  <a href="#">
+                <img
+                  src={
+                    datosUsuario?.image_profile
+                      ? (datosUsuario.image_profile.startsWith("http")
+                          ? `${datosUsuario.image_profile}?${Date.now()}`
+                          : `http://127.0.0.1:8000${datosUsuario.image_profile}?${Date.now()}`)
+                      : perfilIcon
+                  }
+                  alt="Foto de perfil"
+                  className="foto-perfil"
+                  style={{ objectFit: "cover", width: 150, height: 150, borderRadius: "50%" }}
+                />
+                <div className="d-flex justify-content-center mt-2">
+                  <label htmlFor="profile-image-upload" style={{ cursor: "pointer" }}>
                     <img className="icons icons-perfil" src={editarIcon} alt="editar foto" />
-                  </a>
+                  </label>
+                  <input
+                    id="profile-image-upload"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={async (e) => {
+                      if (!e.target.files || e.target.files.length === 0) return;
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append("image_profile", file);
+
+                      try {
+                        setIsLoading(true);
+                        await axios.put(
+                          `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
+                          formData,
+                          { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" } }
+                        );
+                        // Espera un poco para asegurar que el backend procese la imagen
+                        setTimeout(async () => {
+                          const response = await axios.get(
+                            `http://127.0.0.1:8000/profile/${cedula}/`,
+                            { headers: { Authorization: `Bearer ${accessToken}` } }
+                          );
+                          setDatosUsuario(response.data);
+                          showAlert("Foto de perfil actualizada correctamente");
+                          setIsLoading(false);
+                        }, 500);
+                      } catch (err) {
+                        showAlert("Error al subir la foto de perfil");
+                        setIsLoading(false);
+                      }
+                    }}
+                  />
                 </div>
               </div>
             </div>

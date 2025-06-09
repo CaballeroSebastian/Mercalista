@@ -31,10 +31,13 @@
   height: auto;
 }
 
-.foto-perfil{
+.foto-perfil {
   width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #eee;
 }
-
 .img-fluid{
   width: 250px;
 }
