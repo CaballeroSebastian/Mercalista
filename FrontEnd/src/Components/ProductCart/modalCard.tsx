@@ -1,32 +1,28 @@
-import './OnSalePreview.css'
-import productoImg from './img/producto.jpeg';
-interface Producto {
-  idproducto: number;
-  nombre: string;
-  categoriaproducto?: string;
-  cantidadstock?: number;
-  precio: string;
-  descripcion?: string;
-  estado?: string;
-  fotos: string;
-  unidadmedida?: string;
-  
+import './modalCard.css'
+import {useState} from 'react'
+import productoImg from '../../assets/Image/ImgVerduras.jpeg'
+import './modalCard.css'
+
+interface Product {
+    idproducto: number;
+    nombre: string;
+    precio: number;
+    cantidadstock: number;
+    fotos: string | null;
 }
 
-interface Props{
-    close: ()=> void
-    datosProducto : Producto
+interface ModalProps {
+    close: ()=>void
+    data: Product | any
 }
 
-const OnSalePreview = ({close, datosProducto}: Props) =>{
-
-  const backendUrl = "http://127.0.0.1:8000/";
+const ModalProductCard = ({close, data}: ModalProps) =>{
 
     return (
         <div className="modal-overlay" onClick={close}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>{datosProducto.nombre}</h2>
+              <h2>{data.nombre}</h2>
               <button className="close-button" onClick={close}>
                 ×
               </button>
@@ -36,38 +32,39 @@ const OnSalePreview = ({close, datosProducto}: Props) =>{
               <div className="product-info">
                 <div className="info-row">
                   <span className="info-label">Categoría:</span>
-                  <span className="info-value status-badge">{datosProducto.categoriaproducto}</span>
+                  <span className="info-value status-badge">verduras</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Stock:</span>
                   <span className="info-value status-badge">
-                    {datosProducto.cantidadstock} {datosProducto.unidadmedida}
+                    {data.cantidadstock} kg
                   </span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Precio:</span>
-                  <span className="info-value status-badge">{datosProducto.precio}</span>
+                  <span className="info-value status-badge">{data.precio}</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Estado:</span>
-                  <span className="info-value status-badge">{datosProducto.estado}</span>
+                  <span className="info-value status-badge">maduro</span>
                 </div>
               </div>
     
               <div className="photo-container">
                 <div className="photo-wrapper">
-                  <img src={`${backendUrl}media/${datosProducto.fotos}` || "/placeholder.svg"} alt={datosProducto.nombre} className="product-photo" />
+                  <img src={productoImg || "/placeholder.svg"} alt={data.nombre} className="product-photo" />
                 </div>
               </div>
     
               <div className="description-container">
                 <h3>Descripción</h3>
-                <p> {datosProducto.descripcion}</p>
+                <p> nada</p>
               </div>
             </div>
           </div>
         </div>
       )
+
 }
 
-export default OnSalePreview
+export default ModalProductCard

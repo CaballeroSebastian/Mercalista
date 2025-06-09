@@ -24,13 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('producto/', include('producto.urls')),
     path('login/', include('backlogin.urls')),
-
     path('profile/', include('usersProfile.urls')),
     path('Password/', include('loginPassword.urls')),
     path('Register/', include('Register.urls')),
     path('api/', include('productCart.urls')),
 
 ]
-
-if settings.DEBUG:
-    urlpatterns += static('/media/producto/', document_root=os.path.join(settings.MEDIA_ROOT, 'producto'))
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -17,7 +17,6 @@ interface Producto {
   estado?: string;
   fotos: string;
   unidadmedida?: string;
-  
 }
 
 const OnSale = () => {
@@ -25,10 +24,11 @@ const OnSale = () => {
   const [openEdit, setOpenEdit] = useState<Producto | false>(false);
   const [productos, setProductos] = useState<Producto[]>([]);
 
-  const idUsuario = 1
+  const idUsuario = 1;
+  const backendUrl = "http://127.0.0.1:8000/";
 
   useEffect(() => {
-    axios.get<Producto[]>(`http://127.0.0.1:8000/producto/verProductos/${idUsuario}`)
+    axios.get<Producto[]>(`${backendUrl}/producto/verProductos/${idUsuario}`)
       .then(response => {
         setProductos(response.data);
       })
@@ -63,7 +63,15 @@ const OnSale = () => {
           {productos.map((producto) => (
             <div className="product-card" key={producto.idproducto}>
               <div className="product-image">
-                <img src={ productoImg} alt={producto.nombre} />
+                <img 
+                  src={`${backendUrl}media/${producto.fotos}`}
+                  alt={producto.nombre}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = productoImg;
+                    console.log('Error al cargar imagen:', producto.fotos);
+                  }}
+                />
               </div>
               <div className="product-info">
                 <h3 className="product-nombre">{producto.nombre}</h3>
