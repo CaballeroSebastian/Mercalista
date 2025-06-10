@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ShoppingCart.css';
 import NavBar from '../LoginNavbar/LoginNavbar';
+import { Trash2 } from 'lucide-react'; 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
 
 interface CartItem {
@@ -13,7 +15,7 @@ interface CartItem {
 }
 
 const ShoppingCart: React.FC = () => {
-  const cartItems: CartItem[] = [
+  const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
       name: "Iphone 11 pro",
@@ -22,7 +24,21 @@ const ShoppingCart: React.FC = () => {
       quantity: 2,
       price: 900
     },
-  ];
+  ]);
+
+  const handleQuantityChange = (id: number, change: number) => {
+    setCartItems(items =>
+      items.map(item =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + change) }
+          : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (id: number) => {
+    setCartItems(items => items.filter(item => item.id !== id));
+  };
 
   return (
     <>
@@ -51,21 +67,40 @@ const ShoppingCart: React.FC = () => {
                         </div>
 
                         {cartItems.map((item) => (
-                        <div key={item.id} className="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
-                            <div className="d-flex flex-row">
-                            <img className="rounded" src={item.image} width="40" alt={item.name} />
-                            <div className="ml-2">
-                                <span className="font-weight-bold d-block">{item.name}</span>
-                                <span className="spec">{item.specs}</span>
-                            </div>
-                            </div>
-                            <div className="d-flex flex-row align-items-center">
-                            <span className="d-block">{item.quantity}</span>
-                            <span className="d-block ml-5 font-weight-bold">${item.price}</span>
-                            <i className="fa fa-trash-o ml-3 text-black-50"></i>
-                            </div>
-                        </div>
-                        ))}
+  <div key={item.id} className="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
+    <div className="d-flex flex-row">
+      <img className="rounded" src={item.image} width="40" alt={item.name} />
+      <div className="ml-2">
+        <span className="font-weight-bold d-block">{item.name}</span>
+        <span className="spec">{item.specs}</span>
+      </div>
+    </div>
+    <div className="d-flex flex-row align-items-center">
+      <div className="quantity-controls d-flex align-items-center">
+        <button 
+          className="btn btn-sm btn-outline-secondary"
+          onClick={() => handleQuantityChange(item.id, -1)}
+        >
+          <i className="fa fa-minus"></i>
+        </button>
+        <span className="mx-2">{item.quantity}</span>
+        <button 
+          className="btn btn-sm btn-outline-secondary"
+          onClick={() => handleQuantityChange(item.id, 1)}
+        >
+          <i className="fa fa-plus"></i>
+        </button>
+      </div>
+      <span className="d-block ml-5 font-weight-bold">${item.price * item.quantity}</span>
+      <button 
+        className="btn btn-link text-danger delete-btn"
+        onClick={() => handleRemoveItem(item.id)}
+      >
+        <Trash2 size={20} />
+      </button>
+    </div>
+  </div>
+))}
                     </div>
                     </div>
 
@@ -77,19 +112,24 @@ const ShoppingCart: React.FC = () => {
                         </div>
                         
                         <span className="type d-block mt-3 mb-1">Card type</span>
-                        
-                        {['mastercard', 'visa', 'amex', 'paypal'].map((card) => (
-                        <label key={card} className="radio">
-                            <input type="radio" name="card" value="payment" defaultChecked={card === 'mastercard'} />
-                            <span>
-                            <img 
-                                width="30" 
-                                src={`https://img.icons8.com/${card === 'mastercard' ? 'color' : 'officel'}/48/000000/${card}.png`}
-                                alt={card}
-                            />
-                            </span>
-                        </label>
-                        ))}
+                        <div className="radio-container">
+                            {['mastercard', 'visa', 'amex', 'paypal'].map((card) => (
+                                <label key={card} className="radio">
+                                    <input 
+                                        type="radio" 
+                                        name="card" 
+                                        value="payment" 
+                                        defaultChecked={card === 'mastercard'} 
+                                    />
+                                    <span>
+                                        <img 
+                                            src={`https://img.icons8.com/${card === 'mastercard' ? 'color' : 'officel'}/48/000000/${card}.png`}
+                                            alt={card}
+                                        />
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
 
                         <div>
                         <label className="credit-card-label">Name on card</label>
@@ -142,6 +182,7 @@ const ShoppingCart: React.FC = () => {
             </div>
         </NavBar>
         
+
     </>
     );
 };

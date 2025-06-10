@@ -34,6 +34,9 @@ body {
 
 label.radio {
   cursor: pointer;
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
 }
 
 label.radio input {
@@ -45,9 +48,11 @@ label.radio input {
 }
 
 label.radio span {
-  padding: 1px 12px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid #ada9a9;
-  display: inline-block;
   color: #8f37aa;
   border-radius: 3px;
   text-transform: uppercase;
@@ -55,10 +60,22 @@ label.radio span {
   font-weight: 300;
 }
 
+label.radio span img {
+  width: 30px;
+  height: auto;
+  object-fit: contain;
+}
+
 label.radio input:checked + span {
   border-color: #fff;
   background-color: blue;
   color: #fff;
+}
+
+.payment-info .radio-container {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
 }
 
 .credit-inputs {
@@ -106,9 +123,9 @@ label.radio input:checked + span {
 
 .main-wrapper {
     background-color: #f8f9fa;
-    width: calc(100% - 190px);
-     margin-left: 190px !important;
+     width: calc(100% - 190px);
     height: auto;
+    margin-left: 190px !important;
 }
 
 .container-xxl {
@@ -116,3 +133,55 @@ label.radio input:checked + span {
     margin: 0 auto;
     padding: 0 15px;
 }
+
+.quantity-controls {
+    margin: 0 15px;
+}
+
+.quantity-controls button {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.quantity-controls span {
+    min-width: 30px;
+    text-align: center;
+}
+
+.btn-link.text-danger {
+    padding: 0;
+    margin-left: 15px;
+}
+
+.btn-link.text-danger:hover {
+    color: #dc3545;
+    opacity: 0.8;
+}
+
+.delete-btn {
+    margin-left: 15px;
+    transition: all 0.3s ease;
+    padding: 5px;
+}
+
+.delete-btn:hover {
+    transform: scale(1.1);
+    color: #dc3545 !important;
+}
+
+.fa-trash-o {
+    font-size: 1.2em;
+}
+
+
+@media (max-width: 833.33px) and (min-width: 500px) {
+    
+    .main-wrapper {
+    
+        margin: center !important
+}}
