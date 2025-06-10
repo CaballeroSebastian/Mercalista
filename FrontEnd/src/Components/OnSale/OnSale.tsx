@@ -6,6 +6,7 @@ import Menu from '../LoggedNav/LoggedNav';
 import OnSalePreview from './OnSalePreview';
 import Edit from './editModal/edit';
 import axios from "axios";
+import { useAuth } from '../../Context/AuthContext';
 
 interface Producto {
   idproducto: number;
@@ -24,11 +25,17 @@ const OnSale = () => {
   const [openEdit, setOpenEdit] = useState<Producto | false>(false);
   const [productos, setProductos] = useState<Producto[]>([]);
 
-  const idUsuario = 1;
+  //variable para traer usuario global
+  const { user } = useAuth();
   const backendUrl = "http://127.0.0.1:8000/";
 
+  const Usuario = user?.idusuario;
+  console.log(Usuario)
+  //const Usuario = 35
+
+
   useEffect(() => {
-    axios.get<Producto[]>(`${backendUrl}/producto/verProductos/${idUsuario}`)
+    axios.get<Producto[]>(`${backendUrl}producto/verProductos/${Usuario}`)
       .then(response => {
         setProductos(response.data);
       })

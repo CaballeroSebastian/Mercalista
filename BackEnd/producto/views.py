@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
-from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador
+from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador, Usuario
 from .serializers import ProductoSerializer
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -32,11 +32,13 @@ class ProductosEnVenta(APIView):
         return productos_ids
 
     def get(self, request, id):
-       
 
+        #obtener el id del vendedor mediante el id del usuario
+        instanciaVendedor = Vendedor.objects.get(idusuario = id)
+        idVendedor = instanciaVendedor.idvendedor
 
         #id de los productos de determiando vendedor
-        productos_ids = self.obtener_ids_productos(id)
+        productos_ids = self.obtener_ids_productos(idVendedor)
 
         # Obtener todos los productos completos de esos IDs
         productos_completo = Producto.objects.filter(idproducto__in=productos_ids)
@@ -80,9 +82,11 @@ class crearProducto(APIView):
             serializer = ProductoSerializer(data=datos)
             if serializer.is_valid():
                 try:
-                    vendedor = Vendedor.objects.get(pk=id)
+                    vendedor = Vendedor.objects.get(idusuario = id)
                 except Vendedor.DoesNotExist:
-                    return Response({'error': 'Vendedor no encontrado'}, status=404)
+                    # return Response({'error': 'Vendedor no encontrado'}, status=404)
+                    usuario = Usuario.objects.get(pk = id)
+                    vendedor = Vendedor.objects.create(idusuario = usuario)
 
                 producto = serializer.save()
                 

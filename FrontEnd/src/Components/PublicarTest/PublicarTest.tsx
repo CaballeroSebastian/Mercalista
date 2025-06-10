@@ -4,10 +4,17 @@ import type React from "react";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../Context/AuthContext';
 
 const ProductRegistrationForm = () => {
-  const idUsuario = 1;
   const navigate = useNavigate();
+
+  //variable global de usuario
+  const { user } = useAuth();
+
+  const Usuario = user?.idusuario ?? '';
+  console.log(Usuario)
+  
 
   const [formulario, setFormulario] = useState({
     nombre: "",
@@ -72,7 +79,7 @@ const ProductRegistrationForm = () => {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/producto/crearProducto/${idUsuario}`,
+        `http://127.0.0.1:8000/producto/crearProducto/${Usuario}`,
         formData,
         {
           headers: {
