@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 class usersProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['correo', 'telefono', 'contraseña', 'ciudad', 'cedula', 'username', 'image_profile']
+        fields = ['idusuario','nombre','correo', 'telefono', 'contraseña', 'ciudad', 'cedula', 'username', 'image_profile']
         read_only_fields = ['cedula']
 
     def validate_contraseña(self, value):

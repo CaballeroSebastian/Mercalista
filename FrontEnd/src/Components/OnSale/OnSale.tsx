@@ -29,9 +29,10 @@ const OnSale = () => {
   const { user } = useAuth();
   const backendUrl = "http://127.0.0.1:8000/";
 
-  // const Usuario = user?.idusuario ?? '';
-  // console.log(Usuario)
-  const Usuario = 35
+  const Usuario = user?.idusuario;
+  console.log(Usuario)
+  //const Usuario = 35
+  console.log(Usuario)
 
   useEffect(() => {
     axios.get<Producto[]>(`${backendUrl}producto/verProductos/${Usuario}`)
