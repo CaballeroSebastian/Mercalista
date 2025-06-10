@@ -31,7 +31,7 @@ const OnSale = () => {
 
   // const Usuario = user?.idusuario ?? '';
   // console.log(Usuario)
-  const Usuario = 8
+  const Usuario = 35
 
   useEffect(() => {
     axios.get<Producto[]>(`${backendUrl}producto/verProductos/${Usuario}`)
