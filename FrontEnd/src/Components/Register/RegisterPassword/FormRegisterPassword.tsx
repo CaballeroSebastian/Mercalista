@@ -46,10 +46,10 @@ export function FormRegisterPassword({
   return (
     <>
       
-      <form className="form-register" onSubmit={(e) => e.preventDefault()}>
-        <label className='form-label-register' htmlFor="user">User:</label>
+      <form className="form-register-password" onSubmit={(e) => e.preventDefault()}>
+        <label className='form-label-register-password' htmlFor="user">User:</label>
         <input
-          className='form-input-register'
+          className='form-input-register-password'
           type="text" 
           id="user" 
           name="user"
@@ -60,15 +60,15 @@ export function FormRegisterPassword({
           {usuarioError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{usuarioError}</p>}
 
         <br />
-        <label className='form-label-register' htmlFor="password">Password:</label>
+        <label className='form-label-register-password' htmlFor="password">Password:</label>
         <input
-         className='form-input-register'
-         type="password" 
-         id="password" 
-         name="password"
-         value={contraseña}
-         onChange={(e) => {setContraseña(e.target.value); setUsuarioError(null)}}
-         onInput={(e: React.ChangeEvent<HTMLInputElement>) => (e.target.value = e.target.value)} />
+          className='form-input-register-password'
+          type="password" 
+          id="password" 
+          name="password"
+          value={contraseña}
+          onChange={(e) => {setContraseña(e.target.value); setUsuarioError(null)}}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) => (e.target.value = e.target.value)} />
         <br />
         <input
           type="submit"

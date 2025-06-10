@@ -121,7 +121,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       <form className="form-register" onSubmit={handleSubmit} method='POST'>
         
         <div className='div-form-register'>
-        <label className='label-register' htmlFor="name">Nombre:</label>
+        <label className='label-form-register' htmlFor="name">Nombre:</label>
         <input
         className='form-input-register'
         type="text" 
@@ -134,7 +134,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         
         />
         <br />
-        <label className='label-register' htmlFor="apellido">Apellido:</label>
+        <label className='label-form-register' htmlFor="apellido">Apellido:</label>
         <input
           className='form-input-register'
           type="text" 
@@ -146,7 +146,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           required
           />
         <br />
-        <label className='label-register' htmlFor="telefono">Telefono:</label>
+        <label className='label-form-register' htmlFor="telefono">Telefono:</label>
         <input
           className='form-input-register'
           type="text"
@@ -173,7 +173,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         )}
         <br />
 
-        <label className='label-register' htmlFor="correo">Correo:</label>
+        <label className='label-form-register' htmlFor="correo">Correo:</label>
         <input
           className='form-input-register'
           type="email" 
@@ -186,7 +186,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           {correoError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{correoError}</p>}
         <br />
 
-        <label className='label-register' htmlFor="documento">Documento:</label>
+        <label className='label-form-register' htmlFor="documento">Documento:</label>
         <input 
           className='form-input-register'
           type="number" 
@@ -199,7 +199,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         />
         {cedulaError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{cedulaError}</p>}
         <br />
-        <label className='label-register' htmlFor="">Tipo de Usuario</label>
+        <label className='label-form-register' htmlFor="">Tipo de Usuario</label>
         <select 
           typeof='text'
           className="form-select"
@@ -216,7 +216,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         <br />
 
         <div >
-          <label  htmlFor="dep-select" className="form-label-register">
+          <label  htmlFor="dep-select" className="label-form-register">
             {" "}
             Departamento:
           </label>
@@ -241,7 +241,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
 
         <div >
-          <label htmlFor="ciudad-select" className="form-label-register">
+          <label htmlFor="ciudad-select" className="label-form-register">
             Ciudad:
           </label>
           <select

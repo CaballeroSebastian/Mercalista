@@ -34,7 +34,7 @@
   }
   
   
-  label {
+  .label-form-register {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
@@ -42,10 +42,10 @@
     color: #333;
   }
   
-  input[type="text"],
-  input[type="number"],
-  input[type="email"],
-  input[type="ciudad"] {
+  .form-input-register[type="text"],
+  .form-input-register[type="number"],
+  .form-input-register[type="email"],
+  .form-input-register[type="ciudad"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
@@ -253,16 +253,15 @@
     margin: 0 auto; /* Centra el contenedor horizontalmente */
     padding: 20px; /* Añade un espacio interno */
     box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
-    overflow: visible; /* Permite que el contenido se expanda sin scroll */
   }
 
   .form-register {
     width: 90%; /* Ajusta el ancho relativo al contenedor */
     max-width: 800px; /* Limita el ancho máximo */
-    height: auto; /* Ajusta la altura automáticamente */
-    overflow: visible; /* Elimina el scroll */
+    max-height: calc(100vh - 200px); /* Asegura que no exceda la altura disponible */
     padding: 40px; /* Espaciado interno */
     margin: 0; /* Elimina márgenes externos */
+    overflow-y: auto;
     box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
   }
 
@@ -272,7 +271,7 @@
   }
 
   .ImgVerduras{
-    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+    width: 75%; /* Asegura que la imagen ocupe todo el ancho disponible */
     height: auto; /* Ajusta la altura automáticamente */
     max-width: 600px; /* Limita el ancho máximo de la imagen */
     margin: 20px auto; /* Centra la imagen horizontalmente */
