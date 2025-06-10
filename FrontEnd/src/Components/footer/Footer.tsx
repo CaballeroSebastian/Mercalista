@@ -25,12 +25,12 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/manual-tecnico" className="footer-link">
+                <a href="/manuals" className="footer-link">
                   Manual técnico
                 </a>
               </li>
               <li>
-                <a href="/manual-usuario" className="footer-link">
+                <a href="/manuals" className="footer-link">
                   Manual de usuario
                 </a>
               </li>

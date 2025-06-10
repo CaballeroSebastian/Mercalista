@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
-import { jwtDecode } from 'jwt-decode'; // ✅ Importación correctaz
+import { jwtDecode } from 'jwt-decode';
 
 interface Usuario {
- idusuario: number;
+  idusuario: number;
   tipousuario: string;
   nombre: string;
   apellido: string;
@@ -13,18 +13,17 @@ interface Usuario {
   contraseña: string;
   departamento: string;
   username: string;
-
+  image_profile?: string;
 }
 
 interface AuthContextType {
   user: Usuario | null;
   accessToken: string | null;
   loading: boolean;
-  login: (token: string, userData: Usuario) => void;
+  login: (token: string, userData: Usuario) => Promise<void>;
   logout: () => void;
 }
 
-// Ahora puede ser null al principio
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -46,10 +45,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setAccessToken(storedToken);
             setUser(JSON.parse(storedUserData));
           } else {
-            // Token expirado, pero no hacemos logout automático
             console.log('Token expirado');
           }
-          
         } catch (error) {
           console.error('Error al decodificar token:', error);
         }
@@ -60,11 +57,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initAuth();
   }, []);
 
-  const login = (token: string, userData: Usuario) => {
+  const login = async (token: string, userData: Usuario) => {
     localStorage.setItem('access_token', token);
-    localStorage.setItem('userData', JSON.stringify(userData));
-    setAccessToken(token);
-    setUser(userData);
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/profile/${userData.cedula}/`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!response.ok) throw new Error('No se pudo obtener el perfil completo');
+      const perfilCompleto = await response.json();
+
+      localStorage.setItem('userData', JSON.stringify(perfilCompleto));
+      setAccessToken(token);
+      setUser(perfilCompleto);
+    } catch (error) {
+      localStorage.setItem('userData', JSON.stringify(userData));
+      setAccessToken(token);
+      setUser(userData);
+    }
   };
 
   const logout = () => {
@@ -73,11 +83,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('userData');
     setAccessToken(null);
     setUser(null);
-    window.location.href = 'http://localhost:5173/'; // Asegura una redirección limpia
+    window.location.href = 'http://localhost:5173/';
   };
 
   if (loading) {
-    return null; // O un spinner de carga, según tu preferencia
+    return null;
   }
 
   return (

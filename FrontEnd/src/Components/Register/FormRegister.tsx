@@ -2,6 +2,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import ciudades from './ciudades';
 import { useState } from 'react';
 import React from 'react';
+import axios from 'axios';
 
 export function FormRegister() {
 
@@ -24,6 +25,11 @@ export function FormRegister() {
   const [listaCiudades, setListaCiudades] = useState([]);
   const [ciudad, setCiudad] = useState('');
 
+  const [correoError, setCorreoError] = useState<string | null>(null);
+  const [telefonoError, setTelefonoError] = useState<string | null>(null);
+  const [cedulaError, setCedulaError] = useState<string | null>(null);
+
+
     //Función para resetar campos de entrada del formulario
 
   const resetForm = () => {
@@ -35,23 +41,69 @@ export function FormRegister() {
     Settipousuario('')
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const verificarDatos = async () => {
+  try {
+    const response = await axios.post('http://localhost:8000/Register/verificarDatos/', {
+      correo,
+      telefono,
+      cedula
+    });
 
-    Navigate('/Register/RegisterPassword',{
-      state: {
-        nombre,
-        apellido,
-        telefono,
-        correo,
-        cedula,
-        departamento,
-        ciudad,
-        tipousuario,
-      }
-    })
-    
+    const { correo_existe, telefono_existe , cedula_existe} = response.data;
+
+    let hayErrores = false;
+
+    if (correo_existe) {
+      setCorreoError("Este correo ya está registrado.");
+      hayErrores = true;
+    } else {
+      setCorreoError(null);
+    }
+
+    if (telefono_existe) {
+      setTelefonoError("Este teléfono ya está registrado.");
+      hayErrores = true;
+    } else {
+      setTelefonoError(null);
+    }
+
+    if (cedula_existe) {
+      setCedulaError("Este número de cédula ya está registrado.");
+      hayErrores = true;
+    } else {
+      setCedulaError(null);
+    }
+
+    return !hayErrores;
+  } catch (error) {
+    console.error('Error al verificar los datos:', error);
+    setCorreoError("Error al verificar el correo.");
+    return false;
   }
+};
+
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const datosValidos = await verificarDatos();
+  if (!datosValidos) {
+    return; // Detener el envío si los datos ya existen
+  }
+
+  Navigate('/Register/RegisterPassword', {
+    state: {
+      nombre,
+      apellido,
+      telefono,
+      correo,
+      cedula,
+      departamento,
+      ciudad,
+      tipousuario,
+    },
+  });
+}; 
 
   // Maneja el cambio de departamento
   const handleDepartamentoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -69,8 +121,9 @@ export function FormRegister() {
       <form className="form-register" onSubmit={handleSubmit} method='POST'>
         
         <div className='div-form-register'>
-        <label htmlFor="name">Nombre:</label>
-        <input 
+        <label className='label-register' htmlFor="name">Nombre:</label>
+        <input
+        className='form-input-register'
         type="text" 
         id="nombre" 
         name="nombre" 
@@ -81,8 +134,9 @@ export function FormRegister() {
         
         />
         <br />
-        <label htmlFor="apellido">Apellido:</label>
-        <input 
+        <label className='label-register' htmlFor="apellido">Apellido:</label>
+        <input
+          className='form-input-register'
           type="text" 
           id="apellido" 
           name="apellido" 
@@ -92,41 +146,60 @@ export function FormRegister() {
           required
           />
         <br />
-        <label htmlFor="telefono">Telefono:</label>
-        <input 
-          type="number" 
-          id="telefono" 
-          name="telefono" 
-          value = {telefono}
-          onChange={(e)=>Settelefono(e.target.value)}
-          onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/^3\d{10}$/g, ''))}
+        <label className='label-register' htmlFor="telefono">Telefono:</label>
+        <input
+          className='form-input-register'
+          type="text"
+          id="telefono"
+          name="telefono"
+          value={telefono}
+          onChange={(e) => {
+            const input = e.target.value;
+            // Solo permitir dígitos y máximo 10 caracteres
+            if (/^\d{0,10}$/.test(input)) {
+              Settelefono(input);
+              setTelefonoError(null);
+            }
+          }}
+          onBlur={() => {
+            if (!/^3\d{9}$/.test(telefono)) {
+              setTelefonoError("Debe comenzar con 3 y tener exactamente 10 dígitos.");
+            }
+          }}
           required
-          />
+        />
+        {telefonoError && (
+          <p style={{ color: 'red', fontSize: '0.9rem' }}>{telefonoError}</p>
+        )}
         <br />
 
-        <label htmlFor="correo">Correo:</label>
-        <input 
+        <label className='label-register' htmlFor="correo">Correo:</label>
+        <input
+          className='form-input-register'
           type="email" 
           id="correo" 
           name="correo" 
           value = {correo}
-          onChange={(e)=>Setcorreo(e.target.value)}
+          onChange={(e)=>{Setcorreo(e.target.value); setCorreoError(null);}}
           required
           />
+          {correoError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{correoError}</p>}
         <br />
 
-        <label htmlFor="documento">Documento:</label>
+        <label className='label-register' htmlFor="documento">Documento:</label>
         <input 
+          className='form-input-register'
           type="number" 
           id="cedula" 
           name="cedula"
           value = {cedula}
-          onChange={(e)=>Setcedula(e.target.value)}
+          onChange={(e)=>{Setcedula(e.target.value); setCedulaError(null);}}
           onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/^\d{11}$/g, ''))}
           required
         />
+        {cedulaError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{cedulaError}</p>}
         <br />
-        <label htmlFor="">Tipo de Usuario</label>
+        <label className='label-register' htmlFor="">Tipo de Usuario</label>
         <select 
           typeof='text'
           className="form-select"
@@ -143,7 +216,7 @@ export function FormRegister() {
         <br />
 
         <div >
-          <label htmlFor="dep-select" className="form-label">
+          <label  htmlFor="dep-select" className="form-label-register">
             {" "}
             Departamento:
           </label>
@@ -168,7 +241,7 @@ export function FormRegister() {
         </div>
 
         <div >
-          <label htmlFor="ciudad-select" className="form-label">
+          <label htmlFor="ciudad-select" className="form-label-register">
             Ciudad:
           </label>
           <select

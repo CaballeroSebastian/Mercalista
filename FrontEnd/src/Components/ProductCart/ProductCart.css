@@ -1,4 +1,4 @@
-.titulo {
+.tituloPrew {
     font-size: 30px;
     font-family: Cinzel;
     margin: 30px 0 30px 0;
@@ -7,7 +7,20 @@
     color: #000000;
     text-align: center; 
 }
- 
+
+.producto-carts {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
 .contenedor{
     width: 100%;
     height: auto;
@@ -29,7 +42,7 @@
     display: block;
 }
 
-.productos-carts {
+.productos-carts{
     width: calc(100% - 190px);
     height: auto;
     margin-left: 190px !important;
@@ -41,28 +54,83 @@
 }
 
 
-.informacion-producto {
+.informacion-productoPrew {
     display: grid;
-    padding: 10px 0 10px 20px;
+    padding: 10px 15px 20px 15px;
     text-align: start;
+    gap: 0.75rem;
 }
 
 
-p.ciudad{
-    text-align: end;
-    margin: 0 20px 0 0;
-    
-}
-
-.informacion-producto .nombre {
+.informacion-productoPrew .nombrePrew {
     font-size: 18px;
     font-weight: bold;
 }
 
-.informacion-producto .categoria {
+.CategoriaPrew{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
-    color: #666;
+    width: 3rem;
+    border: 1px solid #0000008a;
+    border-radius: 5px;
+    background-color: #e2fa786c;
 }
+
+.precioPrew{
+    font-weight: bold;
+}
+
+.ComprarPrew {
+    width: 86%;
+    padding: 2px;
+    margin: 0 auto;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #413620e1;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+    color: #ffe9c2;
+}
+
+.ComprarPrew:hover {
+    color: rgb(255, 255, 255);    
+    background-color: #413620;
+}
+
+.descripcionPrew {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 100px;
+    min-height: 100px;
+    width: auto;
+}
+
+.thumb {
+    width: 100%;
+    height: 230px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+}
+
+.producto-carts img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
 
 @media (max-width: 1600px) {
     .contenedor-cards {
@@ -102,58 +170,50 @@ p.ciudad{
         margin-left: 0px;
     }
     .titulo {
-        font-size: 34px;
-        margin: 30px 0 30px 0;
-        line-height: 34px;
-        font-weight: 300;
-        color: #000000;
-        text-align: center; 
+    font-size: 34px;
+    margin: 30px 0 30px 0;
+    line-height: 34px;
+    font-weight: 300;
+    color: #000000;
+    text-align: center; 
     }
     
-    .informacion-producto {
-        display: grid;
-        padding: 10px 0 10px 20px;
-        text-align: center;
+    .informacion-productoPrew {
+    display: grid;
+    padding: 10px 0 10px 20px;
+    text-align: start;
+    gap: 0.75rem;
     }
 
     .productos-carts{
-        width: 100%;
-        height: auto;
-        margin-left: 0 !important;
-        border-radius: 8px;
-        overflow: hidden;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease;
+    width: 100%;
+    height: auto;
+    margin-left: 0 !important;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
     }
 
 }
 
 
 .no-image {
-  width: 100%;       
-  height: 300px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ddd;
-  color: #555;
-  font-weight: bold;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: 100%;       
+    height: 300px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd;
+    color: #555;
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 
-.producto-carts {
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    overflow: hidden;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    transition: box-shadow 0.3s ease;
-}
 
 .producto-carts:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.664);
