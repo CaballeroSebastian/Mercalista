@@ -198,7 +198,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
 
                     {/* Íconos solo en móviles */}
                     <div className="mobile-icons d-flex justify-content-center gap-5 mb-3">
-                        <Link to='#'>
+                        <Link to='/ShoppingCart'>
                             <img className="nav-icon-menu" src={carritoWhite} alt="Carrito" />
                         </Link>
                         <Link to='#'>

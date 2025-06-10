@@ -11,6 +11,7 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
 import LoginEmail from './Components/LoginEmail/LoginEmail.tsx' //--> Muckup Iniciar Sesion - correo
 import LoginPassword from './Components/LoginPassword/LoginPassword.tsx' //--> Muckup Iniciar-contraseña
+import ShoppingCart from './Components/ShoppingCart/ShoppingCart.tsx';
 
 
 //Rutas por crear SAMUEL ALVAREZ
@@ -66,6 +67,9 @@ function App() {
           <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />
           <Route path='/PasswordRecovery' element={<PasswordRecovery/>} />
           <Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} />
+          <Route path='/ShoppingCart' element={<ShoppingCart/>} />
+          
+          {/* Rutas de navegación */}
 
           {/* Rutas protegidas */}
           <Route path='/Profile/:cedula' element={
