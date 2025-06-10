@@ -9,7 +9,7 @@ class Producto(models.Model):
     cantidadstock = models.IntegerField(db_column='cantidadStock')  # Field name made lowercase.
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.CharField(max_length=200, blank = True, null=True)
-    estado = models.CharField(max_length=8, blank=True, null=True)
+    estado = models.CharField(max_length=10, blank=True, null=True)
     fotos = models.CharField(max_length=255)
     unidadmedida = models.CharField(db_column='unidadMedida', max_length=10)  # Field name made lowercase.
 
