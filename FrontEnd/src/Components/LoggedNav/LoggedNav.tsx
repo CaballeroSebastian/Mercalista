@@ -167,7 +167,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                     </div>
 
                     {/* Íconos visibles solo en desktop */}
-                    <Link to='#' className="account-link ml-auto">
+                    <Link to='/ShoppingCart' className="account-link ml-auto">
                         <img className="nav-icon-menu" src={Carrito} alt="Carrito" />
                     </Link>
                     <Link to='#' className="account-link ml-auto">
@@ -248,7 +248,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
 
                     {/* Íconos solo en móviles */}
                     <div className="mobile-icons d-flex justify-content-center gap-5 mb-3">
-                        <Link to='/ShoppingCart'>
+                        <Link to='#'>
                             <img className="nav-icon-menu" src={carritoWhite} alt="Carrito" />
                         </Link>
                         <Link to='#'>
