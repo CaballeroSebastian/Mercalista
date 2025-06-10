@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
-from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador
+from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador, Usuario
 from .serializers import ProductoSerializer
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -82,7 +82,9 @@ class crearProducto(APIView):
                 try:
                     vendedor = Vendedor.objects.get(pk=id)
                 except Vendedor.DoesNotExist:
-                    return Response({'error': 'Vendedor no encontrado'}, status=404)
+                    # return Response({'error': 'Vendedor no encontrado'}, status=404)
+                    usuario = Usuario.objects.get(pk = id)
+                    vendedor = Vendedor.objects.create(idusuario = usuario)
 
                 producto = serializer.save()
                 
