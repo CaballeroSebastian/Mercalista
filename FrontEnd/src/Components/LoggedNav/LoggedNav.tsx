@@ -35,7 +35,6 @@ const Menu = ({children}: NavBarPropsLogged) => {
     const { username } = useParams<{ username: string }>();
 
     useEffect(() => {
-        // Solo redirigir si estamos en la ruta /logged/* y el username no coincide
         if (window.location.pathname.startsWith('/logged/') && user?.username !== username) {
             navigate(`/logged/${user?.username}`);
         }
@@ -167,7 +166,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                     </div>
 
                     {/* Íconos visibles solo en desktop */}
-                    <Link to='/ShoppingCart' className="account-link ml-auto">
+                    <Link to='#' className="account-link ml-auto">
                         <img className="nav-icon-menu" src={Carrito} alt="Carrito" />
                     </Link>
                     <Link to='#' className="account-link ml-auto">

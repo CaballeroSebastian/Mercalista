@@ -51,16 +51,17 @@ const ShoppingCart: React.FC = () => {
                     <div className="product-details mr-2">
                         <div className="d-flex flex-row align-items-center">
                         <i className="fa fa-long-arrow-left"></i>
-                        <span className="ml-2">Continue Shopping</span>
+                        <span className="ml-2">Continuar Comprando </span>
                         </div>
                         <hr />
                         <h6 className="mb-0">Shopping cart</h6>
                         <div className="d-flex justify-content-between">
-                        <span>You have {cartItems.length} items in your cart</span>
+                        <span>
+                            Tienes {cartItems.length} artículos en tu carrito</span>
                         <div className="d-flex flex-row align-items-center">
-                            <span className="text-black-50">Sort by:</span>
+                            <span className="text-black-50">Ordenar por:</span>
                             <div className="price ml-2">
-                            <span className="mr-1">price</span>
+                            <span className="mr-1">precio</span>
                             <i className="fa fa-angle-down"></i>
                             </div>
                         </div>
@@ -107,11 +108,10 @@ const ShoppingCart: React.FC = () => {
                     <div className="col-md-4">
                     <div className="payment-info">
                         <div className="d-flex justify-content-between align-items-center">
-                        <span>Card details</span>
-                        <img className="rounded" src="https://i.imgur.com/WU501C8.jpg" width="30" alt="card" />
+                        <span>Detalles de la tarjeta</span>
                         </div>
                         
-                        <span className="type d-block mt-3 mb-1">Card type</span>
+                        <span className="type d-block mt-3 mb-1">Tipo de tarjeta</span>
                         <div className="radio-container">
                             {['mastercard', 'visa', 'amex', 'paypal'].map((card) => (
                                 <label key={card} className="radio">
@@ -132,12 +132,12 @@ const ShoppingCart: React.FC = () => {
                         </div>
 
                         <div>
-                        <label className="credit-card-label">Name on card</label>
+                        <label className="credit-card-label"> Nombre en la tarjeta </label>
                         <input type="text" className="form-control credit-inputs" placeholder="Name" />
                         </div>
 
                         <div>
-                        <label className="credit-card-label">Card number</label>
+                        <label className="credit-card-label">Número de tarjeta </label>
                         <input type="text" className="form-control credit-inputs" placeholder="0000 0000 0000 0000" />
                         </div>
 

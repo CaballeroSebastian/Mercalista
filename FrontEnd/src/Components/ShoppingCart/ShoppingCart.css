@@ -9,7 +9,11 @@
 .product-details {
   padding: 10px;
 }
-
+.rounded
+ {
+    border-radius: var(--bs-border-radius) !important;
+    height: 90px;
+}
 body {
   background: #eee;
 }
@@ -114,7 +118,7 @@ label.radio input:checked + span {
 
 .items {
   -webkit-box-shadow: 5px 5px 4px -1px rgba(0,0,0,0.25);
-  box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.08);
+  box-shadow: 5px 5px 4px -1px rgba(0,0,0,0.25);
 }
 
 .spec {
