@@ -45,7 +45,7 @@ class VerificarPasswordView(APIView):
                 'access_token': str(refresh.access_token),
                 'refresh_token': str(refresh),
                 'usuario': {
-                    'id': usuario.idusuario,
+                    'idusuario': usuario.idusuario,
                     'nombre': usuario.nombre,
                     'apellido': usuario.apellido,
                     'correo': usuario.correo,
