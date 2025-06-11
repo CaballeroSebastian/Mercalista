@@ -1,11 +1,14 @@
 .payment-info {
-  background: #413620;
+  background: transparent;
   padding: 10px;
   border-radius: 6px;
-  color: #fff;
+  color: #444444;
   font-weight: bold;
   position: sticky;
   top: 30px;
+  border: 1px solid #777777;
+  -webkit-box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.25);
 }
 
 .product-details {
@@ -55,8 +58,8 @@ label.radio span img {
 }
 
 label.radio input:checked + span {
-  border-color: #FFD791;
-  background-color: #FFD791;
+  border-color: #50505080;
+  background-color: #50505080;
   color: #fff;
 }
 
@@ -75,7 +78,7 @@ label.radio input:checked + span {
 .credit-card-label {
   font-size: 11px;
   font-weight: 300;
-  color: #ffffff;
+  color: #2c2c2c;
 }
 
 
@@ -175,7 +178,7 @@ label.radio input:checked + span {
 .btn-buy {
   width: 80%;
   height: 2.5rem;
-  background-color: #0044ffad;
+  background-color: #8c5b17;
   border: none;
   display: flex;
   align-items: center;
@@ -190,7 +193,7 @@ label.radio input:checked + span {
 }
 
 .btn-buy:hover {
-  background-color: #0033cc70;
+  background-color: #8c5b17af;
 }
 
 .fa-trash-o {
