@@ -54,6 +54,7 @@ class VerificarPasswordView(APIView):
                     'cedula': usuario.cedula,
                     'username': usuario.username,
                     'ciudad': usuario.ciudad,
+                    'image_profile': usuario.image_profile,
 
                 }
             }, status=status.HTTP_200_OK)

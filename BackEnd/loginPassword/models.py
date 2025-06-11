@@ -16,7 +16,7 @@ class Usuario(models.Model):
     contraseña = models.CharField(max_length=100)
     departamento = models.CharField(max_length=100)
     username = models.CharField(db_column='userName', unique=True, max_length=100)  # Field name made lowercase.
-
+    image_profile = models.CharField(max_length=250)
     class Meta:
         managed = False
         db_table = 'usuario'

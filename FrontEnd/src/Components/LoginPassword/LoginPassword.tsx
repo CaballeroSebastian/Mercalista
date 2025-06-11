@@ -79,7 +79,8 @@ const LoginPassword: React.FC = () => {
         correo: data.usuario.correo,
         contraseña: data.usuario.contraseña, // Agregado
         departamento: data.usuario.departamento, // Agregado
-        username: data.usuario.username
+        username: data.usuario.username,
+        image_profile: data.usuario.image_profile // Descomentado si es necesario
     };
         // Usar userData en lugar de data.usuario
         login(data.access_token, userData);
