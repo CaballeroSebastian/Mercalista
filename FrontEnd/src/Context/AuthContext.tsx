@@ -22,6 +22,8 @@ interface AuthContextType {
   loading: boolean;
   login: (token: string, userData: Usuario) => Promise<void>;
   logout: () => void;
+  updateUserData: (newUserData: Partial<Usuario>) => Promise<void>;
+  fetchWithToken: (url: string, options?: RequestInit) => Promise<Response>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -31,29 +33,57 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const initAuth = () => {
-      const storedToken = localStorage.getItem('access_token');
-      const storedUserData = localStorage.getItem('userData');
+  const refreshToken = async () => {
+    try {
+      const refresh = localStorage.getItem('refresh_token');
+      if (!refresh) throw new Error('No refresh token');
 
-      if (storedToken && storedUserData) {
-        try {
-          const decodedToken = jwtDecode<{ exp: number }>(storedToken);
-          const currentTime = Date.now() / 1000;
+      const response = await fetch('http://localhost:8000/api/token/refresh/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refresh: refresh
+        }),
+      });
 
-          if (decodedToken.exp > currentTime) {
-            setAccessToken(storedToken);
-            setUser(JSON.parse(storedUserData));
-          } else {
-            console.log('Token expirado');
-          }
-        } catch (error) {
-          console.error('Error al decodificar token:', error);
+      if (!response.ok) throw new Error('Failed to refresh token');
+
+      const data = await response.json();
+      localStorage.setItem('access_token', data.access);
+      setAccessToken(data.access);
+      return data.access;
+    } catch (error) {
+      console.error('Error refreshing token:', error);
+      logout();
+      return null;
+    }
+  };
+
+  const initAuth = () => {
+    const storedToken = localStorage.getItem('access_token');
+    const storedUserData = localStorage.getItem('userData');
+
+    if (storedToken && storedUserData) {
+      try {
+        const decodedToken = jwtDecode<{ exp: number }>(storedToken);
+        const currentTime = Date.now() / 1000;
+
+        if (decodedToken.exp > currentTime) {
+          setAccessToken(storedToken);
+          setUser(JSON.parse(storedUserData));
+        } else {
+          console.log('Token expirado');
         }
+      } catch (error) {
+        console.error('Error al decodificar token:', error);
       }
-      setLoading(false);
-    };
+    }
+    setLoading(false);
+  };
 
+  useEffect(() => {
     initAuth();
   }, []);
 
@@ -86,12 +116,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     window.location.href = 'http://localhost:5173/';
   };
 
+  // Función para actualizar el usuario sin cerrar sesión
+  const updateUserData = async (newUserData: Partial<Usuario>) => {
+    if (user) {
+      const updatedUser = { ...user, ...newUserData };
+      localStorage.setItem('userData', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+    }
+  };
+
+  // Verificar token antes de cada petición
+  const fetchWithToken = async (url: string, options: RequestInit = {}) => {
+    let token = localStorage.getItem('access_token');
+    
+    try {
+      // Verificar si el token actual está por expirar
+      if (token) {
+        const decodedToken = jwtDecode<{ exp: number }>(token);
+        const currentTime = Date.now() / 1000;
+        
+        // Si el token expira en menos de 5 minutos, refrescarlo
+        if (decodedToken.exp - currentTime < 300) {
+          token = await refreshToken();
+        }
+      }
+
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          ...options.headers,
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      console.error('Error en fetchWithToken:', error);
+      throw error;
+    }
+  };
+
   if (loading) {
     return null;
   }
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, loading, login, logout }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      accessToken, 
+      loading, 
+      login, 
+      logout,
+      updateUserData,
+      fetchWithToken 
+    }}>
       {children}
     </AuthContext.Provider>
   );

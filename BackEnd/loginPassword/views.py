@@ -49,13 +49,14 @@ class VerificarPasswordView(APIView):
                     'nombre': usuario.nombre,
                     'apellido': usuario.apellido,
                     'correo': usuario.correo,
-                    'tipo_usuario': usuario.tipousuario,
+                    'tipousuario': usuario.tipousuario,  # Cambiado de tipo_usuario a tipousuario
                     'telefono': usuario.telefono,
                     'cedula': usuario.cedula,
                     'username': usuario.username,
                     'ciudad': usuario.ciudad,
                     'image_profile': usuario.image_profile,
-
+                    'departamento': usuario.departamento,  # Asegúrate que este campo exista en tu modelo
+                    'contraseña': usuario.contraseña
                 }
             }, status=status.HTTP_200_OK)
 
