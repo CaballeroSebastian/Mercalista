@@ -53,7 +53,7 @@ const ShoppingCart: React.FC = () => {
       specs: "256GB, Navy Blue",
       image: "https://i.imgur.com/QRwjbm5.jpg",
       quantity: 2,
-      price: 1200,
+      price: 100000000,
       stock: 5
     },
         {
@@ -129,7 +129,7 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateExtras = () => {
     const subtotal = calculateSubtotal();
-    return subtotal > 0 ? subtotal * 0.12 : 0;
+    return subtotal > 0 ? subtotal * 0.6 : 0;
   };
 
   const calculateTotal = () => {
@@ -191,10 +191,10 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
         right: 30,
         zIndex: 3000,
         background: '#fff',
-        border: '2px solid #007bff',
+        border: '2px solidrgb(95, 140, 23)',
         borderRadius: '50px',
         padding: '12px 24px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+        boxShadow: '0 2px 8px  a(0,0,0,0.15)',
         display: 'flex',
         alignItems: 'center',
         gap: 10,
@@ -202,8 +202,8 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
         fontSize: 18,
       }}
     >
-      <CartIcon size={28} color="#007bff" />
-      <span style={{ color: '#007bff' }}>${total.toFixed(2)}</span>
+      <CartIcon size={28} color="#bcbf29" />
+      <span style={{ color: 'black' }}>${total.toFixed(2)}</span>
       {itemCount > 0 && (
         <span
           style={{
@@ -240,7 +240,7 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
       <div className="payment-info">
         <div className="d-flex justify-content-between align-items-center">
           <span>Detalles de la tarjeta</span>
-        </div>
+        </div>  
 
         <span className="type d-block mt-3 mb-1">Tipo de tarjeta</span>
         <div className="radio-container">
@@ -353,7 +353,7 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
           <span>${calculateSubtotal().toFixed(2)}</span>
         </div>
         <div className="d-flex justify-content-between information">
-          <span>Extras (12%)</span>
+          <span>Extras (6%)</span>
           <span>${calculateExtras().toFixed(2)}</span>
         </div>
         <div className="d-flex justify-content-between information">
