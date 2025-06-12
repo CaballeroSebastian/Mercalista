@@ -30,7 +30,7 @@ const OnSale = () => {
   const backendUrl = "http://127.0.0.1:8000/";
 
   const Usuario = user?.idusuario;
-  console.log(Usuario)
+  
   //const Usuario = 35
 
 

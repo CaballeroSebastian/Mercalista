@@ -13,7 +13,6 @@ const ProductRegistrationForm = () => {
   const { user } = useAuth();
 
   const Usuario = user?.idusuario ?? '';
-  console.log(Usuario)
   
 
   const [formulario, setFormulario] = useState({

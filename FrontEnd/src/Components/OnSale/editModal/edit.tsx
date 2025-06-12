@@ -4,6 +4,7 @@ import axios from 'axios'
 import { X, Upload, Edit3, Trash2, Save } from "lucide-react"
 import './editModal.css'
 
+
 interface informacion {
     idproducto: number;
     nombre: string;
@@ -26,6 +27,8 @@ interface Props{
 
 const Edit =({cerrar, informacion}: Props)=>{
     const backendUrl = "http://127.0.0.1:8000/";
+
+    const [ updateData, setUpdateData] = useState({})
 
     const onDelete = async(pk: number) =>{
       try{
