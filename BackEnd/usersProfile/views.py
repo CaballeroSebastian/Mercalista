@@ -11,11 +11,19 @@ class UsersProfileView(ListAPIView):
     serializer_class = usersProfileSerializer
 
 # Obtener o editar perfil por cédula (GET, PUT)
-class UserProfileByCedulaView(RetrieveUpdateAPIView):  # <- actualizado aquí
+class UserProfileByCedulaView(RetrieveUpdateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = usersProfileSerializer
     lookup_field = 'cedula'
 
+    def update(self, request, *args, **kwargs):
+        """Sobreescribimos el método para permitir actualizaciones parciales (solo un campo)"""
+        partial = True  # <- esto permite que se manden solo los campos que quieras
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 class ProfileImageUpdateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
