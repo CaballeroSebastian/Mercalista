@@ -6,8 +6,8 @@ import './Manuals.css';
 
 import { ArrowLeft, ArrowRight, ArrowDown } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
+import Offcanvas from 'bootstrap/js/dist/offcanvas';
 
-import * as bootstrap from 'bootstrap';
 
 const Manuals = () => {
     const [collageOpen1, setCollageOpen1] = useState(false);
@@ -17,9 +17,6 @@ const Manuals = () => {
     const [activeSection2, setActiveSection2] = useState('');
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
 
-    const setActiveSection = (section: string) => {
-        setActiveSection1(section);
-    };
 
     const handleCollage1Toggle = () => {
         setCollageOpen1(open => {
@@ -486,7 +483,7 @@ const Manuals = () => {
         if (isMobile) {
             const offcanvas = document.getElementById('mobileSidebar');
             if (offcanvas) {
-                const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+                const bsOffcanvas = Offcanvas.getOrCreateInstance(offcanvas);
                 bsOffcanvas.hide();
             }
 

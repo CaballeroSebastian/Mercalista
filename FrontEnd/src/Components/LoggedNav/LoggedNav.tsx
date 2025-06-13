@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';  
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
