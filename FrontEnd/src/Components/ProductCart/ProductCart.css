@@ -68,14 +68,14 @@
 }
 
 .CategoriaPrew{
-    display: flex;
     align-items: center;
-    justify-content: center;
     font-size: 14px;
-    width: 3rem;
     border: 1px solid #0000008a;
     border-radius: 5px;
     background-color: #e2fa786c;
+    justify-self: start; /* Añade esta línea */
+    padding: 0.2em 0.5em;
+
 }
 
 .precioPrew{
