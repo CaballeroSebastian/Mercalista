@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     #apps
     'producto',
     'backlogin',
-    'usersProfile',
+    
     'loginPassword',
     'Register',
     'productCart',
