@@ -62,12 +62,13 @@ function App() {
             </LoginNavbar>
           } />
           <Route path='/LoginEmail' element={<LoginEmail/>} />
-          <Route path='/LoginEmail/LoginPassword' element={<LoginPassword/>} />
+          <Route path='/LoginPassword' element={<LoginPassword/>} />
           <Route path='/Register' element={<Register/>} />
           <Route path='/Register/RegisterPassword' element={<RegisterPassword/>} />
           <Route path='/PasswordRecovery' element={<PasswordRecovery/>} />
           <Route path='/PasswordRecovery/ConfirmPassword' element={<ConfirmPassword/>} />
           <Route path='/ShoppingCart' element={<ShoppingCart />} />
+          <Route path='/Manuals' element={<Manuals />} />
             
              
             
@@ -130,12 +131,7 @@ function App() {
             </PrivateRoute>
           } />
 
-          {/* Añadir la ruta para Manuals */}
-          <Route path='/manuals' element={
-            <PrivateRoute>
-              <Manuals />
-            </PrivateRoute>
-          } />
+         
 
         </Routes>
       </AuthProvider>

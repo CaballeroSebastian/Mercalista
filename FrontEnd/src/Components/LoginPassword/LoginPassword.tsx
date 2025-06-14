@@ -4,27 +4,30 @@ import logo from '../../assets/Image/logo.png';
 import collage from '../LoginEmail/img/collage.png';
 import googleIcon from '../LoginEmail/img/google.png';
 import { Eye, EyeClosed } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext'; 
 
 
 const LoginPassword: React.FC = () => {
-  const { login } = useAuth(); // ✅ Usar el hook personalizado
-
+  const { tempEmail, login } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); // Estado para contraseña
   const [passwordType, setPasswordType] = useState<'password' | 'text'>('password');
   const [eyeIcon, setEyeIcon] = useState(<EyeClosed />);
   const [error, setError] = useState(''); //Estado para errores
   const [isLoading, setIsLoading] = useState(false); // Estado de carga
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const savedEmail = localStorage.getItem('userEmail');
-    if (savedEmail) {
-      setEmail(savedEmail);
+    // Verificación inmediata del email temporal
+    if (!tempEmail) {
+        console.log('No hay email temporal, redirigiendo...');
+        navigate('/LoginEmail', { replace: true });
+        return;
+    } else {
+      setEmail(tempEmail);
     }
-  }, []);
+  }, [tempEmail, navigate]);
 
   const togglePasswordInputType = () => {
     const newType = passwordType === 'password' ? 'text' : 'password';
@@ -85,6 +88,12 @@ const LoginPassword: React.FC = () => {
             setIsLoading(false);
         }
   };
+
+  // Si no hay email, retornamos null para evitar renderizar el contenido
+  if (!tempEmail) {
+    return null;
+  }
+
   return (
     <div className="body">
       <header className="header-login">

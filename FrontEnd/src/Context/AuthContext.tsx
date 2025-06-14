@@ -20,6 +20,8 @@ interface AuthContextType {
   user: Usuario | null;
   accessToken: string | null;
   loading: boolean;
+  tempEmail: string | null;
+  setTempEmail: (email: string | null) => void;
   login: (token: string, userData: Usuario) => Promise<void>;
   logout: () => void;
   updateUserData: (newUserData: Partial<Usuario>) => Promise<void>;
@@ -32,6 +34,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<Usuario | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [tempEmail, setTempEmail] = useState<string | null>(
+    sessionStorage.getItem('tempEmail') // Usar sessionStorage para persistencia
+  );
 
   const refreshToken = async () => {
     try {
@@ -113,7 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('userData');
     setAccessToken(null);
     setUser(null);
-    window.location.href = 'http://localhost:5173/';
+    window.location.href = '/LoginEmail'; // Redirigir al login
   };
 
   // Función para actualizar el usuario sin cerrar sesión
@@ -156,16 +161,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const handleSetTempEmail = (email: string | null) => {
+    setTempEmail(email);
+    if (email) {
+      sessionStorage.setItem('tempEmail', email);
+    } else {
+      sessionStorage.removeItem('tempEmail');
+    }
+  };
+
   if (loading) {
     return null;
   }
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      accessToken, 
-      loading, 
-      login, 
+    <AuthContext.Provider value={{
+      user,
+      accessToken,
+      loading,
+      tempEmail,
+      setTempEmail: handleSetTempEmail,
+      login,
       logout,
       updateUserData,
       fetchWithToken 
