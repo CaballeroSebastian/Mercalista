@@ -41,6 +41,11 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  //ruta del back
+  const backendUrl = "http://127.0.0.1:8000/";
+  console.log('token:',  accessToken)
+  console.log(cedula)
+
   // Función para mostrar alertas
   const showAlert = (message: string) => {
     setAlertMessage(message);
@@ -89,7 +94,7 @@ const Profile = () => {
         return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
       case "telefono":
         return /^\d{10}$/.test(value);
-      case "contraseña":
+      case "contraseña":  
         return /^(?=.*[A-Za-zÁÉÍÓÚáéíóúÑñ])(?=.*\d)[A-Za-zÁÉÍÓÚáéíóúÑñ\d!@#$%^&*()_+=\-{}[\]:;"'|<>,.?/~`]{8,}$/.test(value);
       default:
         return true;
@@ -436,11 +441,11 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
               <div className="foto-perfil-container">
                 <img
                   src={
-                    datosUsuario?.image_profile
-                      ? (datosUsuario.image_profile.startsWith("http")
-                          ? `${datosUsuario.image_profile}?${Date.now()}`
-                          : `http://127.0.0.1:8000${datosUsuario.image_profile}?${Date.now()}`)
-                      : perfilIcon
+                    datosUsuario.image_profile.startsWith(backendUrl)?
+                      datosUsuario?.image_profile
+                        ? `${backendUrl}media/${datosUsuario.image_profile}`
+                        : perfilIcon
+                    :perfilIcon
                   }
                   alt="Foto de perfil"
                   className="foto-perfil"
@@ -462,23 +467,25 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                       formData.append("image_profile", file);
 
                       try {
+                        console.log("Token enviado:", accessToken);
                         setIsLoading(true);
-                        await axios.put(
+                        await axios.patch(
                           `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
                           formData,
-                          { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" } }
+                          { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" }}
                         );
                         // Espera un poco para asegurar que el backend procese la imagen
                         setTimeout(async () => {
                           const response = await axios.get(
-                            `http://127.0.0.1:8000/profile/${cedula}/`,
+                            `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
                             { headers: { Authorization: `Bearer ${accessToken}` } }
                           );
                           setDatosUsuario(response.data);
                           showAlert("Foto de perfil actualizada correctamente");
                           setIsLoading(false);
                         }, 500);
-                      } catch (err) {
+                      } catch (err: any) {
+                        console.error("Detalles del error:", err.response?.data || err.message);
                         showAlert("Error al subir la foto de perfil");
                         setIsLoading(false);
                       }
