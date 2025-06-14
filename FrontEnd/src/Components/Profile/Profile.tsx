@@ -441,11 +441,11 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
               <div className="foto-perfil-container">
                 <img
                   src={
-                    datosUsuario.image_profile.startsWith(backendUrl)?
-                      datosUsuario?.image_profile
-                        ? `${backendUrl}media/${datosUsuario.image_profile}`
-                        : perfilIcon
-                    :perfilIcon
+                    datosUsuario?.image_profile
+                      ? (datosUsuario.image_profile.startsWith(backendUrl)
+                          ? `${datosUsuario.image_profile}?${Date.now()}`
+                          : `${datosUsuario.image_profile}?${Date.now()}`)
+                      : perfilIcon
                   }
                   alt="Foto de perfil"
                   className="foto-perfil"
