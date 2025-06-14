@@ -18,7 +18,7 @@ class CrearUsuario(APIView):
         if data.is_valid():
             raw_password = data.validated_data['contraseña']
             hashed_password = make_password(raw_password)
-            Usuario.objects.create(
+            usuario = Usuario.objects.create(
                 tipousuario = data.validated_data['tipousuario'],
                 nombre = data.validated_data['nombre'],
                 apellido = data.validated_data['apellido'],
@@ -30,6 +30,12 @@ class CrearUsuario(APIView):
                 contraseña = hashed_password,
                 username = data.validated_data['username'],
             )
+            
+            if usuario.tipousuario.lower() == 'comprador':
+                Comprador.objects.create(idusuario=usuario)
+            elif usuario.tipousuario.lower() == 'vendedor':
+                Vendedor.objects.create(idusuario=usuario)
+            
             return Response({
                 "mensaje": "Usuario creado correctamente",
                 #"contraseña_original": raw_password,
@@ -37,20 +43,9 @@ class CrearUsuario(APIView):
             },  status=201)      
         else:
             return Response(data.errors, status=400)
+
         
-class CrearTipoDeUsuario(APIView):
-    def post(self, request):
-        dataUsuario = SerializerUsuario(data=request.data)
-        if dataUsuario.is_valid():
-            Comprador.objects.create(
-                idusuario=Usuario.objects.get(idusuario=dataUsuario.validated_data['username'])
-            )
-            
-            Vendedor.objects.create(
-                idusuario=Usuario.objects.get(idusuario=dataUsuario.validated_data['username'])
-            )
-            
-            #se realiza la tabla COMPRADOR Y VENDEDOR SE CAMBIOE L GET(USERNAME POR IDUSUARIO)
+
 class VerificarDatosView(APIView):
     def post(self, request):
         try:

@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';  
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -90,7 +90,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
             <nav id="barraLateral" className="border-right d-none d-md-block">
                 <div className="barra-fija">
                     <div className="navbar-brand p-3">
-                        <Link to = '/' >
+                        <Link to = '/logged/:username' >
                             <img className="logo" src={logo} alt="Mercalista" />
                         </Link>
                     </div>
@@ -154,7 +154,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <Link to='/' className="brand-link">
+                    <Link to='/logged/:username' className="brand-link">
                         <span className="brand-text">Mercalista</span>
                     </Link>
 

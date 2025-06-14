@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ShoppingCart.css';
 import NavBar from '../LoggedNav/LoggedNav';
-import { Trash2, ArrowLeft } from 'lucide-react'; // Añadir ArrowRight
-import { Link } from 'react-router-dom'; // Añadir Link
-import { useAuth } from '../../Context/AuthContext'; // Añadir useAuth
+import { Trash2, ArrowLeft, Plus, Minus, ShoppingCart as CartIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface CartItem {
   id: number;
@@ -12,12 +13,12 @@ interface CartItem {
   image: string;
   quantity: number;
   price: number;
+  stock: number;
 }
 
 const ShoppingCart: React.FC = () => {
-  const { user } = useAuth(); // Obtener el usuario actual
+  const { user } = useAuth();
 
-  // Estados
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -25,21 +26,89 @@ const ShoppingCart: React.FC = () => {
       specs: "256GB, Navy Blue",
       image: "https://i.imgur.com/QRwjbm5.jpg",
       quantity: 2,
-      price: 900
+      price: 900,
+      stock: 3
     },
-    {
+        {
       id: 2,
-      name: "Iphone 11 pro",
+      name: "Iphone 15 pro",
       specs: "256GB, Navy Blue",
       image: "https://i.imgur.com/QRwjbm5.jpg",
       quantity: 2,
-      price: 1200
+      price: 1200,
+      stock: 5
     },
-
-    
+        {
+      id: 2,
+      name: "Iphone 15 pro",
+      specs: "256GB, Navy Blue",
+      image: "https://i.imgur.com/QRwjbm5.jpg",
+      quantity: 2,
+      price: 1200,
+      stock: 5
+    },
+        {
+      id: 2,
+      name: "Iphone 15 pro",
+      specs: "256GB, Navy Blue",
+      image: "https://i.imgur.com/QRwjbm5.jpg",
+      quantity: 2,
+      price: 100000000,
+      stock: 5
+    },
+        {
+      id: 2,
+      name: "Iphone 15 pro",
+      specs: "256GB, Navy Blue",
+      image: "https://i.imgur.com/QRwjbm5.jpg",
+      quantity: 2,
+      price: 1200,
+      stock: 5
+    },
+        {
+      id: 2,
+      name: "Iphone 15 pro",
+      specs: "256GB, Navy Blue",
+      image: "https://i.imgur.com/QRwjbm5.jpg",
+      quantity: 2,
+      price: 1200,
+      stock: 5
+    },
+        {
+      id: 2,
+      name: "Iphone 15 pro",
+      specs: "256GB, Navy Blue",
+      image: "https://i.imgur.com/QRwjbm5.jpg",
+      quantity: 2,
+      price: 10000000,
+      stock: 5
+    },
   ]);
 
-  // Manejadores de eventos
+const [cardName, setCardName] = useState('');
+const [cardNumber, setCardNumber] = useState('');
+const [cardDate, setCardDate] = useState('');
+const [cardCVV, setCardCVV] = useState('');
+
+const [errors, setErrors] = useState({
+  cardName: '',
+  cardNumber: '',
+  cardDate: '',
+  cardCVV: ''
+});
+
+const [showSuccess, setShowSuccess] = useState(false);
+const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+// Estado para la alerta tipo toast
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
+  // Función para mostrar la alerta
+  const showAlert = (message: string) => {
+    setAlertMessage(message);
+    setTimeout(() => setAlertMessage(null), 3000);
+  };
+
   const handleQuantityChange = (id: number, change: number) => {
     setCartItems(items =>
       items.map(item =>
@@ -54,33 +123,365 @@ const ShoppingCart: React.FC = () => {
     setCartItems(items => items.filter(item => item.id !== id));
   };
 
-  // Funciones de cálculo
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
-  const calculateShipping = () => {
-    // Puedes ajustar la lógica del shipping según tus necesidades
-    return cartItems.length > 0 ? 20 : 0;
+  const calculateExtras = () => {
+    const subtotal = calculateSubtotal();
+    return subtotal > 0 ? subtotal * 0.6 : 0;
   };
 
   const calculateTotal = () => {
-    return calculateSubtotal() + calculateShipping();
+    return calculateSubtotal() + calculateExtras();
   };
 
-  // Renderizado
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      showAlert('No hay productos en el carrito');
+      return;
+    }
+
+    const newErrors = {
+      cardName: '',
+      cardNumber: '',
+      cardDate: '',
+      cardCVV: ''
+    };
+
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    const cardNumRegex = /^\d{16}$/;
+    const dateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+    const cvvRegex = /^\d{3,4}$/;
+
+    if (!cardName.trim()) {
+      newErrors.cardName = 'El nombre es obligatorio.';
+    } else if (!nameRegex.test(cardName)) {
+      newErrors.cardName = 'El nombre solo puede contener letras y espacios.';
+    }
+
+    if (!cardNumRegex.test(cardNumber)) {
+      newErrors.cardNumber = 'El número de tarjeta debe tener 16 dígitos.';
+    }
+
+    if (!dateRegex.test(cardDate)) {
+      newErrors.cardDate = 'La fecha debe tener el formato MM/YY.';
+    }
+
+    if (!cvvRegex.test(cardCVV)) {
+      newErrors.cardCVV = 'El CVV debe tener 3 o 4 dígitos.';
+    }
+
+    setErrors(newErrors);
+
+    const isValid = Object.values(newErrors).every(error => error === '');
+    if (isValid) {
+      setShowSuccess(true);
+    }
+  };
+
+  // Botón flotante de carrito
+  const FloatingCartButton: React.FC<{ total: number; onClick: () => void; itemCount: number }> = ({ total, onClick, itemCount }) => (
+    <button
+      className="floating-cart-btn"
+      onClick={onClick}
+      style={{
+        position: 'fixed',
+        bottom: 30,
+        right: 30,
+        zIndex: 3000,
+        background: '#fff',
+        border: '2px solidrgb(95, 140, 23)',
+        borderRadius: '50px',
+        padding: '12px 24px',
+        boxShadow: '0 2px 8px  a(0,0,0,0.15)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        fontWeight: 600,
+        fontSize: 18,
+      }}
+    >
+      <CartIcon size={28} color="#bcbf29" />
+      <span style={{ color: 'black' }}>${total.toFixed(2)}</span>
+      {itemCount > 0 && (
+        <span
+          style={{
+            background: '#dc3545',
+            color: '#fff',
+            borderRadius: '50%',
+            width: 24,
+            height: 24,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 14,
+            marginLeft: 4,
+          }}
+        >
+          {itemCount}
+        </span>
+      )}
+    </button>
+  );
+
+  // Estado para responsive
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1350);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 1350);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Renderiza el bloque de pago (columna derecha)
+  function renderPaymentInfo() {
+    return (
+      <div className="payment-info">
+        <div className="d-flex justify-content-between align-items-center">
+          <span>Detalles de la tarjeta</span>
+        </div>  
+
+        <span className="type d-block mt-3 mb-1">Tipo de tarjeta</span>
+        <div className="radio-container">
+          {['mastercard', 'visa', 'amex', 'paypal'].map((card) => (
+            <label key={card} className="radio">
+              <input 
+                type="radio" 
+                name="card" 
+                value="payment" 
+                defaultChecked={card === 'mastercard'} 
+              />
+              <span>
+                <img 
+                  src={`https://img.icons8.com/${card === 'mastercard' ? 'color' : 'officel'}/48/000000/${card}.png`}
+                  alt={card}
+                />
+              </span>
+            </label>
+          ))}
+        </div>
+
+        {/* Nombre */}
+        <div>
+          <label className="credit-card-label">Nombre en la tarjeta</label>
+          <input
+            type="text"
+            className={`form-control credit-inputs ${errors.cardName ? 'is-invalid' : ''}`}
+            placeholder="Name"
+            value={cardName}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+              setCardName(value);
+              // Limpiar error si es válido
+              if (/^[a-zA-Z\s]+$/.test(value) && value.trim() !== '') {
+                setErrors(prev => ({ ...prev, cardName: '' }));
+              }
+            }}
+            maxLength={40}
+          />
+          {errors.cardName && <div className="text-danger mt-1">{errors.cardName}</div>}
+        </div>
+
+        <div>
+          <label className="credit-card-label">Número de tarjeta</label>
+          <input
+            type="text"
+            className={`form-control credit-inputs ${errors.cardNumber ? 'is-invalid' : ''}`}
+            placeholder="0000 0000 0000 0000"
+            value={cardNumber}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, '').slice(0, 16);
+              setCardNumber(value);
+              if (/^\d{16}$/.test(value)) {
+                setErrors(prev => ({ ...prev, cardNumber: '' }));
+              }
+            }}
+            maxLength={16}
+          />
+          {errors.cardNumber && <div className="text-danger mt-1">{errors.cardNumber}</div>}
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <label className="credit-card-label">Fecha</label>
+            <input
+              type="text"
+              className={`form-control credit-inputs ${errors.cardDate ? 'is-invalid' : ''}`}
+              placeholder="MM/YY"
+              value={cardDate}
+              onChange={(e) => {
+                let value = e.target.value.replace(/[^0-9/]/g, '');
+                if (value.length === 2 && cardDate.length === 1) {
+                  value += '/';
+                }
+                value = value.slice(0, 5);
+                setCardDate(value);
+                if (/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+                  setErrors(prev => ({ ...prev, cardDate: '' }));
+                }
+              }}
+              maxLength={5}
+            />
+            {errors.cardDate && <div className="text-danger mt-1">{errors.cardDate}</div>}
+          </div>
+          <div className="col-md-6">
+            <label className="credit-card-label">CVV</label>
+            <input
+              type="text"
+              className={`form-control credit-inputs ${errors.cardCVV ? 'is-invalid' : ''}`}
+              placeholder="342"
+              value={cardCVV}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, '').slice(0, 4);
+                setCardCVV(value);
+                if (/^\d{3,4}$/.test(value)) {
+                  setErrors(prev => ({ ...prev, cardCVV: '' }));
+                }
+              }}
+              maxLength={4}
+            />
+            {errors.cardCVV && <div className="text-danger mt-1">{errors.cardCVV}</div>}
+          </div>
+        </div>
+
+
+        <hr className="line" />
+
+        <div className="d-flex justify-content-between information">
+          <span>Subtotal (Incl. Iva)</span>
+          <span>${calculateSubtotal().toFixed(2)}</span>
+        </div>
+        <div className="d-flex justify-content-between information">
+          <span>Extras (6%)</span>
+          <span>${calculateExtras().toFixed(2)}</span>
+        </div>
+        <div className="d-flex justify-content-between information">
+          <span>Total (Incl. Extras)</span>
+          <span>${calculateTotal().toFixed(2)}</span>
+        </div>
+
+        <button className="btn-buy mt-3" type="button" onClick={handleCheckout}>
+          <span>${calculateTotal().toFixed(2)}</span>
+          <span>
+            Comprar
+            <i className="fa fa-long-arrow-right ml-1"></i>
+          </span>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
+      {/* Toast de alerta */}
+      {alertMessage && (
+        <div
+          aria-live="polite"
+          aria-atomic="true"
+          style={{ position: "fixed", top: 20, right: 20, zIndex: 2000 }}
+        >
+          <div className="toast show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style={{ minWidth: '250px' }}>
+            <div className="d-flex">
+              <div className="toast-body">{alertMessage}</div>
+              <button
+                type="button"
+                className="btn-close btn-close-white me-2 m-auto"
+                aria-label="Close"
+                onClick={() => setAlertMessage(null)}
+              ></button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de éxito */}
+      
+      {showSuccess && (
+        <>
+          {/* Fondo oscuro detrás del modal */}
+          <div
+            className="modal-backdrop fade show"
+            style={{ zIndex: 1040 }}
+          ></div>
+          <div
+            className="modal fade show"
+            style={{ display: 'block', zIndex: 1050 }}
+            tabIndex={-1}
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header bg-success text-white">
+                  <h5 className="modal-title">¡Pago exitoso!</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    onClick={() => setShowSuccess(false)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <p>Pago procesado con éxito. ¡Gracias por tu compra!</p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => setShowSuccess(false)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Modal de pago para mobile */}
+      {isMobile && showPaymentModal && (
+        <>
+          <div
+            className="modal fade show"
+            style={{ display: 'block', zIndex: 2000 }}
+            tabIndex={-1}
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Detalles de pago</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    onClick={() => setShowPaymentModal(false)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  {renderPaymentInfo()}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="modal-backdrop fade show"
+            style={{ zIndex: 1999 }}
+            onClick={() => setShowPaymentModal(false)}
+          ></div>
+        </>
+      )}
+
       <NavBar>
-        <div className="main-wrapper min-vh-100 bg-light py-2">
-          <div className="container-xxl">
-            <div className="container mt-5 p-3 rounded cart">
+        <div className="MenuCarrito min-vh-100 py-2">
+          <div className="ContenedorpCarrito">
+            <div className="ContenedorCarrito">
               <div className="row no-gutters">
-                
-                {/* Columna izquierda - Detalles del carrito */}
-                <div className="col-md-8">
+
+                {/* Columna izquierda */}
+                <div className="ColumnaIzCarrito col-md-8">
                   <div className="product-details mr-2">
-                    {/* Encabezado */}
                     <div className="d-flex flex-row align-items-center">
                       <Link 
                         to={`/logged/${user?.username}`} 
@@ -91,47 +492,46 @@ const ShoppingCart: React.FC = () => {
                       </Link>
                     </div>
                     <hr />
-
-                    {/* Información del carrito */}
-                    <h6 className="mb-0">Shopping cart</h6>
+                    <h6 className="mb-0">Carro de compras</h6>
                     <div className="d-flex justify-content-between">
                       <span>Tienes {cartItems.length} artículos en tu carrito</span>
-                      <div className="d-flex flex-row align-items-center">
+                      <div className="ordenPCarrito d-flex flex-row align-items-center">
                         <span className="text-black-50">Ordenar por:</span>
                         <div className="price ml-2">
-                          <span className="mr-1">precio</span>
+                          <span className="mr-1" > Precio</span>
                           <i className="fa fa-angle-down"></i>
                         </div>
                       </div>
                     </div>
 
-                    {/* Lista de productos */}
                     {cartItems.map((item) => (
                       <div key={item.id} className="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
-                        {/* Información del producto */}
                         <div className="d-flex flex-row">
-                          <img className="rounded" src={item.image} width="40" alt={item.name} />
+                          <img className="imgCarrito" src={item.image} width="40" alt={item.name} />
                           <div className="ml-2">
                             <span className="font-weight-bold d-block">{item.name}</span>
                             <span className="spec">{item.specs}</span>
+                            <span className="badge bg-light text-dark ml-1">Stock: {item.stock}</span>
                           </div>
                         </div>
 
-                        {/* Controles de cantidad y precio */}
                         <div className="d-flex flex-row align-items-center">
                           <div className="quantity-controls d-flex align-items-center">
                             <button 
-                              className="btn btn-sm btn-outline-secondary"
+                              className="btn-carrito btn-sm btn-outline-secondary"
                               onClick={() => handleQuantityChange(item.id, -1)}
+                              disabled={item.quantity <= 1}
                             >
-                              <i className="fa fa-minus"></i>
+                              <Minus size={16} />
                             </button>
                             <span className="mx-2">{item.quantity}</span>
                             <button 
-                              className="btn btn-sm btn-outline-secondary"
+                              className={`btn-carrito btn-sm btn-outline-secondary${item.quantity >= item.stock ? ' btn-out-of-stock' : ''}`}
                               onClick={() => handleQuantityChange(item.id, 1)}
+                              disabled={item.quantity >= item.stock}
+                              title={item.quantity >= item.stock ? 'No hay más stock disponible' : 'Agregar uno más'}
                             >
-                              <i className="fa fa-plus"></i>
+                              <Plus size={16} />
                             </button>
                           </div>
                           <span className="d-block ml-5 font-weight-bold">
@@ -149,90 +549,26 @@ const ShoppingCart: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Columna derecha - Información de pago */}
-                <div className="col-md-4">
-                  <div className="payment-info">
-                    {/* Encabezado de pago */}
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span>Detalles de la tarjeta</span>
-                    </div>
-
-                    {/* Selección de tipo de tarjeta */}
-                    <span className="type d-block mt-3 mb-1">Tipo de tarjeta</span>
-                    <div className="radio-container">
-                      {['mastercard', 'visa', 'amex', 'paypal'].map((card) => (
-                        <label key={card} className="radio">
-                          <input 
-                            type="radio" 
-                            name="card" 
-                            value="payment" 
-                            defaultChecked={card === 'mastercard'} 
-                          />
-                          <span>
-                            <img 
-                              src={`https://img.icons8.com/${card === 'mastercard' ? 'color' : 'officel'}/48/000000/${card}.png`}
-                              alt={card}
-                            />
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-
-                    {/* Formulario de tarjeta */}
-                    <div>
-                      <label className="credit-card-label">Nombre en la tarjeta</label>
-                      <input type="text" className="form-control credit-inputs" placeholder="Name" />
-                    </div>
-
-                    <div>
-                      <label className="credit-card-label">Número de tarjeta</label>
-                      <input type="text" className="form-control credit-inputs" placeholder="0000 0000 0000 0000" />
-                    </div>
-
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label className="credit-card-label">Date</label>
-                        <input type="text" className="form-control credit-inputs" placeholder="12/24" />
-                      </div>
-                      <div className="col-md-6">
-                        <label className="credit-card-label">CVV</label>
-                        <input type="text" className="form-control credit-inputs" placeholder="342" />
-                      </div>
-                    </div>
-
-                    <hr className="line" />
-
-                    {/* Resumen de la orden - Actualizar esta sección */}
-                    <div className="d-flex justify-content-between information">
-                      <span>Subtotal</span>
-                      <span>${calculateSubtotal().toFixed(2)}</span>
-                    </div>
-                    <div className="d-flex justify-content-between information">
-                      <span>Shipping</span>
-                      <span>${calculateShipping().toFixed(2)}</span>
-                    </div>
-                    <div className="d-flex justify-content-between information">
-                      <span>Total(Incl. taxes)</span>
-                      <span>${calculateTotal().toFixed(2)}</span>
-                    </div>
-
-                    {/* Botón de checkout - Actualizar esta sección */}
-                    <button className="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button">
-                      <span>${calculateTotal().toFixed(2)}</span>
-                      <span>
-                        Checkout
-                        <i className="fa fa-long-arrow-right ml-1"></i>
-                      </span>
-                    </button>
+                {/* Columna derecha solo en desktop */}
+                {!isMobile && (
+                  <div className="col-md-4">
+                    {renderPaymentInfo()}
                   </div>
-                </div>
-
+                )}
               </div>
             </div>
           </div>
         </div>
+        {/* Botón flotante solo en mobile */}
+        {isMobile && (
+          <FloatingCartButton
+            total={calculateTotal()}
+            onClick={() => setShowPaymentModal(true)}
+            itemCount={cartItems.length}
+          />
+        )}
       </NavBar>
-  </>
+    </>
   );
 };
 
