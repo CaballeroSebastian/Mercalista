@@ -170,15 +170,13 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
     }
 
     .brand-text {
+        width: 100%;
         font-size: 40px;
         font-family: Cinzel;
         text-align: center;
-        width: 100%;
-
     }
 
     .mobile-nav {
@@ -225,7 +223,7 @@ body {
     display: flex !important;
     flex-direction: column !important;
     margin-top: 15px;
-    background-color: #8080802f !important;
+    background-color: #80808086 !important;
     gap: 10px !important;
     border: 0px !important;
     border-radius: 0 0 10px 10px !important ;

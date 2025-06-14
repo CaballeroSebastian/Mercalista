@@ -36,81 +36,54 @@ const LoginPassword: React.FC = () => {
    // ⭐ Función para manejar el submit del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!password) {
-      setError('Por favor, ingresa tu contraseña');
-      return;
-    }
-
-    setIsLoading(true); // ⭐ Activar estado de carga
-    setError(''); // Limpiar errores previos
+    setIsLoading(true);
+    setError('');
 
     try {
-      console.log('Enviando petición a:', 'http://localhost:8000/Password/verificar-password/');
-      console.log('Datos enviados:', { correo: email, contraseña: password });
-      
-      const response = await fetch('http://localhost:8000/Password/verificar-password/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          correo: email, 
-          contraseña: password 
-        }),
-      });
+        const response = await fetch('http://localhost:8000/Password/verificar-password/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                correo: email, 
+                contraseña: password 
+            }),
+        });
 
-      console.log('Status de respuesta:', response.status);
-      console.log('Response OK:', response.ok);
+        const data = await response.json();
 
-      const data = await response.json();
-      console.log('Datos recibidos:', data);
+        if (response.ok && data.contraseña_valida) {
+            const userData = {
+                idusuario: data.usuario.idusuario,
+                tipousuario: data.usuario.tipousuario,
+                nombre: data.usuario.nombre,
+                apellido: data.usuario.apellido,
+                telefono: data.usuario.telefono,
+                cedula: data.usuario.cedula,
+                ciudad: data.usuario.ciudad,
+                correo: data.usuario.correo,
+                contraseña: data.usuario.contraseña,
+                departamento: data.usuario.departamento,
+                username: data.usuario.username,
+                image_profile: data.usuario.image_profile
+            };
 
-      // ⭐ LÓGICA DE RESPUESTA
-      if (response.ok && data.contraseña_valida) {
-        const userData = {
-        idusuario: data.usuario.idusuario,
-        tipousuario: data.usuario.tipousuario, // Cambiado de rol a tipousuario
-        nombre: data.usuario.nombre,
-        apellido: data.usuario.apellido,
-        telefono: data.usuario.telefono,
-        cedula: data.usuario.cedula,
-        ciudad: data.usuario.ciudad, // Agregado
-        correo: data.usuario.correo,
-        contraseña: data.usuario.contraseña, // Agregado
-        departamento: data.usuario.departamento, // Agregado
-        username: data.usuario.username
-    };
-        // Usar userData en lugar de data.usuario
-        login(data.access_token, userData);
-        // Aquí cambias la navegación para incluir el username
-        navigate(`/logged/${userData.username}`);
-        
-        // Guardar userData en localStorage en lugar de data.usuario
-        localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('refresh_token', data.refresh_token);
-        localStorage.setItem('userData', JSON.stringify(userData));
-        
-      } else if (response.ok && !data.contraseña_valida) {
-        console.log('Contraseña incorrecta');
-        setError('Contraseña incorrecta');
-      } else {
-        console.log('Error del servidor');
-        setError('Contraseña incorrecta.');
-      }
-
-    } catch (err) {
-      console.error('Error completo:', err);
-      if (err instanceof Error) {
-        console.error('Tipo de error:', err.name);
-        console.error('Mensaje de error:', err.message);
-      } else {
-        console.error('Tipo de error desconocido');
-      }
-      setError('Error al verificar la contraseña. Intenta de nuevo.');
-    } finally {
-      setIsLoading(false); //Desactivar estado de carga
-    }
+            // Solo llamamos a login una vez y dejamos que AuthContext maneje el resto
+            await login(data.access_token, userData);
+            navigate(`/logged/${userData.username}`, { replace: true });
+            
+        } else if (response.ok && !data.contraseña_valida) {
+            setError('Contraseña incorrecta');
+        } else {
+            setError('Error al iniciar sesión');
+        }
+        } catch (err) {
+            console.error('Error:', err);
+            setError('Error al verificar la contraseña. Intenta de nuevo.');
+        } finally {
+            setIsLoading(false);
+        }
   };
   return (
     <div className="body">

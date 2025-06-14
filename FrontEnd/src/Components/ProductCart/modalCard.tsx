@@ -1,15 +1,16 @@
 import './modalCard.css'
 import {useState} from 'react'
 import productoImg from '../../assets/Image/ImgVerduras.jpeg'
-import './modalCard.css'
 
 interface Product {
-    idproducto: number;
-    nombre: string;
-    precio: number;
-    cantidadstock: number;
-    fotos: string | null;
-    categoriaproducto: string;
+  idproducto: number;
+  nombre: string;
+  precio: number;
+  cantidadstock: number;
+  fotos: string | null;
+  categoriaproducto: string;
+  estado?: string;
+  descripcion?: string;
 }
 
 interface ModalProps {
