@@ -4,12 +4,15 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import logo from '../../assets/Image/logo.png';
 import './Manuals.css';
 
+import { useAuth } from '../../Context/AuthContext';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, ArrowDown } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import Offcanvas from 'bootstrap/js/dist/offcanvas';
 
 
 const Manuals = () => {
+    const { user } = useAuth();
     const [collageOpen1, setCollageOpen1] = useState(false);
     const [collageOpen2, setCollageOpen2] = useState(false);
     const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -501,10 +504,10 @@ const Manuals = () => {
             {/* Toggle para mobile */}
             {isMobile && (
                 <div className="p-2 bg-dark text-white d-flex justify-content-between align-items-center w-100">
-                    <div className="d-flex align-items-center">
+                    <Link to={user ? `/logged/${user.username}` : '/'} className="d-flex align-items-center text-white text-decoration-none">
                         <img src={logo} alt="MercalistaLogo" className="logoMerc me-2" />
                         <span className="fs-5">Mercalista</span>
-                    </div>
+                    </Link>
                     <button
                         className="btonMenu btn btn-outline-light"
                         type="button"
@@ -520,10 +523,10 @@ const Manuals = () => {
             {/* Sidebar para desktop */}
             {!isMobile && sidebarVisible && (
                 <div className="contNavManual d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style={{ width: 230 }}>
-                    <a href="/" className="cont-title d-flex align-items-center mb-3 me-md-auto text-white text-decoration-none">
+                    <Link to={user ? `/logged/${user.username}` : '/'} className="cont-title d-flex align-items-center mb-3 me-md-auto text-white text-decoration-none">
                         <img src={logo} alt="MercalistaLogo" className="logoMerc" />
                         <span className="titleMercalista fs-4">Mercalista</span>
-                    </a>
+                    </Link>
                     <hr />
                     <SidebarContent
                         collageOpen1={collageOpen1}
