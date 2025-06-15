@@ -4,27 +4,27 @@ import logo from '../../assets/Image/logo.png';
 import collage from '../LoginEmail/img/collage.png';
 import googleIcon from '../LoginEmail/img/google.png';
 import { Eye, EyeClosed } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext'; 
 
 
 const LoginPassword: React.FC = () => {
-  const { login } = useAuth(); // ✅ Usar el hook personalizado
-
-  const [email, setEmail] = useState('');
+  const { login, tempEmail } = useAuth();
+  const navigate = useNavigate();
   const [password, setPassword] = useState(''); // Estado para contraseña
   const [passwordType, setPasswordType] = useState<'password' | 'text'>('password');
   const [eyeIcon, setEyeIcon] = useState(<EyeClosed />);
   const [error, setError] = useState(''); //Estado para errores
   const [isLoading, setIsLoading] = useState(false); // Estado de carga
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const savedEmail = localStorage.getItem('userEmail');
-    if (savedEmail) {
-      setEmail(savedEmail);
-    }
-  }, []);
+    // Verificación inmediata del email temporal
+    if (!tempEmail) {
+        console.log('No hay email temporal, redirigiendo...');
+        navigate('/LoginEmail', { replace: true });
+        return;
+    } 
+  }, [tempEmail, navigate]);
 
   const togglePasswordInputType = () => {
     const newType = passwordType === 'password' ? 'text' : 'password';
@@ -40,51 +40,40 @@ const LoginPassword: React.FC = () => {
     setError('');
 
     try {
-        const response = await fetch('http://localhost:8000/Password/verificar-password/', {
+        const response = await fetch('http://127.0.0.1:8000/Password/verificar-password/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-                correo: email, 
-                contraseña: password 
+                correo: tempEmail,
+                contraseña: password
             }),
         });
 
         const data = await response.json();
 
-        if (response.ok && data.contraseña_valida) {
-            const userData = {
-                idusuario: data.usuario.idusuario,
-                tipousuario: data.usuario.tipousuario,
-                nombre: data.usuario.nombre,
-                apellido: data.usuario.apellido,
-                telefono: data.usuario.telefono,
-                cedula: data.usuario.cedula,
-                ciudad: data.usuario.ciudad,
-                correo: data.usuario.correo,
-                contraseña: data.usuario.contraseña,
-                departamento: data.usuario.departamento,
-                username: data.usuario.username,
-                image_profile: data.usuario.image_profile
-            };
-
-            // Solo llamamos a login una vez y dejamos que AuthContext maneje el resto
-            await login(data.access_token, userData);
-            navigate(`/logged/${userData.username}`, { replace: true });
+        if (response.ok) {
+            localStorage.setItem('refresh_token', data.refresh_token);
             
-        } else if (response.ok && !data.contraseña_valida) {
-            setError('Contraseña incorrecta');
+            await login(data.access_token, data.usuario);
+            navigate(`/logged/${data.usuario.username}`);
         } else {
-            setError('Error al iniciar sesión');
+            setError(data.error || 'Contraseña incorrecta');
         }
-        } catch (err) {
-            console.error('Error:', err);
-            setError('Error al verificar la contraseña. Intenta de nuevo.');
-        } finally {
-            setIsLoading(false);
-        }
+    } catch (err) {
+        console.error('Error:', err);
+        setError('Error al verificar la contraseña');
+    } finally {
+        setIsLoading(false);
+    }
   };
+
+  // Si no hay email, retornamos null para evitar renderizar el contenido
+  if (!tempEmail) {
+    return null;
+  }
+
   return (
     <div className="body">
       <header className="header-login">
@@ -115,7 +104,7 @@ const LoginPassword: React.FC = () => {
               className="form-control-password"
               id="email"
               placeholder="Ingresa tu e-mail"
-              value={email}
+              value={tempEmail}
               readOnly // El campo es solo lectura
             />
             <br />

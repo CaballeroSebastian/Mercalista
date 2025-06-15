@@ -42,17 +42,28 @@
     color: #333;
   }
   
-  .form-input-register[type="text"],
-  .form-input-register[type="number"],
-  .form-input-register[type="email"],
-  .form-input-register[type="ciudad"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-  }
+  .input-register {
+  width: 100%;
+  padding: 2px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+
+  /* input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="ciudad"] {
+  width: 100%;
+  padding: 2px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  } */
+  
   
   input[type="submit"] {
     width: 100%;
@@ -176,10 +187,7 @@
     max-height: 100vh;
   }
 
-  input[type="text"],
-  input[type="number"],
-  input[type="email"],
-  input[type="ciudad"] {
+  .input-register {
     width: 100%;
     padding: 2px;
     margin-bottom: 15px;

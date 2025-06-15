@@ -41,6 +41,10 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  //ruta del back
+  const backendUrl = "http://127.0.0.1:8000/";
+
+
   // Función para mostrar alertas
   const showAlert = (message: string) => {
     setAlertMessage(message);
@@ -62,6 +66,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         setIsLoading(true);
+        
         const response = await axios.get(
           `http://127.0.0.1:8000/profile/${cedula}/`,
           {
@@ -89,7 +94,7 @@ const Profile = () => {
         return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
       case "telefono":
         return /^\d{10}$/.test(value);
-      case "contraseña":
+      case "contraseña":  
         return /^(?=.*[A-Za-zÁÉÍÓÚáéíóúÑñ])(?=.*\d)[A-Za-zÁÉÍÓÚáéíóúÑñ\d!@#$%^&*()_+=\-{}[\]:;"'|<>,.?/~`]{8,}$/.test(value);
       default:
         return true;
@@ -134,7 +139,7 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
   if (!formData || !datosUsuario) return;
   const value = formData[field];
 
-  // Validar solo si es string (por ejemplo, para correo, teléfono, contraseña)
+  // Validar campos si son string (como correo, teléfono, contraseña)
   if (typeof value === "string" && !validateField(field, value)) {
     const errorMessage = getValidationErrorMessage(field);
     showAlert(errorMessage);
@@ -142,31 +147,39 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
   }
 
   try {
-    const updatedData: Partial<datosUser> = { ...datosUsuario };
+    // Solo incluir el campo que se está editando
+    const updatedData: Partial<datosUser> = {};
+
     if (field === "contraseña") {
-      // Enviar contraseña solo si no está vacía o undefined
+      // Enviar contraseña solo si tiene contenido
       if (value && typeof value === "string" && value.trim() !== "") {
         updatedData.contraseña = value;
+      } else {
+        showAlert("La contraseña no puede estar vacía.");
+        return;
       }
     } else {
-      // Para otros campos, asegúrate que value no sea undefined
-      
       if (value !== undefined && value !== datosUsuario[field]) {
         updatedData[field] = value as never;
+      } else {
+        showAlert("No hay cambios para actualizar.");
+        setIsEditing((prev) => ({ ...prev, [field]: false }));
+        return;
       }
     }
-
-    if (Object.keys(updatedData).length === 0) {
-      showAlert("No hay cambios para actualizar");
-      setIsEditing((prev) => ({ ...prev, [field]: false }));
-      return;
-    }
-
-    const response = await axios.put(`http://127.0.0.1:8000/profile/${cedula}/`, updatedData);
+    const response = await axios.put(
+      `http://127.0.0.1:8000/profile/${cedula}/`,
+      updatedData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     setDatosUsuario(response.data);
     setIsEditing((prev) => ({ ...prev, [field]: false }));
-    showAlert("Campo actualizado correctamente");
+    showAlert("Campo actualizado correctamente.");
   } catch (error: any) {
     console.error("Error al actualizar", error);
     const errData = error.response?.data;
@@ -176,6 +189,8 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
         showAlert(`Error en teléfono: ${errData.telefono.join(", ")}`);
       } else if (errData.contraseña) {
         showAlert(`Error en contraseña: ${errData.contraseña.join(", ")}`);
+      } else if (typeof errData === "string") {
+        showAlert(`Error: ${errData}`);
       } else {
         showAlert("Error al actualizar el campo. Intenta de nuevo.");
       }
@@ -183,9 +198,6 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
       showAlert("Error al actualizar el campo. Intenta de nuevo.");
     }
   }
-
-
-  
 };
 
 
@@ -437,9 +449,9 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                 <img
                   src={
                     datosUsuario?.image_profile
-                      ? (datosUsuario.image_profile.startsWith("http")
+                      ? (datosUsuario.image_profile.startsWith(backendUrl)
                           ? `${datosUsuario.image_profile}?${Date.now()}`
-                          : `http://127.0.0.1:8000${datosUsuario.image_profile}?${Date.now()}`)
+                          : `${datosUsuario.image_profile}?${Date.now()}`)
                       : perfilIcon
                   }
                   alt="Foto de perfil"
@@ -462,23 +474,25 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                       formData.append("image_profile", file);
 
                       try {
+                        console.log("Token enviado:", accessToken);
                         setIsLoading(true);
-                        await axios.put(
+                        await axios.patch(
                           `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
                           formData,
-                          { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" } }
+                          { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" }}
                         );
                         // Espera un poco para asegurar que el backend procese la imagen
                         setTimeout(async () => {
                           const response = await axios.get(
-                            `http://127.0.0.1:8000/profile/${cedula}/`,
+                            `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
                             { headers: { Authorization: `Bearer ${accessToken}` } }
                           );
                           setDatosUsuario(response.data);
                           showAlert("Foto de perfil actualizada correctamente");
                           setIsLoading(false);
                         }, 500);
-                      } catch (err) {
+                      } catch (err: any) {
+                        console.error("Detalles del error:", err.response?.data || err.message);
                         showAlert("Error al subir la foto de perfil");
                         setIsLoading(false);
                       }
