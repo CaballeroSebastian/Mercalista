@@ -29,5 +29,6 @@ urlpatterns = [
     path('Register/', include('Register.urls')),
     path('api/', include('productCart.urls')),
 
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
