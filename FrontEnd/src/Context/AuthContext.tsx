@@ -31,8 +31,15 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<Usuario | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [user, setUser] = useState<Usuario | null>(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+  
+  const [accessToken, setAccessToken] = useState<string | null>(() => {
+    return localStorage.getItem('accessToken');
+  });
+
   const [loading, setLoading] = useState(true);
   const [tempEmail, setTempEmail] = useState<string | null>(
     sessionStorage.getItem('tempEmail') // Usar sessionStorage para persistencia
@@ -93,29 +100,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (token: string, userData: Usuario) => {
-    localStorage.setItem('access_token', token);
-
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/profile/${userData.cedula}/`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (!response.ok) throw new Error('No se pudo obtener el perfil completo');
-      const perfilCompleto = await response.json();
-
-      localStorage.setItem('userData', JSON.stringify(perfilCompleto));
-      setAccessToken(token);
-      setUser(perfilCompleto);
-    } catch (error) {
-      localStorage.setItem('userData', JSON.stringify(userData));
-      setAccessToken(token);
-      setUser(userData);
-    }
+    localStorage.setItem('accessToken', token);
+    localStorage.setItem('user', JSON.stringify(userData));
+    setAccessToken(token);
+    setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refresh_token');
-    localStorage.removeItem('userData');
+    localStorage.removeItem('user');
     setAccessToken(null);
     setUser(null);
     window.location.href = '/LoginEmail'; // Redirigir al login
@@ -125,14 +119,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateUserData = async (newUserData: Partial<Usuario>) => {
     if (user) {
       const updatedUser = { ...user, ...newUserData };
-      localStorage.setItem('userData', JSON.stringify(updatedUser));
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
     }
   };
 
   // Verificar token antes de cada petición
   const fetchWithToken = async (url: string, options: RequestInit = {}) => {
-    let token = localStorage.getItem('access_token');
+    let token = localStorage.getItem('accessToken');
     
     try {
       // Verificar si el token actual está por expirar
