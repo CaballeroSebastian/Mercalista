@@ -119,154 +119,149 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     return (
       <form className="form-register" onSubmit={handleSubmit} method='POST'>
-        
         <div className='div-form-register'>
-        <label className='label-form-register' htmlFor="name">Nombre:</label>
-        <input
-        className='form-input-register'
-        type="text" 
-        id="nombre" 
-        name="nombre" 
-        value = {nombre}
-        onChange={(e)=>Setnombre(e.target.value)}
-        onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
-        required
-        
-        />
-        <br />
-        <label className='label-form-register' htmlFor="apellido">Apellido:</label>
-        <input
-          className='form-input-register'
-          type="text" 
-          id="apellido" 
-          name="apellido" 
-          value = {apellido}
-          onChange={(e)=>Setapellido(e.target.value)}
-          onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
-          required
+          <label className='label-form-register' htmlFor="name">Nombre:</label>
+          <input
+            className='form-input-register input-register'
+            type="text" 
+            id="nombre" 
+            name="nombre" 
+            value={nombre}
+            onChange={(e)=>Setnombre(e.target.value)}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
+            required
           />
-        <br />
-        <label className='label-form-register' htmlFor="telefono">Telefono:</label>
-        <input
-          className='form-input-register'
-          type="text"
-          id="telefono"
-          name="telefono"
-          value={telefono}
-          onChange={(e) => {
-            const input = e.target.value;
-            // Solo permitir dígitos y máximo 10 caracteres
-            if (/^\d{0,10}$/.test(input)) {
-              Settelefono(input);
-              setTelefonoError(null);
-            }
-          }}
-          onBlur={() => {
-            if (!/^3\d{9}$/.test(telefono)) {
-              setTelefonoError("Debe comenzar con 3 y tener exactamente 10 dígitos.");
-            }
-          }}
-          required
-        />
-        {telefonoError && (
-          <p style={{ color: 'red', fontSize: '0.9rem' }}>{telefonoError}</p>
-        )}
-        <br />
+          
+          <label className='label-form-register' htmlFor="apellido">Apellido:</label>
+          <input
+            className='form-input-register input-register'
+            type="text" 
+            id="apellido" 
+            name="apellido" 
+            value={apellido}
+            onChange={(e)=>Setapellido(e.target.value)}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
+            required
+          />
+          
+          <label className='label-form-register' htmlFor="telefono">Telefono:</label>
+          <input
+            className='form-input-register input-register'
+            type="text"
+            id="telefono"
+            name="telefono"
+            value={telefono}
+            onChange={(e) => {
+              const input = e.target.value;
+              if (/^\d{0,10}$/.test(input)) {
+                Settelefono(input);
+                setTelefonoError(null);
+              }
+            }}
+            onBlur={() => {
+              if (!/^3\d{9}$/.test(telefono)) {
+                setTelefonoError("Debe comenzar con 3 y tener exactamente 10 dígitos.");
+              }
+            }}
+            required
+          />
 
-        <label className='label-form-register' htmlFor="correo">Correo:</label>
-        <input
-          className='form-input-register'
-          type="email" 
-          id="correo" 
-          name="correo" 
-          value = {correo}
-          onChange={(e)=>{Setcorreo(e.target.value); setCorreoError(null);}}
-          required
+          {telefonoError && (
+            <p style={{ color: 'red', fontSize: '0.9rem' }}>{telefonoError}</p>
+          )}
+          <label className='label-form-register' htmlFor="correo">Correo:</label>
+          <input
+            className='form-input-register input-register'
+            type="email" 
+            id="correo" 
+            name="correo" 
+            value={correo}
+            onChange={(e)=>{Setcorreo(e.target.value); setCorreoError(null);}}
+            required
           />
+
           {correoError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{correoError}</p>}
-        <br />
+          <label className='label-form-register' htmlFor="documento">Documento:</label>
+          <input 
+            className='form-input-register input-register'
+            type="number" 
+            id="cedula" 
+            name="cedula"
+            value={cedula}
+            onChange={(e)=>{Setcedula(e.target.value); setCedulaError(null);}}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/^\d{11}$/g, ''))}
+            required
+          />
 
-        <label className='label-form-register' htmlFor="documento">Documento:</label>
-        <input 
-          className='form-input-register'
-          type="number" 
-          id="cedula" 
-          name="cedula"
-          value = {cedula}
-          onChange={(e)=>{Setcedula(e.target.value); setCedulaError(null);}}
-          onInput={(e: React.ChangeEvent<HTMLInputElement>)=> (e.target.value = e.target.value.replace(/^\d{11}$/g, ''))}
-          required
-        />
-        {cedulaError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{cedulaError}</p>}
-        <br />
-        <label className='label-form-register' htmlFor="">Tipo de Usuario</label>
-        <select 
-          typeof='text'
-          className="form-select"
-          value={tipousuario} 
-          onChange={(e) => Settipousuario(e.target.value)}
-          name='tipousuario'
-          id='tipousuario'
-          required
-        > 
-          <option value="">-- Selecciona tipo de usuario --</option>
-          <option value="comprador">Comprador</option>
-          <option value="vendedor">Vendedor</option>
-        </select>
-        <br />
-
-        <div >
-          <label  htmlFor="dep-select" className="label-form-register">
-            {" "}
-            Departamento:
-          </label>
-          <select
+          {cedulaError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{cedulaError}</p>}
+          <label className='label-form-register' htmlFor="">Tipo de Usuario</label>
+          <select 
             typeof='text'
             className="form-select"
-            id="dep-select"
-            value={departamento}
-            onChange={handleDepartamentoChange}
+            value={tipousuario} 
+            onChange={(e) => Settipousuario(e.target.value)}
+            name='tipousuario'
+            id='tipousuario'
             required
-          >
-            <option value="">-- Selecciona un departamento --</option>
-            {Object.keys(ciudades).map((depName) => (
-              <option key={depName} value={depName}>
-                {depName}
-              </option>
-            ))}
+          > 
+            <option value="">-- Selecciona tipo de usuario --</option>
+            <option value="comprador">Comprador</option>
+            <option value="vendedor">Vendedor</option>
           </select>
-          <div className="invalid-feedback">
-            Por favor elegir un Departamento.
+          
+
+          <div >
+            <label  htmlFor="dep-select" className="label-form-register">
+              {" "}
+              Departamento:
+            </label>
+            <select
+              typeof='text'
+              className="form-select"
+              id="dep-select"
+              value={departamento}
+              onChange={handleDepartamentoChange}
+              required
+            >
+              <option value="">-- Selecciona un departamento --</option>
+              {Object.keys(ciudades).map((depName) => (
+                <option key={depName} value={depName}>
+                  {depName}
+                </option>
+              ))}
+            </select>
+            <div className="invalid-feedback">
+              Por favor elegir un Departamento.
+            </div>
           </div>
-        </div>
 
-        <div >
-          <label htmlFor="ciudad-select" className="label-form-register">
-            Ciudad:
-          </label>
-          <select
-            typeof='text'
-            className="form-select"
-            id="ciudad-select"
-            value={ciudad}
-            disabled={!departamento} // Deshabilitado hasta que el departamento esté seleccionado
-            onChange={(e) => setCiudad(e.target.value)}
-            required
-          >
-            <option value="">
-              {departamento
-                ? "-- Selecciona una ciudad --"
-                : "-- Primero elige un departamento --"}
-            </option>
-            {listaCiudades.map((city) => (
-              <option key={city} value={city}>
-                {city}
+          <div >
+            <label htmlFor="ciudad-select" className="label-form-register">
+              Ciudad:
+            </label>
+            <select
+              typeof='text'
+              className="form-select"
+              id="ciudad-select"
+              value={ciudad}
+              disabled={!departamento} // Deshabilitado hasta que el departamento esté seleccionado
+              onChange={(e) => setCiudad(e.target.value)}
+              required
+            >
+              <option value="">
+                {departamento
+                  ? "-- Selecciona una ciudad --"
+                  : "-- Primero elige un departamento --"}
               </option>
-            ))}
-          </select>
-          <div className="invalid-feedback">Por favor elegir unidad ciudad</div>
-        </div>
-        
+              {listaCiudades.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+            <div className="invalid-feedback">Por favor elegir unidad ciudad</div>
+          </div>
+          
 
             <div className = 'div-terminos-register '>
           <input
@@ -299,4 +294,4 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       </form>
       
     ); 
-  } 
+  }
