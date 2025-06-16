@@ -168,6 +168,8 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
         return;
       }
     }
+
+
     const response = await axios.put(
       `http://127.0.0.1:8000/profile/${cedula}/`,
       updatedData,
@@ -478,7 +480,7 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                         console.log("Token enviado:", accessToken);
                         setIsLoading(true);
                         await axios.patch(
-                          `http://127.0.0.1:8000/profile/${cedula}/`,
+                          `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
                           formData,
                           { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" }}
                         );
