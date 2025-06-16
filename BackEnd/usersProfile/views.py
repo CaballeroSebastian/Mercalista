@@ -19,13 +19,41 @@ class UserProfileByCedulaView(RetrieveUpdateAPIView):
     lookup_field = 'cedula'
 
     def update(self, request, *args, **kwargs):
-        """Sobreescribimos el método para permitir actualizaciones parciales (solo un campo)"""
-        partial = True  # <- esto permite que se manden solo los campos que quieras
+        """Permite actualizaciones parciales (solo campos enviados)"""
+        partial = True
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
+
+    # def patch(self, request, *args, **kwargs):
+    #     """
+    #     Sobrescribimos patch para manejar actualización de imagen si viene en FILES,
+    #     o delegar a update para otros campos.
+    #     """
+    #     if 'image_profile' in request.FILES:
+    #         imagen = request.FILES.get('image_profile')
+    #         usuario = self.get_object()
+
+    #         # Opcional: verificar que el usuario autenticado es el mismo que se quiere modificar
+    #         if request.user.username != usuario.username:
+    #             return Response({'detail': 'No autorizado para modificar este perfil'}, status=status.HTTP_403_FORBIDDEN)
+
+    #         ruta_relativa = f'imageProfile/{usuario.cedula}/{imagen.name}'
+    #         ruta_guardada = default_storage.save(ruta_relativa, ContentFile(imagen.read()))
+
+    #         usuario.image_profile = ruta_guardada
+    #         usuario.save()
+
+    #         serializer = self.get_serializer(usuario)
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    #     # Si no hay imagen, hacer update parcial normal
+    #     return self.update(request, *args, **kwargs)
+
+    
+
 class ProfileImageUpdateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -41,7 +69,7 @@ class ProfileImageUpdateView(APIView):
 
         try:
             # Busca el usuario por cédula Y vinculado al username autenticado
-            usuario = Usuario.objects.get(cedula=cedula, username=request.user.username)
+            usuario = Usuario.objects.get(cedula=cedula)
         except Usuario.DoesNotExist:
             return Response({'detail': 'User not found', 'code': 'user_not_found'}, status=status.HTTP_404_NOT_FOUND)
 

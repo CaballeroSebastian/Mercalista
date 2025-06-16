@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "./profile.css";
 import NavBar from "../LoggedNav/LoggedNav";
@@ -477,14 +478,14 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
                         console.log("Token enviado:", accessToken);
                         setIsLoading(true);
                         await axios.patch(
-                          `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
+                          `http://127.0.0.1:8000/profile/${cedula}/`,
                           formData,
                           { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "multipart/form-data" }}
                         );
                         // Espera un poco para asegurar que el backend procese la imagen
                         setTimeout(async () => {
                           const response = await axios.get(
-                            `http://127.0.0.1:8000/profile/update-image/${cedula}/`,
+                            `http://127.0.0.1:8000/profile/${cedula}/`,
                             { headers: { Authorization: `Bearer ${accessToken}` } }
                           );
                           setDatosUsuario(response.data);

@@ -62,8 +62,8 @@ const Menu = ({children}: NavBarPropsLogged) => {
         formData.append("image_profile", file);
 
         try {
-            await axios.put(
-                `http://127.0.0.1:8000/profile/update-image/${user.cedula}/`,
+            await axios.patch(
+                `http://127.0.0.1:8000/profile/${user.cedula}/`,
                 formData,
                 {
                     headers: {
