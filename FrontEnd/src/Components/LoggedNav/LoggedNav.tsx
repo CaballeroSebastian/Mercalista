@@ -186,7 +186,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         <button className="dropdownMenu btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img
                                 className="nav-icon-menu profile-icon " 
-                                src={userProfileImg}
+                                src={usuario}
                                 alt="Usuario"
                             />
                         </button>
