@@ -2,6 +2,7 @@
 .purchases-container {
   width: calc(100% - 190px);
   height: auto;
+  min-height: 100vh;
   font-family: 'Lucida Sans', 'Lucida Grande', Geneva, Verdana, sans-serif;
   padding: 0 5rem 5rem 5rem;
   display: flex;

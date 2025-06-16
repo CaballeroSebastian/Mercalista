@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Purchases.css';
 import papa from './img/papa.jpeg';
+import uva from './img/image.png';
+import fresa from './img/fresa.png';
 import Menu from '../LoggedNav/LoggedNav';
 import Preview from '../Preview/Preview';
 
@@ -19,75 +21,27 @@ const Purchases: React.FC = () => {
   const purchases: Purchase[] = [
     {
       id: 1,
-      vendor: 'Sebastián',
-      product: 'Papa pastusa maluca',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
+      vendor: 'Brayan Fruits',
+      product: 'Uva verde sin pepa', 
+      date: '04/10/2025',
+      total: '$10.650',
+      image: uva,
     },
     {
       id: 2,
-      vendor: 'Sebastián',
-      product: 'Papá',
+      vendor: 'JuliaPAPAS',
+      product: 'Papá pastusa',
       date: '02/22/2025',
-      total: '$20.000',
+      total: '$120.000',
       image: papa,
     },
     {
       id: 3,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
+      vendor: 'Samuel Alvarez',
+      product: 'Freza orgánica',
+      date: '10/04/2025',
       total: '$20.000',
-      image: papa,
-    },
-    {
-      id: 4,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
-    },
-    {
-      id: 5,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
-    },
-    {
-      id: 6,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
-    },
-    {
-      id: 7,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
-    },
-    {
-      id: 8,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
-    },
-    {
-      id: 9,
-      vendor: 'Sebastián',
-      product: 'Papá',
-      date: '02/22/2025',
-      total: '$20.000',
-      image: papa,
+      image: fresa,
     },
   ];
 
