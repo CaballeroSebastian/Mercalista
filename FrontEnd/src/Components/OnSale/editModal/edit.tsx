@@ -3,6 +3,7 @@ import type React from "react"
 import axios from 'axios'
 import { X, Upload, Edit3, Trash2, Save } from "lucide-react"
 import './editModal.css'
+import { useAuth } from '../../../Context/AuthContext'; 
 
 
 interface informacion {
@@ -13,7 +14,7 @@ interface informacion {
     precio: string;
     descripcion?: string;
     estado?: string;
-    fotos: string;
+    fotos: string | File;
     unidadmedida?: string;
     
   }
@@ -26,9 +27,10 @@ interface Props{
 }
 
 const Edit =({cerrar, informacion}: Props)=>{
+  
     const backendUrl = "http://127.0.0.1:8000/";
-
-    const [ updateData, setUpdateData] = useState({})
+    const { user, accessToken, logout } = useAuth();
+    const Usuario = user?.idusuario ?? '';
 
     const onDelete = async(pk: number) =>{
       try{
@@ -41,11 +43,40 @@ const Edit =({cerrar, informacion}: Props)=>{
       }
     };
 
-    const onSave = (data: any) =>{
+    const onSave = async (data: any) =>{
+      
+      try{
+
+        const formDataToSend = new FormData();
+        formDataToSend.append('idProducto', data.idProducto.toString());
+        formDataToSend.append('nombre', data.nombre);
+        formDataToSend.append('categoriaproducto', data.categoriaproducto);
+        formDataToSend.append('cantidadstock', data.cantidadstock.toString());
+        formDataToSend.append('unidadmedida', data.unidadmedida);
+        formDataToSend.append('descripcion', data.descripcion);
+        formDataToSend.append('estado', data.estado);
+        formDataToSend.append('precio', data.precio.toString());
+          if (data.fotos) {
+            formDataToSend.append('fotos', data.fotos);
+          }
+
+        const response = await axios.patch(`${backendUrl}producto/actualizarProducto/${Usuario}`, formDataToSend,{
+          headers:{
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "multipart/form-data",
+          }
+        })
+        console.log('respuesta del servidor: ', response)
         console.log(`informacion guardada correctamente: ${data}`)
+      }catch(error: any){
+        console.error("Detalles del error:", error.response?.data || error.message);
+        alert('hubo un problema al guardar la informacion')
+      }
+        
     }
     
     const [formData, setFormData] = useState({
+        idProducto: informacion?.idproducto,
         nombre: informacion?.nombre || "",
         categoriaproducto: informacion?.categoriaproducto || "",
         cantidadstock: informacion?.cantidadstock || 0,
@@ -57,7 +88,9 @@ const Edit =({cerrar, informacion}: Props)=>{
       })
     
     
-      const [imagePreview, setImagePreview] = useState(informacion?.fotos || "")
+      const [imagePreview, setImagePreview] = useState<string>(
+        informacion?.fotos ? `${backendUrl}media/${informacion.fotos}` : "/placeholder.svg"
+      );
     
       const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
@@ -68,19 +101,22 @@ const Edit =({cerrar, informacion}: Props)=>{
       }
     
       const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
+        const file = e.target.files?.[0];
         if (file) {
-          const reader = new FileReader()
-          reader.onload = (e) => {
-            const result = e.target?.result as string
-            setImagePreview(result)
-            setFormData((prev) => ({ ...prev, foto: result }))
-          }
-          reader.readAsDataURL(file)
+          // Actualiza el estado con el File
+          setFormData(prev => ({
+            ...prev,
+            fotos: file
+          }));
+      
+          // Genera la URL local de la imagen para el preview
+          const previewURL = URL.createObjectURL(file);
+          setImagePreview(previewURL);
         }
-      }
+      };
+      
     
-      const handleSave = () => {
+      const handleSave  =  () => {
         onSave?.(formData)
         cerrar()
       }
@@ -212,7 +248,7 @@ const Edit =({cerrar, informacion}: Props)=>{
                   <div className="product-edit-image-upload-container">
                     {imagePreview ? (
                       <div className="product-edit-image-preview">
-                        <img src={`${backendUrl}media/${formData.fotos}` || "/placeholder.svg"} alt="Preview" />
+                        <img src={imagePreview || "/placeholder.svg"} alt="Preview" />
                         <div className="product-edit-image-overlay">
                           <label htmlFor="foto" className="product-edit-change-image-btn">
                             <Upload size={20} />

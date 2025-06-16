@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador, Usuario
 from .serializers import ProductoSerializer
 from django.core.files.storage import default_storage
@@ -128,3 +129,56 @@ def eliminarProducto(request, pk):
     except Producto.DoesNotExist:
         print(f"Producto con ID {pk} no encontrado")
         return Response({'error': 'Producto no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+    
+
+
+
+class updateProduct(APIView):
+
+    def updateImg(self, request, Usuario):
+        foto = request.FILES.get('fotos')
+        if not foto:
+            return None
+        print(foto.name)
+        ruta_relativa = f'productos/{Usuario}/{foto.name}'
+        default_storage.save(ruta_relativa, ContentFile(foto.read()))
+        return ruta_relativa
+
+    def patch(self, request, Usuario):
+        idProduct = request.data.get('idProducto')
+        if not idProduct:
+            return Response({'error': 'ID de producto no proporcionado'}, status=400)
+
+        try:
+            producto = Producto.objects.get(idproducto=idProduct)
+        except Producto.DoesNotExist:
+            return Response({'error': 'Producto no encontrado'}, status=HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(f"Error obteniendo producto: {e}")
+            return Response({'error': str(e)}, status=HTTP_500_INTERNAL_SERVER_ERROR)
+
+        try:
+            ruta = self.updateImg(request, Usuario)
+
+            info = request.data
+            producto.nombre = info.get('nombre', producto.nombre)
+            producto.categoriaproducto = info.get('categoriaproducto', producto.categoriaproducto)
+            producto.cantidadstock = int(info.get('cantidadstock', producto.cantidadstock))
+            producto.unidadmedida = info.get('unidadmedida', producto.unidadmedida)
+            producto.descripcion = info.get('descripcion', producto.descripcion)
+            producto.estado = info.get('estado', producto.estado)
+            producto.precio = float(info.get('precio', producto.precio))
+
+            if ruta:
+                producto.fotos = ruta
+
+            producto.save()
+
+            return Response({'message': 'Producto actualizado correctamente'})
+
+        except Exception as e:
+            print(f"Error actualizando producto: {e}")
+            return Response({'error': str(e)}, status=HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+        
