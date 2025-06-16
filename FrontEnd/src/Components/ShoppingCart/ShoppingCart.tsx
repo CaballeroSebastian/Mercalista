@@ -6,14 +6,16 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import cilantro from './480250694_122198876288243954_6597085174549642507_n.jpg';
+import papa from './papa.jpg';
+
 interface CartItem {
   id: number;
   name: string;
-  specs: string;
   image: string;
   quantity: number;
   price: number;
-  stock: number;
+  Cantidad: number;
 }
 
 const ShoppingCart: React.FC = () => {
@@ -22,66 +24,19 @@ const ShoppingCart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
-      name: "Iphone 11 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
-      price: 900,
-      stock: 3
-    },
-        {
-      id: 2,
-      name: "Iphone 15 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
+      name: "Cilantro Largo",
+      image: cilantro,
+      quantity: 1,
       price: 1200,
-      stock: 5
+      Cantidad: 100
     },
         {
       id: 2,
-      name: "Iphone 15 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
-      price: 1200,
-      stock: 5
-    },
-        {
-      id: 2,
-      name: "Iphone 15 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
-      price: 100000000,
-      stock: 5
-    },
-        {
-      id: 2,
-      name: "Iphone 15 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
-      price: 1200,
-      stock: 5
-    },
-        {
-      id: 2,
-      name: "Iphone 15 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
-      price: 1200,
-      stock: 5
-    },
-        {
-      id: 2,
-      name: "Iphone 15 pro",
-      specs: "256GB, Navy Blue",
-      image: "https://i.imgur.com/QRwjbm5.jpg",
-      quantity: 2,
-      price: 10000000,
-      stock: 5
+      name: "Papa Pastusa",
+      image: papa,
+      quantity: 1,
+      price: 12300000,
+      Cantidad: 10
     },
   ]);
 
@@ -511,7 +466,7 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
                           <div className="ml-2">
                             <span className="font-weight-bold d-block">{item.name}</span>
                             <span className="spec">{item.specs}</span>
-                            <span className="badge bg-light text-dark ml-1">Stock: {item.stock}</span>
+                            <span className="badge bg-light text-dark ml-1">Cantidad: {item.Cantidad}</span>
                           </div>
                         </div>
 
@@ -526,10 +481,10 @@ const [showPaymentModal, setShowPaymentModal] = useState(false);
                             </button>
                             <span className="mx-2">{item.quantity}</span>
                             <button 
-                              className={`btn-carrito btn-sm btn-outline-secondary${item.quantity >= item.stock ? ' btn-out-of-stock' : ''}`}
+                              className={`btn-carrito btn-sm btn-outline-secondary${item.quantity >= item.Cantidad ? ' btn-out-of-Cantidad' : ''}`}
                               onClick={() => handleQuantityChange(item.id, 1)}
-                              disabled={item.quantity >= item.stock}
-                              title={item.quantity >= item.stock ? 'No hay más stock disponible' : 'Agregar uno más'}
+                              disabled={item.quantity >= item.Cantidad}
+                              title={item.quantity >= item.Cantidad ? 'No hay más Cantidades disponible' : 'Agregar uno más'}
                             >
                               <Plus size={16} />
                             </button>

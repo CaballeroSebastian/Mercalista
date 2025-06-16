@@ -167,7 +167,7 @@ label.radio input:checked + span {
     color: #212529;
 }
 
-.btn-carrito.btn-out-of-stock {
+.btn-carrito.btn-out-of-Cantidad {
     background-color: #ffcccc;
     color: #b30000;
     border-color: #b30000;
