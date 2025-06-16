@@ -257,18 +257,6 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         </li>
                     </ul>
 
-                    {/* Íconos solo en móviles */}
-                    <div className="mobile-icons d-flex justify-content-center gap-5 mb-3">
-                        <Link to='#'>
-                            <img className="nav-icon-menu" src={carritoWhite} alt="Carrito" />
-                        </Link>
-                        <Link to='#'>
-                            <img className="nav-icon-menu" src={notiwhite} alt="Notificación" />
-                        </Link>
-                        {/* Imagen de perfil en móvil */}
-                        <img className="nav-icon-menu" src={userProfileImg} alt="Usuario" />
-                    </div>
-
                     <form className="d-flex" role="search">
                         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                         <button className="search-btn btn btn-outline-success" type="submit">Search</button>
