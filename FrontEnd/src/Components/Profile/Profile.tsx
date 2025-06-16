@@ -43,8 +43,7 @@ const Profile = () => {
 
   //ruta del back
   const backendUrl = "http://127.0.0.1:8000/";
-  console.log('token:',  accessToken)
-  console.log(cedula)
+
 
   // Función para mostrar alertas
   const showAlert = (message: string) => {

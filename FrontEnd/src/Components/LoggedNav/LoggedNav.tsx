@@ -85,57 +85,67 @@ const Menu = ({children}: NavBarPropsLogged) => {
         }
     };
 
+    // Agregar este console.log para verificar
+    console.log('Tipo de usuario:', user?.tipousuario);
+
     return (   
         <div className="menu-container">
             <nav id="barraLateral" className="border-right d-none d-md-block">
                 <div className="barra-fija">
                     <div className="navbar-brand p-3">
-                        <Link to = '/logged/:username' >
+                        <Link to={`/logged/${user?.username}`} >
                             <img className="logo" src={logo} alt="Mercalista" />
                         </Link>
                     </div>
                     <ul className="nav flex-column" id="nav-horizontal">
-                        <li className="nav-item">
-                            <a className='nav-link' data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <img className="icon" src={ventasIcon} alt="Premium" />
-                                        Mis Productos
-                            </a>
-                            <div className="collapse" id="collapseExample">
-                                <div className="card-productos card card-body">
-                                    <ul className="nav flex-column">
-                                        <li className="nav-item">
-                                            <Link to='/OnSale' className="nav-link">
-                                                <img className="iconP" src={ventaP} alt="Premium" />
-                                                    En Venta
-                                            </Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link to='/Sales' className="nav-link">
-                                                <img className="iconP" src={vendidoP} alt="Premium" />
-                                                    Vendidos
-                                            </Link>
-                                        </li>
-                                    </ul>
+                        {/* Condición corregida para el botón Mis Productos */}
+                        {/* {user && user.tipousuario === 'vendedor' && ( */}
+                            <li className="nav-item">
+                                <a className='nav-link' data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <img className="icon" src={ventasIcon} alt="Premium" />
+                                    Mis Productos
+                                </a>
+                                <div className="collapse" id="collapseExample">
+                                    <div className="card-productos card card-body">
+                                        <ul className="nav flex-column">
+                                            <li className="nav-item">
+                                                <Link to='/OnSale' className="nav-link">
+                                                    <img className="iconP" src={ventaP} alt="Premium" />
+                                                        En Venta
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link to='/Sales' className="nav-link">
+                                                    <img className="iconP" src={vendidoP} alt="Premium" />
+                                                        Vendidos
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        {/* )} */}
                         <li className="nav-item">
                             <Link to = '/Suscription' className="nav-link" style={{ color: "rgb(255, 238, 0)" }}>
                                 <img className="icon" src={premiumIcon} alt="Premium" />
                                     Premium
                                 </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to = '/Purchases' className="nav-link">
-                                <img className="icon" src={comprasIcon} alt="Compras" />
-                                    Mis Compras
-                            </Link>
-                        </li>
-                        <li className="create-product">
-                            <Link to = '/PublicarProducto' className="nav-link create-product">
-                                Crear producto
-                            </Link>
-                        </li>
+                         {/* {user && user.tipousuario === 'comprador' && ( */}
+                            <li className="nav-item">
+                                <Link to = '/Purchases' className="nav-link">
+                                    <img className="icon" src={comprasIcon} alt="Compras" />
+                                        Mis Compras
+                                </Link>
+                            </li>
+                        {/* )} */}
+                        {/* {user && user.tipousuario === 'vendedor' && ( */}
+                            <li className="create-product">
+                                <Link to = '/PublicarProducto' className="nav-link create-product">
+                                    Crear producto
+                                </Link>
+                            </li>
+                        {/* )} */}
                     </ul>
                 </div>
             </nav>
@@ -154,7 +164,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <Link to='/logged/:username' className="brand-link">
+                    <Link to={`/logged/${user?.username}`} className="brand-link">
                         <span className="brand-text">Mercalista</span>
                     </Link>
 
@@ -205,6 +215,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
             <div className="collapse d-md-none" id="mobile-menu">
                 <nav className="mobile-nav bg-light p-3">
                     <ul className="mobile-nav-list nav flex-column">
+                    {user && user.tipousuario === 'comprador' && (
                         <li className="nav-item">
                             <a className='nav-link' data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                             <img className="nav-icon" src={ventasIcon} alt="Premium" />
@@ -229,6 +240,7 @@ const Menu = ({children}: NavBarPropsLogged) => {
                             </div>
                             </div>
                         </li>
+                    )}
                         <li className="nav-item2">
                             <Link to='/Suscription' className="nav-link2 mobile-link" style={{ color: "rgb(255, 238, 0)" }}>
                                 <img className="nav-icon" src={premiumIcon} alt="Premium" />

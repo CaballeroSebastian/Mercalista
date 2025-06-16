@@ -169,3 +169,7 @@ ALLOWED_HOSTS = ['*']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+SENDGRID_API_KEY = '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'
+DEFAULT_FROM_EMAIL = 'mercalistanoreplay@gmail.com' 
+

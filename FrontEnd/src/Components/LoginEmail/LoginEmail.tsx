@@ -4,8 +4,10 @@ import collage from './img/collage.png';
 import logo from '../../assets/Image/logo.png';
 import googleIcon from './img/google.png';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext'; // Asegúrate de que la ruta sea correcta
 
 const LoginEmail: React.FC = () => {
+  const { setTempEmail } = useAuth();
   const [correo, setCorreo] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false); // ⭐ Estado de carga
@@ -44,10 +46,8 @@ const LoginEmail: React.FC = () => {
       if (response.ok && data.correo_valido) {
         console.log('Correo válido, guardando y navegando...');
         
-        // ⭐ AQUÍ ES DONDE GUARDAS EL CORREO ⭐
-        localStorage.setItem('userEmail', correo);
-        
-        navigate('/LoginEmail/LoginPassword');
+        setTempEmail(correo); // Guardar el email en el contexto
+        navigate('/LoginPassword');
       } else if (response.ok && !data.correo_valido) {
         console.log('Correo no válido');
         setError('Correo invalido');
