@@ -301,3 +301,130 @@ body {
     color: #FFD791 ;
     background-color: rgba(0, 0, 0, 0.582);
 }
+
+
+
+.filter-section {
+    padding: 9px;
+    margin: 20px 5px;
+    background-color: #836e43;
+    border-radius: 8px;
+}
+
+.filter-title {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Estilos para el filtro de precio */
+.price-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.price-input {
+    width: 55px;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.price-separator {
+    color: white;
+    font-weight: bold;
+}
+
+.price-arrow {
+    color: white;
+    cursor: pointer;
+}
+
+.price-arrow:hover {
+    color: #FFD791;
+}
+
+/* Estilos para los botones de categoría */
+.category-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.category-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1px 12px;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #FFD791;
+    color: #FFD791;
+}
+
+.category-name {
+    font-size: 14px;
+    
+}
+
+.category-count {
+    font-size: 12px;
+    color: #FFD791;
+}
+
+/* Mantener el logo fijo */
+.navbar-brand {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #413620;
+}
+
+/* Hacer la barra lateral scrolleable */
+.barra-fija {
+    height: calc(100vh - 66px);
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* Para Internet Explorer y Edge */
+    scrollbar-width: none;     /* Para Firefox */
+}
+
+/* Ocultar scrollbar para Chrome, Safari y Opera */
+.barra-fija::-webkit-scrollbar {
+    display: none;
+}
+
+.barra-fija::-webkit-scrollbar-track {
+    background: #836e43;
+}
+
+.barra-fija::-webkit-scrollbar-thumb {
+    background-color: #FFD791;
+    border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .filter-section {
+        margin: 10px;
+    }
+
+    .price-filter {
+        flex-wrap: wrap;
+    }
+
+    .price-input {
+        width: calc(50% - 15px);
+    }
+}
