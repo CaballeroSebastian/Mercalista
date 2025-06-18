@@ -4,21 +4,29 @@ import React from 'react'
 
 
 interface Purchase {
-    id: number;
-    vendor: string;
-    product: string;
-    date: string;
-    total: string;
-    image: string;
-  }
+  id: number;
+  vendedor: string;
+  producto: string;
+  total: string;
+  image: string;
+  fecha?: string;
+  ciudad?: string;
+  telefono?: string;
+  correo?: string;
+  cantidad?: string;
+  precioUnidad?: string;
+  estado?: string; 
+  unidadMedida?: string; 
+}
 
 interface PreviewProps {
     purchase: Purchase;
     onClose: () => void;
   }
 
-const Preview : React.FC<PreviewProps> = ({ onClose }) =>{
+const Preview : React.FC<PreviewProps> = ({ purchase, onClose }) =>{
 
+  const backendUrl = 'http://127.0.0.1:8000/';
     
         return (
             <div className="modal-bg" onClick={e => e.target === e.currentTarget && onClose()}>
@@ -29,15 +37,15 @@ const Preview : React.FC<PreviewProps> = ({ onClose }) =>{
                 </div>
                 <div className="modal-row">
                   <div className="modal-info">
-                    <div><b>Factura:</b> MI-306</div>
-                    <div><b>Fecha:</b> 5/03/2025</div>
+                    <div><b>Factura:</b> {purchase.id}</div>
+                    <div><b>Fecha:</b> {purchase.fecha}</div>
                     <div><b>Método de pago:</b> <span style={{ fontWeight: 400 }}>Transaccion</span></div>
                   </div>
                   <div className="modal-product">
-                    <div className="modal-product-title">Papa</div>
+                    <div className="modal-product-title">{purchase.producto}</div>
                     <div className="modal-product-img-row">
                       <span className="modal-arrow">{'<'}</span>
-                      <img src={productImg} alt="Papa" className="modal-product-img" />
+                      <img src={`${backendUrl}media/${purchase.image}`} alt="Papa" className="modal-product-img" />
                       <span className="modal-arrow">{'>'}</span>
                     </div>
                   </div>
@@ -45,10 +53,10 @@ const Preview : React.FC<PreviewProps> = ({ onClose }) =>{
                 <hr className="modal-divider" />
                 <div className="modal-section">
                   <div className="modal-section-title">Información del vendedor</div>
-                  <div><b>Nombre:</b> Sebastian</div>
-                  <div><b>Ciudad:</b> Bogota</div>
-                  <div><b>Teléfono:</b> 31182489632</div>
-                  <div><b>Email:</b> sebas@boboHpt.com</div>
+                  <div><b>Nombre:</b> {purchase.vendedor}</div>
+                  <div><b>Ciudad:</b> {purchase.ciudad}</div>
+                  <div><b>Teléfono:</b> {purchase.telefono}</div>
+                  <div><b>Email:</b> {purchase.correo}</div>
                 </div>
                 <hr className="modal-divider" />
                 <div className="modal-section">
@@ -57,16 +65,16 @@ const Preview : React.FC<PreviewProps> = ({ onClose }) =>{
                     <div className="modal-table-header">
                       <div>Producto</div>
                       <div>Cantidad</div>
-                      <div>Precio U.</div>
+                      <div>Precio U.</div>  
                       <div>Subtotal</div>
                       <div>Estado</div>
                     </div>
                     <div className="modal-table-row">
-                      <div>Papa</div>
-                      <div>10KG</div>
-                      <div>$10.000</div>
-                      <div>$100.000</div>
-                      <div>N/A</div>
+                      <div>{purchase.producto}</div>
+                      <div>{purchase.cantidad}{purchase.unidadMedida}</div>
+                      <div>{purchase.precioUnidad}</div>
+                      <div>{purchase.total}</div>
+                      <div>{purchase.estado}</div>
                     </div>
                   </div>
                 </div>
