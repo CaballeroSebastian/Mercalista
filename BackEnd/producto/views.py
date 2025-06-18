@@ -223,7 +223,6 @@ class ProductosVendidosView(APIView):
 
 class ComprasUsuarioView(APIView):
     def get(self, request, id):
-<<<<<<< HEAD
         print(f"ComprasUsuarioView: Buscando compras para usuario ID: {id}")
         
         try:
@@ -237,24 +236,13 @@ class ComprasUsuarioView(APIView):
         # Filtrar pedidos hechos por ese comprador
         pedidos = Pedido.objects.filter(idcomprador=comprador)
         print(f"Pedidos encontrados: {pedidos.count()}")
-=======
-        # Buscar el comprador a partir del ID de usuario
-        comprador = Comprador.objects.get(idusuario = id)
-
-        # Filtrar pedidos hechos por ese comprador
-        pedidos = Pedido.objects.filter(idcomprador=comprador)
->>>>>>> 5c47dc5 (se prepara rama para subirla al remoto)
 
         resultado = []
 
         for pedido in pedidos:
-<<<<<<< HEAD
             print(f"Procesando pedido ID: {pedido.idpedido}")
             carritos = Carrito.objects.filter(idpedido=pedido)
             print(f"Carritos en este pedido: {carritos.count()}")
-=======
-            carritos = Carrito.objects.filter(idpedido=pedido)
->>>>>>> 5c47dc5 (se prepara rama para subirla al remoto)
 
             for carrito in carritos:
                 producto = carrito.idproducto
@@ -277,10 +265,7 @@ class ComprasUsuarioView(APIView):
                     "vendedor": usuario_vendedor.nombre
                 })
 
-<<<<<<< HEAD
         print(f"Resultado final: {len(resultado)} compras encontradas")
-=======
->>>>>>> 5c47dc5 (se prepara rama para subirla al remoto)
         return Response(resultado, status=status.HTTP_200_OK)
 
     

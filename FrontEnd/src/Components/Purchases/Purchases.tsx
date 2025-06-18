@@ -58,7 +58,7 @@ const Purchases: React.FC = () => {
               onClick={() => openModal(purchase)}
             >
               <div className="purchase-image-container">
-                <img src={purchase.image} alt={purchase.producto} className="purchase-image" />
+                <img src={`${backendUrl}media/${purchase.image}`} alt={purchase.producto} className="purchase-image" />
               </div>
 
               <div className="purchase-details">
