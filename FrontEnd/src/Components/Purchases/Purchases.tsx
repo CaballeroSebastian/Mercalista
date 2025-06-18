@@ -27,16 +27,10 @@ const Purchases: React.FC = () => {
   const { user } = useAuth();
   const backendUrl = 'http://127.0.0.1:8000/';
   const Usuario = user?.idusuario;
-<<<<<<< HEAD
-  const numero = 0;
-  useEffect(() => {
-
-=======
   
 
   useEffect(() => {
 
->>>>>>> 5c47dc5 (se prepara rama para subirla al remoto)
     axios.get<Purchase[]>(`${backendUrl}producto/verCompras/${Usuario}`)
       .then(response => setPurchases(response.data))
       .catch(error => console.error("Error al obtener compras:", error));
@@ -64,11 +58,7 @@ const Purchases: React.FC = () => {
               onClick={() => openModal(purchase)}
             >
               <div className="purchase-image-container">
-<<<<<<< HEAD
-                <img src={`${backendUrl}media/${purchase.image}`} alt={purchase.producto} className="purchase-image" />
-=======
                 <img src={purchase.image} alt={purchase.producto} className="purchase-image" />
->>>>>>> 5c47dc5 (se prepara rama para subirla al remoto)
               </div>
 
               <div className="purchase-details">
