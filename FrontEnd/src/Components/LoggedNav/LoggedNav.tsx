@@ -222,7 +222,7 @@ const Menu = ({ children }: NavBarPropsLogged) => {
           <div className="filter-section">
             <h6 className="filter-title">Categorías</h6>
             <div className="category-buttons">
-              {["frutas", "legumbres", "cereales", "tuberculos", "Especias", "nueces o semillas"].map((category) => (
+              {["Frutas", "Legumbres", "Cereales", "Tuberculos", "Especias", "Nueces o semillas"].map((category) => (
                   <button
                       key={category}
                       className={`category-button ${selectedCategory === category ? "active" : ""}`}
@@ -313,7 +313,7 @@ const Menu = ({ children }: NavBarPropsLogged) => {
       <div className="collapse d-md-none" id="mobile-menu">
         <nav className="mobile-nav bg-light p-3">
           <ul className="mobile-nav-list nav flex-column">
-            {user && user.tipousuario === "comprador" && (
+            
               <li className="nav-item">
                 <a
                   className="nav-link"
@@ -345,7 +345,7 @@ const Menu = ({ children }: NavBarPropsLogged) => {
                   </div>
                 </div>
               </li>
-            )}
+            
             <li className="nav-item2">
               <Link to="/Suscription" className="nav-link2 mobile-link" style={{ color: "rgb(255, 238, 0)" }}>
                 <img className="nav-icon" src={premiumIcon || "/placeholder.svg"} alt="Premium" />
@@ -364,6 +364,8 @@ const Menu = ({ children }: NavBarPropsLogged) => {
               </Link>
             </li>
           </ul>
+
+          
 
           <form className="d-flex" role="search">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
