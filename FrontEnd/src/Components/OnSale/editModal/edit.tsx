@@ -168,10 +168,10 @@ const Edit =({cerrar, informacion}: Props)=>{
                       >
                         <option value="">Seleccionar categoría</option>
                         <option value="frutas">Frutas</option>
-                        <option value="legumbres">Verduras</option>
-                        <option value="cereales">Granos</option>
-                        <option value="tuberculos">Lácteos</option>
-                        <option value="nueces">Carnes</option>
+                        <option value="legumbres">legumbres</option>
+                        <option value="verduras">verduras</option>
+                        <option value="tuberculos">tuberculos</option>
+                        <option value="nueces">nueces</option>
                         <option value="especias">Otros</option>
                       </select>
                     </div>
@@ -212,6 +212,7 @@ const Edit =({cerrar, informacion}: Props)=>{
                         <option value="kilogramos">kilogramos</option>
                         <option value="tonelada">Tonelada</option>
                         <option value="Carga">Carga</option>
+                        <option value="arroba">arroba</option>
                       </select>
                     </div>
                   </div>

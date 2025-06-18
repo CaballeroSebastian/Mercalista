@@ -237,11 +237,11 @@ const ProductRegistrationForm = () => {
                   >
                     <option value="" disabled>Seleccione una opción</option>
                     <option value="frutas">Frutas</option>
-                    <option value="legumbres">Legumbres</option>
-                    <option value="cereales">Cereales o granos</option>
-                    <option value="tuberculos">Tubérculos y raíces</option>
-                    <option value="nueces">Nueces y semillas</option>
-                    <option value="especias">Especias y hierbas</option>
+                        <option value="legumbres">legumbres</option>
+                        <option value="verduras">verduras</option>
+                        <option value="tuberculos">tuberculos</option>
+                        <option value="nueces">nueces</option>
+                        <option value="especias">Otros</option>
                   </select>
                 </div>
 

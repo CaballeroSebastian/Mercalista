@@ -24,7 +24,6 @@ interface Sale {
     direccion?: string;
     cantidad?: string;
     total?: string;
-    metodoPago?: string;
     pedidoId?: string;
     telefono?: string;
     email?: string;
@@ -43,6 +42,8 @@ interface Sale {
 const PreviewSale = ({ onClose, datosVenta }:SalesHistoryModalProps) => {
     const [activeTab, setActiveTab] = useState<"details" | "buyer">("details")
   
+    const backendUrl = "http://127.0.0.1:8000/";
+
   
     return (
       <div className="sales-modal-overlay">
@@ -64,7 +65,7 @@ const PreviewSale = ({ onClose, datosVenta }:SalesHistoryModalProps) => {
                   <ChevronLeft size={20} />
                 </button>
                 <div className="sales-modal-product-image">
-                  <img src={datosVenta.imagen || "/placeholder.svg"} alt={datosVenta.producto} />
+                  <img src={`${backendUrl}media/${datosVenta.imagen || "/placeholder.svg"}`} alt={datosVenta.producto} />
                 </div>
                 <button className="sales-modal-nav-button right">
                   <ChevronRight size={20} />
@@ -118,7 +119,7 @@ const PreviewSale = ({ onClose, datosVenta }:SalesHistoryModalProps) => {
                     </div>
                     <div className="sales-modal-detail-content">
                       <span className="sales-modal-detail-label">Método de pago</span>
-                      <span className="sales-modal-detail-value">{datosVenta.metodoPago}</span>
+                      <span className="sales-modal-detail-value">Transaccion</span>
                     </div>
                   </div>
                   <div className="sales-modal-detail-item">

@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import './styles.css';
+import '../Purchases/Purchases.css'
 import papa from './img/papa.jpeg';
 import Menu from '../LoggedNav/LoggedNav';
 import PreviewSale from './PreviewSale'
+import { useAuth } from '../../Context/AuthContext'; 
+import axios from 'axios'
 
 
 
@@ -14,7 +17,6 @@ interface Sale {
   direccion?: string;
   cantidad?: string;
   total?: string;
-  metodoPago?: string;
   pedidoId?: string;
   telefono?: string;
   email?: string;
@@ -25,89 +27,26 @@ interface Sale {
 
 const Sales: React.FC = () => {
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+  const [sales, setSales] = useState<Sale[]>([]);
 
-  const sales: Sale[] = [
-    {
-      id: 1,
-      comprador: 'Sebastián',
-      producto: 'Papa pastusa maluca',
-      fecha: '02/22/2025',
-      direccion: "Pereira, Risaralda",
-      cantidad: "100000",
-      total: '$20.000',
-      metodoPago: "transaccion",
-      pedidoId: "1",
-      telefono: "3118074248",
-      email:"brayan@gmail.com",
-      precioUnidad:"10.000",
-      estado: "Maduro",
-      imagen: papa,
-    },
-    {
-      id: 2,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 3,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 4,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 5,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 6,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 7,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 8,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-    {
-      id: 9,
-      comprador: 'Sebastián',
-      producto: 'Papá',
-      fecha: '02/22/2025',
-      total: '$20.000',
-      imagen: papa,
-    },
-  ];
+
+  const { user } = useAuth();
+  const backendUrl = "http://127.0.0.1:8000/";
+
+  const idUsuario = user?.idusuario;
+
+  
+  useEffect(() => {
+    if (!idUsuario) return;
+    
+    axios.get<Sale[]>(`${backendUrl}producto/misVentas/${idUsuario}`)
+      .then(response => {
+        setSales(response.data); // ✅ Directamente seteas los datos
+      })
+      .catch(error => {
+        console.error("Error al obtener los productos:", error);
+      });
+  }, [idUsuario]);
 
   const openModal = (sale: Sale) => {
     setSelectedSale(sale);
@@ -130,8 +69,8 @@ const Sales: React.FC = () => {
               key={sale.id}
               onClick={() => openModal(sale)}
             >
-              <div className="sale-imagen-container">
-                <img src={sale.imagen} alt={sale.producto} className="sale-imagen" />
+              <div className="purchase-image-container ">
+                <img src={`${backendUrl}media/${sale.imagen}`} alt={sale.producto} className="purchase-image" />
               </div>
 
               <div className="sale-details">

@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
+from django.db.models import Prefetch
 from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador, Usuario
 from .serializers import ProductoSerializer
 from django.core.files.storage import default_storage
@@ -182,3 +183,39 @@ class updateProduct(APIView):
 
 
         
+
+class ProductosVendidosView(APIView):
+    def get(self, request, id_usuario):
+        try:
+            vendedor = Vendedor.objects.get(idusuario=id_usuario)
+        except Vendedor.DoesNotExist:
+            return Response({"error": "Vendedor no encontrado"}, status=404)
+
+        pedidos = Pedido.objects.filter(idvendedor=vendedor).select_related("idcomprador__idusuario")
+        carritos = Carrito.objects.filter(idpedido__in=pedidos).select_related("idproducto", "idpedido__idcomprador__idusuario")
+
+        ventas = []
+
+        for item in carritos:
+            producto = item.idproducto
+            pedido = item.idpedido
+            comprador = pedido.idcomprador.idusuario
+
+            ventas.append({
+                "id": item.idcarrito,
+                "comprador": f"{comprador.nombre} {comprador.apellido}",
+                "producto": producto.nombre,
+                "fecha": pedido.fechapedido.strftime("%Y-%m-%d"),
+                "direccion": pedido.direccion,
+                "cantidad": str(item.cantidadproductos),
+                "total": str(item.preciototal),
+                "pedidoId": str(pedido.idpedido),
+                "telefono": comprador.telefono,
+                "email": comprador.correo,
+                "precioUnidad": str(producto.precio),
+                "estado": producto.estado,
+                "imagen": producto.fotos,
+            })
+
+        return Response(ventas)
+
