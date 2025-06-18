@@ -11,6 +11,7 @@ interface Product {
   categoriaproducto: string;
   estado?: string;
   descripcion?: string;
+  unidadmedida: string;
 }
 
 interface ModalProps {
@@ -39,7 +40,7 @@ const ModalProductCard = ({close, data}: ModalProps) =>{
                 <div className="info-row">
                   <span className="info-label">Stock:</span>
                   <span className="info-value status-badge">
-                    {data.cantidadstock} kg
+                    {data.cantidadstock} {data.unidadmedida }
                   </span>
                 </div>
                 <div className="info-row">

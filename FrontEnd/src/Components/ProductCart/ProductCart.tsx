@@ -10,6 +10,7 @@ interface Product {
     fotos: string | null;
     categoriaproducto: string;
     descripcion: string;
+    unidadmedida: string;
 }
 
 const ProductCart = () => {

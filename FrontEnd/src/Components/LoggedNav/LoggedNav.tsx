@@ -222,7 +222,7 @@ const Menu = ({ children }: NavBarPropsLogged) => {
           <div className="filter-section">
             <h6 className="filter-title">Categorías</h6>
             <div className="category-buttons">
-              {["Frutas", "Legumbres", "Cereales", "Tuberculos", "Especias", "Nueces o semillas"].map((category) => (
+              {["Frutas", "Legumbres", "Verduras", "Tuberculos", "Nueces", "Otros"].map((category) => (
                   <button
                       key={category}
                       className={`category-button ${selectedCategory === category ? "active" : ""}`}
