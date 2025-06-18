@@ -223,16 +223,26 @@ class ProductosVendidosView(APIView):
 
 class ComprasUsuarioView(APIView):
     def get(self, request, id):
-        # Buscar el comprador a partir del ID de usuario
-        comprador = Comprador.objects.get(idusuario = id)
+        print(f"ComprasUsuarioView: Buscando compras para usuario ID: {id}")
+        
+        try:
+            # Buscar el comprador a partir del ID de usuario
+            comprador = Comprador.objects.get(idusuario = id)
+            print(f"Comprador encontrado: {comprador.idcomprador}")
+        except Comprador.DoesNotExist:
+            print(f"Comprador no encontrado para usuario ID: {id}")
+            return Response({"error": "Comprador no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
         # Filtrar pedidos hechos por ese comprador
         pedidos = Pedido.objects.filter(idcomprador=comprador)
+        print(f"Pedidos encontrados: {pedidos.count()}")
 
         resultado = []
 
         for pedido in pedidos:
+            print(f"Procesando pedido ID: {pedido.idpedido}")
             carritos = Carrito.objects.filter(idpedido=pedido)
+            print(f"Carritos en este pedido: {carritos.count()}")
 
             for carrito in carritos:
                 producto = carrito.idproducto
@@ -255,6 +265,7 @@ class ComprasUsuarioView(APIView):
                     "vendedor": usuario_vendedor.nombre
                 })
 
+        print(f"Resultado final: {len(resultado)} compras encontradas")
         return Response(resultado, status=status.HTTP_200_OK)
 
     
