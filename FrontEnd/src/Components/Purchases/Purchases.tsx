@@ -27,8 +27,7 @@ const Purchases: React.FC = () => {
   const { user } = useAuth();
   const backendUrl = 'http://127.0.0.1:8000/';
   const Usuario = user?.idusuario;
-  
-
+  const numero = 0;
   useEffect(() => {
 
     axios.get<Purchase[]>(`${backendUrl}producto/verCompras/${Usuario}`)
