@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
+from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch
 from .models import Vendedorproducto, Producto, Vendedor, Carrito, Pedido, Comprador, Usuario
 from .serializers import ProductoSerializer
@@ -219,3 +220,42 @@ class ProductosVendidosView(APIView):
 
         return Response(ventas)
 
+
+class ComprasUsuarioView(APIView):
+    def get(self, request, id):
+        # Buscar el comprador a partir del ID de usuario
+        comprador = Comprador.objects.get(idusuario = id)
+
+        # Filtrar pedidos hechos por ese comprador
+        pedidos = Pedido.objects.filter(idcomprador=comprador)
+
+        resultado = []
+
+        for pedido in pedidos:
+            carritos = Carrito.objects.filter(idpedido=pedido)
+
+            for carrito in carritos:
+                producto = carrito.idproducto
+                vendedor = pedido.idvendedor
+                usuario_vendedor = vendedor.idusuario
+
+                resultado.append({
+                    "id": carrito.idcarrito,  # <-- Factura
+                    "fecha": pedido.fechapedido,
+                    "producto": producto.nombre,
+                    "image": producto.fotos,
+                    "total": float(carrito.preciototal),
+                    "cantidad": f"{carrito.cantidadproductos}",
+                    "precioUnidad": f"${producto.precio:,.0f}",
+                    "estado": producto.estado or "N/A",
+                    "unidadMedida": producto.unidadmedida,
+                    "ciudad": usuario_vendedor.ciudad,
+                    "telefono": usuario_vendedor.telefono,
+                    "correo": usuario_vendedor.correo,
+                    "vendedor": usuario_vendedor.nombre
+                })
+
+        return Response(resultado, status=status.HTTP_200_OK)
+
+    
+#comprador = Comprador.objects.get(idusuario = id)
