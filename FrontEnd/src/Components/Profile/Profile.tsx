@@ -212,7 +212,7 @@ const handleConfirmEdit = async (field: keyof datosUser) => {
       const tamaño = "400x200";
       const zoom = 12;
       const tipoMapa = "roadmap";
-      const claveAPI = "AIzaSyDJ3hJPOOmYKWq4j-rWqRe9IeIlGI49P04";
+      const claveAPI = "";
       const urlMapa = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
         ciudadUsuario
       )}&zoom=${zoom}&size=${tamaño}&maptype=${tipoMapa}&markers=color:red%7C${encodeURIComponent(
